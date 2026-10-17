@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initAuth();
   initNavigation();
   initClockAndPair();
-  loadSeedData();
   initFormInteractions();
   initDashboardEvents();
   initExcelViewer();
@@ -80,30 +79,16 @@ function initAuth() {
   const loginModal = document.getElementById('loginModalOverlay');
   const loginForm = document.getElementById('loginForm');
   const loginError = document.getElementById('loginErrorBanner');
-  const quickRoleBtns = document.querySelectorAll('.quick-role-btn');
   const btnLogout = document.getElementById('btnLogout');
   const changePasswordForm = document.getElementById('changePasswordForm');
-
-  // Quick Role buttons: pre-fill username & password
-  quickRoleBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      quickRoleBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const u = btn.getAttribute('data-username');
-      const p = btn.getAttribute('data-password');
-      const userInput = document.getElementById('loginUsername');
-      const passInput = document.getElementById('loginPassword');
-      if (userInput) userInput.value = u;
-      if (passInput) passInput.value = p;
-    });
-  });
+  const topbarProfile = document.getElementById('topbarUserProfile');
 
   // Login form submit
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const username = document.getElementById('loginUsername').value;
-      const password = document.getElementById('loginPassword').value;
+      const username = (document.getElementById('loginUsername')?.value || '').trim();
+      const password = (document.getElementById('loginPassword')?.value || '').trim();
       const btnSubmit = document.getElementById('btnLoginSubmit');
 
       if (loginError) loginError.style.display = 'none';
@@ -128,7 +113,11 @@ function initAuth() {
         state.currentUser = data.user;
         localStorage.setItem('urdpi_user', JSON.stringify(data.user));
 
+        // Unlock application
+        document.body.classList.remove('not-authenticated');
+        document.body.classList.add('authenticated');
         if (loginModal) loginModal.classList.add('hidden');
+
         showToast(`Xush kelibsiz, ${data.user.name}!`, 'success');
 
         applyUserRolePermissions();
@@ -153,10 +142,20 @@ function initAuth() {
     btnLogout.addEventListener('click', () => {
       state.currentUser = null;
       localStorage.removeItem('urdpi_user');
-      showToast('Tizimdan muvaffaqiyatli chiqildi', 'info');
+
+      // Lock down application
+      document.body.classList.add('not-authenticated');
+      document.body.classList.remove('authenticated');
+
+      if (topbarProfile) topbarProfile.style.display = 'none';
       if (loginModal) {
         loginModal.classList.remove('hidden');
+        const userInput = document.getElementById('loginUsername');
+        const passInput = document.getElementById('loginPassword');
+        if (userInput) { userInput.value = ''; userInput.focus(); }
+        if (passInput) passInput.value = '';
       }
+      showToast('Tizimdan muvaffaqiyatli chiqildi', 'info');
     });
   }
 
@@ -191,19 +190,31 @@ function initAuth() {
     });
   }
 
-  // Check existing session
+  // Check existing session on startup
   const savedUser = localStorage.getItem('urdpi_user');
   if (savedUser) {
     try {
       state.currentUser = JSON.parse(savedUser);
+      // Valid session found -> unlock app
+      document.body.classList.remove('not-authenticated');
+      document.body.classList.add('authenticated');
       if (loginModal) loginModal.classList.add('hidden');
       applyUserRolePermissions();
+      loadSeedData();
     } catch (e) {
+      state.currentUser = null;
       localStorage.removeItem('urdpi_user');
+      document.body.classList.add('not-authenticated');
+      document.body.classList.remove('authenticated');
+      if (topbarProfile) topbarProfile.style.display = 'none';
       if (loginModal) loginModal.classList.remove('hidden');
     }
   } else {
-    // Show login modal if not logged in
+    // No session -> strictly lock down and display login screen
+    state.currentUser = null;
+    document.body.classList.add('not-authenticated');
+    document.body.classList.remove('authenticated');
+    if (topbarProfile) topbarProfile.style.display = 'none';
     if (loginModal) loginModal.classList.remove('hidden');
   }
 }
@@ -211,6 +222,9 @@ function initAuth() {
 function applyUserRolePermissions() {
   const user = state.currentUser;
   if (!user) return;
+
+  const topbarProfile = document.getElementById('topbarUserProfile');
+  if (topbarProfile) topbarProfile.style.display = 'flex';
 
   const topbarRoleBadge = document.getElementById('topbarRoleBadge');
   const topbarUserName = document.getElementById('topbarUserName');

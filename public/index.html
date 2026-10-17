@@ -8,11 +8,11 @@
   <meta name="description"
     content="Urganch davlat pedagogika instituti (UrDPI) 5 ta fakulteti va yo'nalishlari uchun mobil va avtomatlashtirilgan Excel davomat monitoring tizimi">
   <link rel="manifest" href="/manifest.json">
-  <link rel="stylesheet" href="/css/style.css?v=2.5">
+  <link rel="stylesheet" href="/css/style.css?v=2.6">
   <link rel="icon" type="image/png" href="/logo.png">
 </head>
 
-<body>
+<body class="not-authenticated">
 
   <!-- App Layout Container -->
   <div class="app-layout">
@@ -98,12 +98,12 @@
             <span id="headerLiveClock">--:--:--</span>
           </div>
 
-          <!-- Active User Profile Pill -->
-          <div class="topbar-user-profile" id="topbarUserProfile">
-            <span class="user-role-badge" id="topbarRoleBadge">Admin</span>
+          <!-- Active User Profile Pill (Visible only after login) -->
+          <div class="topbar-user-profile" id="topbarUserProfile" style="display: none;">
+            <span class="user-role-badge" id="topbarRoleBadge">--</span>
             <div class="user-profile-info">
-              <span class="user-profile-name" id="topbarUserName">Jamshid Boltaboyev</span>
-              <span class="user-faculty-tag" id="topbarFacultyTag">Barcha fakultetlar</span>
+              <span class="user-profile-name" id="topbarUserName">--</span>
+              <span class="user-faculty-tag" id="topbarFacultyTag">--</span>
             </div>
             <button type="button" class="btn-logout" id="btnLogout" title="Tizimdan chiqish">
               <span>Chiqish</span>
@@ -839,63 +839,27 @@
   </nav>
 
   <!-- ================= AUTHENTICATION MODAL ================= -->
-  <div class="auth-modal-overlay hidden" id="loginModalOverlay">
+  <div class="auth-modal-overlay" id="loginModalOverlay">
     <div class="auth-modal-card">
       <div class="auth-modal-header">
         <img src="/logo.png" alt="UrDPI Logo" class="auth-modal-logo">
         <h2 class="auth-modal-title">UrDPI Davomat Tizimi</h2>
-        <p class="auth-modal-subtitle">Tizimga kirish uchun hisobingizni tanlang yoki login/parolni kiriting</p>
-      </div>
-
-      <!-- Quick Role Selection -->
-      <div class="quick-role-section">
-        <div class="quick-role-label">Tezkor hisobni tanlash (1-klikda to'ldirish):</div>
-        <div class="quick-role-grid" id="quickRoleGrid">
-          <button type="button" class="quick-role-btn active" data-username="admin" data-password="123" title="Admin">
-            <span class="quick-role-icon">👑</span>
-            <span>Admin</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-username="aniq" data-password="123"
-            title="Aniq fanlar uslubchisi">
-            <span class="quick-role-icon">🔬</span>
-            <span>Aniq fanlar</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-username="filologiya" data-password="123"
-            title="Filologiya uslubchisi">
-            <span class="quick-role-icon">📖</span>
-            <span>Filologiya</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-username="ijtimoiy" data-password="123"
-            title="Ijtimoiy-amaliy uslubchisi">
-            <span class="quick-role-icon">🌍</span>
-            <span>Ijtimoiy</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-username="boshlangich" data-password="123"
-            title="Boshlang'ich ta'lim uslubchisi">
-            <span class="quick-role-icon">✏️</span>
-            <span>Boshlang'ich</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-username="pedagogika" data-password="123"
-            title="Pedagogika uslubchisi">
-            <span class="quick-role-icon">🎨</span>
-            <span>Pedagogika</span>
-          </button>
-        </div>
+        <p class="auth-modal-subtitle">Tizimga kirish uchun login va parolingizni kiriting</p>
       </div>
 
       <!-- Login Form -->
-      <form id="loginForm" style="display: flex; flex-direction: column; gap: 0.85rem;">
+      <form id="loginForm" style="display: flex; flex-direction: column; gap: 1rem;">
         <div class="auth-error-banner" id="loginErrorBanner"></div>
 
         <div class="auth-input-group">
           <label class="auth-input-label" for="loginUsername">👤 Foydalanuvchi nomi (Login)</label>
-          <input type="text" id="loginUsername" class="auth-input" value="admin" placeholder="Masalan: admin yoki aniq"
-            required autocomplete="username">
+          <input type="text" id="loginUsername" class="auth-input" value="" placeholder="Loginni kiriting (admin yoki uslubchi)"
+            required autocomplete="username" autofocus>
         </div>
 
         <div class="auth-input-group">
           <label class="auth-input-label" for="loginPassword">🔑 Parol</label>
-          <input type="password" id="loginPassword" class="auth-input" value="123" placeholder="Parolni kiriting"
+          <input type="password" id="loginPassword" class="auth-input" value="" placeholder="Parolingizni kiriting"
             required autocomplete="current-password">
         </div>
 
@@ -911,7 +875,7 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Main Frontend Application Logic -->
-  <script src="/js/app.js?v=2.5"></script>
+  <script src="/js/app.js?v=2.6"></script>
 </body>
 
 </html>

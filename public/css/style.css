@@ -2249,13 +2249,24 @@ input:checked + .toggle-slider:before {
 
 /* ================= AUTHENTICATION & MULTI-ROLE STYLES ================= */
 
+/* Lockdown when not authenticated: completely hide application workspace */
+body.not-authenticated .app-layout {
+  display: none !important;
+}
+
+body.not-authenticated {
+  overflow: hidden;
+  background: #0f172a;
+}
+
 /* Login Modal Overlay */
 .auth-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(10px);
-  z-index: 10000;
+  background: radial-gradient(circle at center, rgba(30, 41, 59, 0.92) 0%, rgba(15, 23, 42, 0.98) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
