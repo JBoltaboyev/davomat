@@ -443,25 +443,9 @@ const server = app.listen(PORT, HOST, () => {
   console.log(`=================================================`);
 });
 
-// Dual-Port: Standart HTTP 80-port orqali to'g'ridan-to'g'ri davomat.urdpi.uz ni ochish
-let port80Server = null;
-if (String(PORT) !== '80') {
-  try {
-    const http = require('http');
-    port80Server = http.createServer(app);
-    port80Server.listen(80, HOST, () => {
-      console.log(`🌐  Domen orqali to'g'ridan-to'g'ri: http://davomat.urdpi.uz (yoki http://172.10.11.59)`);
-      console.log(`=================================================`);
-    }).on('error', (err) => {
-      // Agar 80-port band bo'lsa xavfsiz o'tkazib yuboriladi
-    });
-  } catch (e) {}
-}
-
 // Graceful Shutdown for Production (PM2, Docker, Systemd)
 const handleShutdown = (signal) => {
   console.log(`\n🛑 [${signal}] Signali qabul qilindi. Server xavfsiz to'xtatilmoqda...`);
-  if (port80Server) port80Server.close();
   server.close(() => {
     console.log('✅ Barcha ulanishlar yopildi. Server to\'xtatildi.');
     process.exit(0);
