@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  urdpi-davomat:
+    build: .
+    container_name: urdpi_davomat_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+    env_file:
+      - .env
+    volumes:
+      # Ma'lumotlar bazasi va Excel fayllarini serverda saqlab qolish
+      - ./data:/app/data
+      - ./DAVOMAT.xlsx:/app/DAVOMAT.xlsx
+      - ./logs:/app/logs
+      - ./backups:/app/backups

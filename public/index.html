@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UrDPI Davomat</title>
+  <meta name="description"
+    content="Urganch davlat pedagogika instituti (UrDPI) 5 ta fakulteti va yo'nalishlari uchun mobil va avtomatlashtirilgan Excel davomat monitoring tizimi">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/style.css?v=2.5">
+  <link rel="icon" type="image/png" href="/logo.png">
+</head>
+
+<body>
+
+  <!-- App Layout Container -->
+  <div class="app-layout">
+
+    <!-- Mobile/Tablet Sidebar Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Left Navigation Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+      <!-- Sidebar Brand Area -->
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <img src="/logo.png" alt="UrDPI Logo" class="brand-logo-img">
+        </div>
+        <div class="brand-text">
+          <h2>UrDPI Davomat</h2>
+
+        </div>
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Yopish">✕</button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">ASOSIY MENYU</div>
+
+        <button class="nav-tab-btn active" data-tab="tab-attendance">
+          <span class="nav-title">Xonada Davomat</span>
+          <span class="nav-tag">Audit</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="tab-dashboard">
+          <span class="nav-title">Institut Monitoringi</span>
+          <span class="nav-tag live">Jonli</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="tab-excel">
+          <span class="nav-title">Excel Jadvali</span>
+          <span class="nav-tag excel">.xlsx</span>
+        </button>
+
+        <div class="nav-group-title" style="margin-top: 1.25rem;">TIZIM</div>
+
+        <button class="nav-tab-btn" data-tab="tab-settings">
+          <span class="nav-title">Sozlamalar</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Bottom Widget -->
+      <div class="sidebar-bottom">
+        <div class="sidebar-lesson-box">
+          <div class="lesson-indicator-dot"></div>
+          <div>
+            <div class="lesson-box-title" id="sidebarLessonTitle">1-para davom etmoqda</div>
+            <div class="lesson-box-time" id="sidebarLessonTime">08:30 - 09:50</div>
+          </div>
+        </div>
+
+
+
+        <div class="sidebar-submeta">
+          <span>Copyright 2026 © Jamshid Boltaboyev</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main-area">
+
+      <!-- Top Bar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="topbar-toggle-btn" id="sidebarToggleBtn" aria-label="Menyu">
+            <span>☰</span>
+          </button>
+          <div class="topbar-page-info">
+            <span class="topbar-page-title" id="topbarPageTitle">Xonada Davomat</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="live-time-badge">
+            <div class="live-indicator"></div>
+            <span id="headerLiveClock">--:--:--</span>
+          </div>
+
+          <!-- Active User Profile Pill -->
+          <div class="topbar-user-profile" id="topbarUserProfile">
+            <span class="user-role-badge" id="topbarRoleBadge">Admin</span>
+            <div class="user-profile-info">
+              <span class="user-profile-name" id="topbarUserName">Jamshid Boltaboyev</span>
+              <span class="user-faculty-tag" id="topbarFacultyTag">Barcha fakultetlar</span>
+            </div>
+            <button type="button" class="btn-logout" id="btnLogout" title="Tizimdan chiqish">
+              <span>Chiqish</span>
+            </button>
+          </div>
+
+          <a href="/api/excel/download" class="btn-excel-download" id="headerExcelDownloadBtn"
+            title="Yangilangan Excel faylni yuklab olish">
+            <span>Yuklab Olish</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Main Content Wrapper -->
+      <main class="main-wrapper">
+
+        <!-- ================= TAB 1: XONADA DAVOMAT OLISH (MOBILE AUDITOR) ================= -->
+        <section id="tab-attendance" class="view-section active">
+          <div class="glass-card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <div class="card-title-icon">📱</div>
+                <div>
+                  <h2 class="card-title">Davomat Olish</h2>
+                  <p class="card-subtitle">Auditoriyaga kirib tezkor davomat oling — Excel avtomatik yangilanadi</p>
+                </div>
+              </div>
+              <span class="live-time-badge" id="currentLessonBadge">1-para davom etmoqda</span>
+            </div>
+
+            <!-- Attendance Step Form -->
+            <form id="attendanceWalkForm">
+
+              <!-- ⏰ O'qish Vaqti va Juftlik (Para) Paneli (Aqlli Rejim) -->
+              <div class="schedule-selector-panel">
+                <!-- 🟢 Hozirgi Faol Dars Kartochkasi (Hero Card) -->
+                <div class="active-lesson-hero-card" id="activeLessonHeroCard">
+                  <div class="hero-card-left">
+                    <div class="hero-status-tag" id="heroStatusTag">
+                      <span class="pulse-dot-green" id="heroPulseDot"></span>
+                      <span id="heroLiveStatusText">JONLI FAOL DARS</span>
+                    </div>
+                    <div class="hero-pair-title" id="heroPairTitle">
+                      <span>2-para</span>
+                      <span
+                        style="font-size: 1.05rem; opacity: 0.85; font-family: 'JetBrains Mono', monospace; font-weight: 600;">(10:00
+                        - 11:20)</span>
+                    </div>
+                    <div class="hero-shift-subtitle" id="heroShiftSubtitle">
+                      ☀️ Kunduzgi (1-smena) • Dars davom etmoqda
+                    </div>
+                  </div>
+                  <div class="hero-card-right">
+                    <button type="button" class="btn-reset-live" id="btnResetLiveSchedule"
+                      title="Hozirgi real dars vaqtiga qaytish">
+                      <span>⚡</span>
+                      <span>Jonli darsga qaytish</span>
+                    </button>
+                    <button type="button" class="btn-toggle-manual" id="btnToggleManualSchedule"
+                      title="Boshqa para yoki smenani tanlash">
+                      <span id="manualToggleIcon">⚙️</span>
+                      <span id="manualToggleText">Boshqa para / smena ▾</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Yashirin / Yig'iladigan Manual Tanlash Qutisi (Drawer) -->
+                <div class="manual-schedule-drawer" id="manualScheduleDrawer">
+                  <div
+                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem;">
+                    <span
+                      style="font-size: 0.78rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em;">
+                      Qo'lda boshqa para yoki smenani belgilash:
+                    </span>
+                    <span class="live-time-badge" id="currentShiftNotice">☀️ Kunduzgi (1-smena) • 3 ta para</span>
+                  </div>
+
+                  <!-- 3 ta O'qish Vaqti (Smena) Tanlash -->
+                  <div class="shift-tabs-container" id="shiftSelector">
+                    <button type="button" class="shift-tab-btn active" data-shift="kunduzgi-1"
+                      title="Kunduzgi 1-smena: 08:30 - 12:50 (3 ta para)">
+                      <span class="shift-tab-icon">☀️</span>
+                      <div class="shift-tab-text">
+                        <span class="shift-tab-name">Kunduzgi (1-smena)</span>
+                        <span class="shift-tab-range">08:30 - 12:50 • 3 para</span>
+                      </div>
+                    </button>
+                    <button type="button" class="shift-tab-btn" data-shift="kunduzgi-2"
+                      title="Kunduzgi 2-smena: 13:00 - 17:20 (3 ta para)">
+                      <span class="shift-tab-icon">🌤</span>
+                      <div class="shift-tab-text">
+                        <span class="shift-tab-name">Kunduzgi (2-smena)</span>
+                        <span class="shift-tab-range">13:00 - 17:20 • 3 para</span>
+                      </div>
+                    </button>
+                    <button type="button" class="shift-tab-btn" data-shift="kechki"
+                      title="Kechki ta'lim: 17:30 - 20:20 (2 ta para: 17:30-18:50, 19:00-20:20)">
+                      <span class="shift-tab-icon">🌙</span>
+                      <div class="shift-tab-text">
+                        <span class="shift-tab-name">Kechki ta'lim</span>
+                        <span class="shift-tab-range">17:30 - 20:20 • 2 para</span>
+                      </div>
+                    </button>
+                  </div>
+
+                  <!-- Juftliklar (Paralar) -->
+                  <div class="para-grid cols-3" id="paraSelector">
+                    <div class="para-btn" data-para="1" data-time="08:30 - 09:50">
+                      <div class="para-number">1-para</div>
+                      <div class="para-time">08:30 - 09:50</div>
+                    </div>
+                    <div class="para-btn active" data-para="2" data-time="10:00 - 11:20">
+                      <div class="para-number">2-para</div>
+                      <div class="para-time">10:00 - 11:20</div>
+                    </div>
+                    <div class="para-btn" data-para="3" data-time="11:30 - 12:50">
+                      <div class="para-number">3-para</div>
+                      <div class="para-time">11:30 - 12:50</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form Inputlari: Xona, Fakultet, Yo'nalish, Guruh... -->
+              <div class="form-step-grid">
+
+                <!-- Room / Auditoriya -->
+                <div class="input-group">
+                  <label class="input-label" for="roomSelect">
+                    <span>🚪 Auditoriya / Xona</span>
+                    <small class="text-dim">Tezkor tanlash:</small>
+                  </label>
+                  <input type="text" id="roomInput" class="form-input" placeholder="Xona raqami, masalan: 101"
+                    list="roomsDatalist" required>
+                  <datalist id="roomsDatalist"></datalist>
+                  <div class="chips-container" id="roomChips">
+                    <button type="button" class="chip-btn active" data-room="101-auditoriya">101</button>
+                    <button type="button" class="chip-btn" data-room="102-auditoriya">102</button>
+                    <button type="button" class="chip-btn" data-room="201-auditoriya">201</button>
+                    <button type="button" class="chip-btn" data-room="203-kompyuter sinfi">203</button>
+                    <button type="button" class="chip-btn" data-room="301-auditoriya">301</button>
+                    <button type="button" class="chip-btn" data-room="305-auditoriya">305</button>
+                    <button type="button" class="chip-btn" data-room="405-til laboratoriyasi">405</button>
+                  </div>
+                </div>
+
+                <!-- Fakultet Selector -->
+                <div class="input-group">
+                  <label class="input-label" for="facultySelect">
+                    <span>🏛 Fakultet</span>
+                    <span id="facultyLockIndicator"></span>
+                  </label>
+                  <select id="facultySelect" class="form-select" required></select>
+                </div>
+
+                <!-- Yo'nalish & Kurs -->
+                <div class="input-group">
+                  <label class="input-label" for="directionSelect">📚 Ta'lim yo'nalishi</label>
+                  <select id="directionSelect" class="form-select" required></select>
+                </div>
+
+                <!-- Guruh Selector -->
+                <div class="input-group">
+                  <label class="input-label" for="groupSelect">
+                    <span>👥 Guruh</span>
+                    <span id="groupHemisBadge" style="color: var(--primary); font-weight:700;">HEMIS: 25</span>
+                  </label>
+                  <select id="groupSelect" class="form-select" required></select>
+                </div>
+
+                <!-- O'qituvchi -->
+                <div class="input-group">
+                  <label class="input-label" for="teacherInput">👨‍🏫 O'qituvchi (F.I.Sh.)</label>
+                  <input type="text" id="teacherInput" class="form-input"
+                    placeholder="O'qituvchi ismini tanlang yoki yozing" list="teachersDatalist" required>
+                  <datalist id="teachersDatalist"></datalist>
+                </div>
+
+                <!-- Fan nomi -->
+                <div class="input-group">
+                  <label class="input-label" for="subjectInput">📖 Fan nomi</label>
+                  <input type="text" id="subjectInput" class="form-input"
+                    placeholder="Masalan: Umumiy fizika, Matematik analiz..." required>
+                </div>
+
+                <!-- Sana -->
+                <div class="input-group">
+                  <label class="input-label" for="attendanceDate">📅 Dars sanasi</label>
+                  <input type="date" id="attendanceDate" class="form-input" required>
+                </div>
+
+              </div>
+
+              <!-- Teacher presence verification -->
+              <div class="teacher-audit-box">
+                <div class="switch-label">
+                  <span>👨‍🏫 O'qituvchi darsdami?</span>
+                  <span id="teacherStatusLabel" style="color: var(--status-good); font-weight:700;">(Ha, darsda)</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="teacherPresentCheck" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <!-- Mode Switcher: Quick Count vs Student Roster -->
+              <div class="mode-toggle-container">
+                <button type="button" class="mode-btn active" id="btnModeQuick">
+                  <span>⚡</span> Tezkor Sanash (Inspector Quick Count)
+                </button>
+                <button type="button" class="mode-btn" id="btnModeRoster">
+                  <span>📋</span> Talabalar Ro'yxati (HEMIS Roster)
+                </button>
+              </div>
+
+              <!-- MODE A: Quick Tactile Counter -->
+              <div id="quickCounterPanel">
+                <div class="counter-hero-card">
+                  <div class="counter-title">Auditoriyadagi Talabalar Soni</div>
+
+                  <div class="stepper-row">
+                    <button type="button" class="stepper-btn" id="btnStepMinus">−</button>
+                    <div class="stepper-value-display">
+                      <div class="stepper-number" id="presentNumberDisplay">25</div>
+                      <div class="stepper-max" id="totalNumberDisplay">/ HEMISda 25 ta</div>
+                    </div>
+                    <button type="button" class="stepper-btn" id="btnStepPlus">+</button>
+                  </div>
+
+                  <!-- Range slider for quick touch drag -->
+                  <input type="range" id="attendanceSlider" min="0" max="35" value="25"
+                    style="width: 80%; accent-color: var(--primary); margin: 0.5rem 0;">
+
+                  <!-- Visual percentage badge -->
+                  <div class="attendance-badge-row">
+                    <div class="rate-badge good" id="attendanceRateBadge">
+                      <span>🟢</span> <span id="ratePercentText">100%</span>
+                    </div>
+                    <div class="missing-badge" id="missingStudentsText">Barcha talabalar to'liq darsda</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MODE B: Student Roster Checklist -->
+              <div id="rosterCheckPanel" class="roster-container">
+                <div class="roster-header-bar">
+                  <div style="font-size:0.85rem; font-weight:700; color:var(--text-main);">
+                    Guruh talabalari ro'yxati (<span id="rosterCountBadge">0</span> ta)
+                  </div>
+                  <button type="button" class="btn-all-present" id="btnAllPresent">
+                    ✓ Barchasini "Bor" qilish
+                  </button>
+                </div>
+                <div class="roster-list" id="rosterListContainer">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Notes and Inspector info -->
+              <div class="form-step-grid" style="margin-bottom: 1rem;">
+                <div class="input-group">
+                  <label class="input-label" for="notesInput">📝 Eslatma / Sabablar (ixtiyoriy)</label>
+                  <input type="text" id="notesInput" class="form-input"
+                    placeholder="Masalan: 1 talaba sababli kasal, dars jadval bo'yicha ketmoqda">
+                </div>
+                <div class="input-group">
+                  <label class="input-label" for="auditorInput">👤 Tekshiruvchi</label>
+                  <input type="text" id="auditorInput" class="form-input" value="Inspektor Aliyev">
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn-submit-attendance" id="btnSubmitAttendance">
+                <span>✅</span> Saqlash va DAVOMAT.xlsx ga Yozish
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ================= TAB 2: INSTITUT MONITORINGI (RECTOR & DEAN DASHBOARD) ================= -->
+        <section id="tab-dashboard" class="view-section">
+
+          <!-- Top KPI Row -->
+          <div class="kpi-grid">
+            <div class="kpi-card green">
+              <div>
+                <div class="kpi-label" id="kpiOverallLabel">Institut Umumiy Davomati</div>
+                <div class="kpi-value" id="kpiOverallRate">94.5%</div>
+                <div class="kpi-subtext" id="kpiAuditedText">Bugungi tekshiruvlar xulosasi</div>
+              </div>
+              <div class="kpi-icon-bubble">📈</div>
+            </div>
+
+            <div class="kpi-card indigo">
+              <div>
+                <div class="kpi-label" id="kpiTotalLabel">Jami Institut Talabalari</div>
+                <div class="kpi-value" id="kpiTotalStudents">5,151</div>
+                <div class="kpi-subtext" id="kpiTotalSubtext">5 ta fakultet, 221 ta guruh</div>
+              </div>
+              <div class="kpi-icon-bubble">👥</div>
+            </div>
+
+            <div class="kpi-card">
+              <div>
+                <div class="kpi-label">Bugun Tekshirilganlar</div>
+                <div class="kpi-value" id="kpiAuditedGroups">38</div>
+                <div class="kpi-subtext">guruh auditoriyada nazorat qilindi</div>
+              </div>
+              <div class="kpi-icon-bubble">📋</div>
+            </div>
+
+            <div class="kpi-card amber">
+              <div>
+                <div class="kpi-label">Darsda Bo'lgan O'qituvchilar</div>
+                <div class="kpi-value" id="kpiTeacherRate">100%</div>
+                <div class="kpi-subtext">Reja bo'yicha darslar o'tilmoqda</div>
+              </div>
+              <div class="kpi-icon-bubble">👨‍🏫</div>
+            </div>
+          </div>
+
+          <!-- Faculty Progress Comparison Grid -->
+          <div class="glass-card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <div class="card-title-icon">🏛</div>
+                <div>
+                  <h2 class="card-title" id="facultyComparisonTitle">5 ta Fakultet Bo'yicha Jonli Davomat Ko'rsatkichi
+                  </h2>
+                  <p class="card-subtitle" id="facultyComparisonSubtitle">Real vaqt rejimida barcha fakultetlarning
+                    qatnashish reytingi</p>
+                </div>
+              </div>
+              <button class="chip-btn" id="btnRefreshStats">🔄 Yangilash</button>
+            </div>
+
+            <div class="faculty-comparison-list" id="facultyComparisonList">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Pairs and Activity row -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+
+            <!-- Pairs dynamic card -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-title-icon">⏰</div>
+                  <div>
+                    <h3 class="card-title">Paralar Kesimida Davomat</h3>
+                    <p class="card-subtitle">1-para, 2-para, 3-para va smenalar dinamikasi</p>
+                  </div>
+                </div>
+              </div>
+              <div id="pairStatsContainer" style="display:flex; flex-direction:column; gap:1rem;">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Live Audits Stream -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-title-icon">📡</div>
+                  <div>
+                    <h3 class="card-title">Jonli Tekshiruvlar Lentasi</h3>
+                    <p class="card-subtitle">Auditoriyalardan eng oxirgi olingan davomatlar</p>
+                  </div>
+                </div>
+                <button class="chip-btn" id="btnSendTelegramReport">✈️ Telegramga Yuborish</button>
+              </div>
+              <div class="audit-stream-list" id="auditStreamList">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ================= TAB 3: EXCEL JADVALI & EKSPORT ================= -->
+        <section id="tab-excel" class="view-section">
+          <div class="glass-card">
+            <div class="card-header no-print">
+              <div class="card-title-group">
+                <div class="card-title-icon">📑</div>
+                <div>
+                  <h2 class="card-title">DAVOMAT Elektron Jadvali</h2>
+                  <p class="card-subtitle">Haftalik kunlar (Dushanba-Shanba), paralar va foizlar Excel formati bo'yicha
+                  </p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button type="button" class="chip-btn" id="btnPrintExcelTable"
+                  style="display:flex; align-items:center; gap:0.4rem; padding:0.5rem 0.9rem; font-weight:700;">
+                  <span>🖨</span> Chop etish (Print)
+                </button>
+                <a href="/api/excel/download?faculty=aniq-fanlar" class="chip-btn active" id="btnDownloadFacultyExcel"
+                  style="display:flex; align-items:center; gap:0.4rem; padding:0.5rem 0.9rem; text-decoration:none; font-weight:700;">
+                  <span>📥</span> Tanlangan Fakultet (.xlsx)
+                </a>
+                <a href="/api/excel/download?faculty=all" class="btn-excel-download"
+                  style="font-size:0.82rem; padding:0.5rem 0.9rem;">
+                  <span>📁</span> Barcha Fakultetlar (.xlsx)
+                </a>
+              </div>
+            </div>
+
+            <!-- Faculty Tabs for Excel Sheets -->
+            <div class="excel-tabs-nav no-print" id="excelFacultyTabs">
+              <button class="excel-tab-btn active" data-faculty="aniq-fanlar">1. Aniq fanlar oliy maktabi</button>
+              <button class="excel-tab-btn" data-faculty="filologiya">2. Filologiya fakulteti</button>
+              <button class="excel-tab-btn" data-faculty="ijtimoiy-amaliy">3. Ijtimoiy va amaliy fanlar
+                fakulteti</button>
+              <button class="excel-tab-btn" data-faculty="boshlangich-talim">4. Boshlang'ich ta'lim fakulteti</button>
+              <button class="excel-tab-btn" data-faculty="pedagogika">5. Pedagogika fakulteti</button>
+            </div>
+
+            <!-- Print Section Container (Only this area is printed on paper) -->
+            <div id="printSectionContainer">
+              <!-- Official Printable Header (Hidden on screen, visible on print) -->
+              <div class="print-only-header">
+                <div class="print-header-flex">
+                  <div class="print-logo-box">
+                    <img src="/logo.png" alt="UrDPI" class="print-logo-img">
+                  </div>
+                  <div class="print-header-center">
+                    <h4>O'ZBEKISTON RESPUBLIKASI OLIY TA'LIM, FAN VA INNOVATSIYALAR VAZIRLIGI</h4>
+                    <h2>URGANCH DAVLAT PEDAGOGIKA INSTITUTI</h2>
+                    <h3 id="printFacultyHeading">ANIQ FANLAR OLIY MAKTABI</h3>
+                    <p>KUNDUZGI TA'LIM YO'NALISHLARI BO'YICHA HAFTALIK TALABALAR DAVOMAT JADVALI</p>
+                  </div>
+                  <div class="print-meta-info">
+                    <div><b>O'quv yili:</b> 2026-2027</div>
+                    <div><b>Hafta oralig'i:</b> <span id="printWeekSpan">Dushanba - Shanba</span></div>
+                    <div><b>Chop etildi:</b> <span id="printDateSpan">--.--.2026</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Excel Spreadsheet Scroll Area -->
+              <div class="excel-table-scroll">
+                <table class="excel-grid-table" id="excelSheetTable">
+                  <thead id="excelTableHead"></thead>
+                  <tbody id="excelTableBody"></tbody>
+                </table>
+              </div>
+
+              <!-- Official Printable Footer / Signatures (Hidden on screen, visible on print) -->
+              <div class="print-only-footer">
+                <div class="print-signatures-grid">
+                  <div class="print-sig-col">
+                    <div class="sig-title">Fakultet Dekani:</div>
+                    <div class="sig-space">______________________________</div>
+                    <div class="sig-sub">(imzo, F.I.Sh.)</div>
+                  </div>
+                  <div class="print-sig-col">
+                    <div class="sig-title">Uslubchi:</div>
+                    <div class="sig-space">______________________________</div>
+                    <div class="sig-sub">(imzo, F.I.Sh.)</div>
+                  </div>
+                  <div class="print-sig-col" style="text-align: right;">
+                    <div class="sig-title">O'quv-uslubiy boshqarma:</div>
+                    <div class="sig-space">______________________________</div>
+                    <div class="sig-sub">(imzo, F.I.Sh.)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="no-print"
+              style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
+              <div>💡 <i>Ushbu jadval to'g'ridan-to'g'ri `DAVOMAT.xlsx` fayli bilan 100% sinxronlashgan. Yangi davomat
+                  kiritilganda kataklar darhol yangilanadi.</i></div>
+              <div style="display:flex; gap:1rem;">
+                <span>🟢 ≥ 90% (A'lo)</span>
+                <span>🟡 80-89% (Yaxshi)</span>
+                <span>🔴 &lt; 80% (Past)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= TAB 5: SOZLAMALAR & GURUHLAR ================= -->
+        <section id="tab-settings" class="view-section">
+          <div class="glass-card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <div class="card-title-icon">⚙️</div>
+                <div>
+                  <h2 class="card-title">Guruhlar, O'qituvchilar va Xonalar Boshqaruvi</h2>
+                  <p class="card-subtitle">Yangi guruhlar qo'shish, HEMIS talabalar sonini yangilash</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dars Vaqtlari Jadvali (3 ta Smena) -->
+            <div class="schedule-table-card" style="margin-bottom: 1.5rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                  <span style="font-size:1.3rem;">🕒</span>
+                  <h3 style="font-size:1.1rem; font-weight:700;">Rasmiy Dars Vaqtlari va Juftliklar Jadvali (3 ta Smena)
+                  </h3>
+                </div>
+                <span class="live-time-badge" style="font-size:0.75rem;">Yangi tasdiqlangan me'yor</span>
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
+                Davomat olishda ushbu dars vaqtlari avtomatik aniqlanadi va auditoriyalarga biriktiriladi.
+              </p>
+
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                <!-- 1-smena -->
+                <div class="schedule-shift-group">
+                  <div class="schedule-shift-header">
+                    <span class="schedule-shift-title"><span>☀️</span> Kunduzgi (1-smena)</span>
+                    <span class="schedule-shift-badge">08:30 - 12:50</span>
+                  </div>
+                  <div class="schedule-pair-list">
+                    <div class="schedule-pair-pill">
+                      <span class="schedule-pair-name">1-para</span>
+                      <span class="schedule-pair-time">08:30 - 09:50</span>
+                    </div>
+                    <div class="schedule-pair-pill">
+                      <span class="schedule-pair-name">2-para</span>
+                      <span class="schedule-pair-time">10:00 - 11:20</span>
+                    </div>
+                    <div class="schedule-pair-pill">
+                      <span class="schedule-pair-name">3-para</span>
+                      <span class="schedule-pair-time">11:30 - 12:50</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2-smena -->
+                <div class="schedule-shift-group">
+                  <div class="schedule-shift-header">
+                    <span class="schedule-shift-title"><span>🌤</span> Kunduzgi (2-smena)</span>
+                    <span class="schedule-shift-badge">13:00 - 17:20</span>
+                  </div>
+                  <div class="schedule-pair-list">
+                    <div class="schedule-pair-pill">
+                      <span class="schedule-pair-name">1-para</span>
+                      <span class="schedule-pair-time">13:00 - 14:20</span>
+                    </div>
+                    <div class="schedule-pair-pill">
+                      <span class="schedule-pair-name">2-para</span>
+                      <span class="schedule-pair-time">14:30 - 15:50</span>
+                    </div>
+                    <div class="schedule-pair-pill">
+                      <span class="schedule-pair-name">3-para</span>
+                      <span class="schedule-pair-time">16:00 - 17:20</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Kechki -->
+                <div class="schedule-shift-group">
+                  <div class="schedule-shift-header">
+                    <span class="schedule-shift-title"><span>🌙</span> Kechki ta'lim</span>
+                    <span class="schedule-shift-badge">17:30 - 20:20</span>
+                  </div>
+                  <div class="schedule-pair-list">
+                    <div class="schedule-pair-pill">
+                      <span class="schedule-pair-name">1-para</span>
+                      <span class="schedule-pair-time">17:30 - 18:50</span>
+                    </div>
+                    <div class="schedule-pair-pill">
+                      <span class="schedule-pair-name">2-para</span>
+                      <span class="schedule-pair-time">19:00 - 20:20</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+
+              <!-- Add Group Form -->
+              <div class="faculty-row-item">
+                <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem;">➕ Yangi Guruh Qo'shish / Yangilash
+                </h3>
+                <form id="addGroupForm" style="display:flex; flex-direction:column; gap:0.8rem;">
+                  <div>
+                    <label class="input-label">Fakultet</label>
+                    <select id="settingsFacultySelect" class="form-select"></select>
+                  </div>
+                  <div>
+                    <label class="input-label">Guruh Nomi (Masalan: 263-Fizika)</label>
+                    <input type="text" id="newGroupName" class="form-input" placeholder="Guruh nomi" required>
+                  </div>
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+                    <div>
+                      <label class="input-label">Kurs</label>
+                      <select id="newGroupCourse" class="form-select">
+                        <option value="1">1-kurs</option>
+                        <option value="2">2-kurs</option>
+                        <option value="3">3-kurs</option>
+                        <option value="4">4-kurs</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="input-label">HEMIS Talabalar</label>
+                      <input type="number" id="newGroupHemis" class="form-input" value="25" min="1" max="60" required>
+                    </div>
+                  </div>
+                  <button type="submit" class="chip-btn active"
+                    style="padding:0.75rem; font-weight:700; margin-top:0.5rem;">
+                    ✓ Guruhni Bazaga va Excelga Saqlash
+                  </button>
+                </form>
+              </div>
+
+              <!-- Add Teacher Form -->
+              <div class="faculty-row-item">
+                <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem;">👨‍🏫 Yangi O'qituvchi Qo'shish</h3>
+                <form id="addTeacherForm" style="display:flex; flex-direction:column; gap:0.8rem;">
+                  <div>
+                    <label class="input-label">O'qituvchi F.I.Sh.</label>
+                    <input type="text" id="newTeacherName" class="form-input" placeholder="dots. Karimova Lola"
+                      required>
+                  </div>
+                  <div>
+                    <label class="input-label">Kafedra / Fan</label>
+                    <input type="text" id="newTeacherDept" class="form-input" placeholder="Matematika kafedrasi"
+                      required>
+                  </div>
+                  <button type="submit" class="chip-btn active"
+                    style="padding:0.75rem; font-weight:700; margin-top:0.5rem;">
+                    ✓ O'qituvchini Qo'shish
+                  </button>
+                </form>
+              </div>
+
+              <!-- Add Room Form -->
+              <div class="faculty-row-item">
+                <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem;">🚪 Yangi Auditoriya Qo'shish</h3>
+                <form id="addRoomForm" style="display:flex; flex-direction:column; gap:0.8rem;">
+                  <div>
+                    <label class="input-label">Xona Nomi / Raqami</label>
+                    <input type="text" id="newRoomName" class="form-input" placeholder="315-auditoriya" required>
+                  </div>
+                  <div>
+                    <label class="input-label">Bino / Korpus</label>
+                    <input type="text" id="newRoomBuilding" class="form-input" placeholder="Aniq fanlar korpusi"
+                      required>
+                  </div>
+                  <button type="submit" class="chip-btn active"
+                    style="padding:0.75rem; font-weight:700; margin-top:0.5rem;">
+                    ✓ Auditoriyani Qo'shish
+                  </button>
+                </form>
+              </div>
+
+              <!-- Settings: User Management (Admin Only) -->
+              <div class="faculty-row-item" id="adminUserManagementSection" style="grid-column: 1 / -1;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                  <div>
+                    <h3 style="font-size:1.05rem; font-weight:700;">👥 Tizim Foydalanuvchilari va Uslubchilar</h3>
+                    <p style="font-size:0.8rem; color:var(--text-dim); margin-top:0.2rem;">Fakultet uslubchilari
+                      hisoblari va biriktirilgan huquqlar</p>
+                  </div>
+                  <span class="user-role-badge">Admin Nazorati</span>
+                </div>
+                <div style="overflow-x: auto;">
+                  <table class="user-admin-table" id="adminUsersTable">
+                    <thead>
+                      <tr>
+                        <th>F.I.Sh. / Nomi</th>
+                        <th>Login (Username)</th>
+                        <th>Roli</th>
+                        <th>Biriktirilgan Fakultet</th>
+                        <th>Telefon</th>
+                        <th>Amal</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminUsersTableBody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Settings: Password Change (For Current User) -->
+              <div class="faculty-row-item" style="grid-column: 1 / -1;">
+                <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem;">🔑 Shaxsiy Parolni O'zgartirish</h3>
+                <form id="changePasswordForm"
+                  style="display:flex; flex-direction:column; gap:0.8rem; max-width: 480px;">
+                  <div>
+                    <label class="input-label">Eski Parol</label>
+                    <input type="password" id="oldPasswordInput" class="form-input"
+                      placeholder="Joriy parolingizni kiriting" required>
+                  </div>
+                  <div>
+                    <label class="input-label">Yangi Parol</label>
+                    <input type="password" id="newPasswordInput" class="form-input" placeholder="Yangi parolni kiriting"
+                      required>
+                  </div>
+                  <button type="submit" class="chip-btn active"
+                    style="padding:0.75rem; font-weight:700; margin-top:0.5rem;">
+                    ✓ Yangi Parolni Saqlash
+                  </button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div> <!-- .app-main-area -->
+  </div> <!-- .app-layout -->
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-bottom-nav">
+    <button class="mobile-tab-btn active" data-tab="tab-attendance">
+      <span class="tab-icon">📱</span>
+      <span>Davomat</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="tab-dashboard">
+      <span class="tab-icon">📊</span>
+      <span>Monitoring</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="tab-excel">
+      <span class="tab-icon">📑</span>
+      <span>Excel</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="tab-settings">
+      <span class="tab-icon">⚙️</span>
+      <span>Sozlama</span>
+    </button>
+  </nav>
+
+  <!-- ================= AUTHENTICATION MODAL ================= -->
+  <div class="auth-modal-overlay hidden" id="loginModalOverlay">
+    <div class="auth-modal-card">
+      <div class="auth-modal-header">
+        <img src="/logo.png" alt="UrDPI Logo" class="auth-modal-logo">
+        <h2 class="auth-modal-title">UrDPI Davomat Tizimi</h2>
+        <p class="auth-modal-subtitle">Tizimga kirish uchun hisobingizni tanlang yoki login/parolni kiriting</p>
+      </div>
+
+      <!-- Quick Role Selection -->
+      <div class="quick-role-section">
+        <div class="quick-role-label">Tezkor hisobni tanlash (1-klikda to'ldirish):</div>
+        <div class="quick-role-grid" id="quickRoleGrid">
+          <button type="button" class="quick-role-btn active" data-username="admin" data-password="123" title="Admin">
+            <span class="quick-role-icon">👑</span>
+            <span>Admin</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-username="aniq" data-password="123"
+            title="Aniq fanlar uslubchisi">
+            <span class="quick-role-icon">🔬</span>
+            <span>Aniq fanlar</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-username="filologiya" data-password="123"
+            title="Filologiya uslubchisi">
+            <span class="quick-role-icon">📖</span>
+            <span>Filologiya</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-username="ijtimoiy" data-password="123"
+            title="Ijtimoiy-amaliy uslubchisi">
+            <span class="quick-role-icon">🌍</span>
+            <span>Ijtimoiy</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-username="boshlangich" data-password="123"
+            title="Boshlang'ich ta'lim uslubchisi">
+            <span class="quick-role-icon">✏️</span>
+            <span>Boshlang'ich</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-username="pedagogika" data-password="123"
+            title="Pedagogika uslubchisi">
+            <span class="quick-role-icon">🎨</span>
+            <span>Pedagogika</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <div class="auth-error-banner" id="loginErrorBanner"></div>
+
+        <div class="auth-input-group">
+          <label class="auth-input-label" for="loginUsername">👤 Foydalanuvchi nomi (Login)</label>
+          <input type="text" id="loginUsername" class="auth-input" value="admin" placeholder="Masalan: admin yoki aniq"
+            required autocomplete="username">
+        </div>
+
+        <div class="auth-input-group">
+          <label class="auth-input-label" for="loginPassword">🔑 Parol</label>
+          <input type="password" id="loginPassword" class="auth-input" value="123" placeholder="Parolni kiriting"
+            required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn-auth-submit" id="btnLoginSubmit">
+          <span>Tizimga Kirish</span>
+          <span>→</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Main Frontend Application Logic -->
+  <script src="/js/app.js?v=2.5"></script>
+</body>
+
+</html>

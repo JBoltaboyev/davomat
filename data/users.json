@@ -1,0 +1,62 @@
+[
+  {
+    "id": "user_admin",
+    "username": "admin",
+    "password": "123",
+    "name": "Jamshid Boltaboyev",
+    "role": "admin",
+    "facultyId": "all",
+    "facultyName": "Barcha fakultetlar",
+    "phone": "+998 93 369-16-45"
+  },
+  {
+    "id": "user_uslubchi_aniq",
+    "username": "aniq",
+    "password": "123",
+    "name": "Uslubchi (Aniq fanlar)",
+    "role": "uslubchi",
+    "facultyId": "aniq-fanlar",
+    "facultyName": "Aniq fanlar oliy maktabi",
+    "phone": "+998 91 234-56-78"
+  },
+  {
+    "id": "user_uslubchi_filologiya",
+    "username": "filologiya",
+    "password": "123",
+    "name": "Uslubchi (Filologiya)",
+    "role": "uslubchi",
+    "facultyId": "filologiya",
+    "facultyName": "Filologiya fakulteti",
+    "phone": "+998 91 345-67-89"
+  },
+  {
+    "id": "user_uslubchi_ijtimoiy",
+    "username": "ijtimoiy",
+    "password": "123",
+    "name": "Uslubchi (Ijtimoiy-amaliy)",
+    "role": "uslubchi",
+    "facultyId": "ijtimoiy-amaliy",
+    "facultyName": "Ijtimoiy va amaliy fanlar fakulteti",
+    "phone": "+998 91 456-78-90"
+  },
+  {
+    "id": "user_uslubchi_boshlangich",
+    "username": "boshlangich",
+    "password": "123",
+    "name": "Uslubchi (Boshlang'ich ta'lim)",
+    "role": "uslubchi",
+    "facultyId": "boshlangich-talim",
+    "facultyName": "Boshlang'ich ta'lim fakulteti",
+    "phone": "+998 91 567-89-01"
+  },
+  {
+    "id": "user_uslubchi_pedagogika",
+    "username": "pedagogika",
+    "password": "123",
+    "name": "Uslubchi (Pedagogika)",
+    "role": "uslubchi",
+    "facultyId": "pedagogika",
+    "facultyName": "Pedagogika fakulteti",
+    "phone": "+998 91 678-90-12"
+  }
+]

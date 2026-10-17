@@ -1,0 +1,23 @@
+[
+  { "id": "t1", "name": "dots. Qodirov Azamat", "department": "Fizika", "phone": "+998 90 123-45-67" },
+  { "id": "t2", "name": "prof. Boltayev Sulton", "department": "Matematika", "phone": "+998 91 234-56-78" },
+  { "id": "t3", "name": "dots. Yoqubov Sherzod", "department": "Axborot texnologiyalari", "phone": "+998 93 345-67-89" },
+  { "id": "t4", "name": "katta o'qit. Rahimova Dilnoza", "department": "Amaliy matematika", "phone": "+998 94 456-78-90" },
+  { "id": "t5", "name": "o'qit. Jumaniyazov Bobur", "department": "Sun'iy intellekt", "phone": "+998 97 567-89-01" },
+  { "id": "t6", "name": "prof. Otajonov Murod", "department": "Astronomiya", "phone": "+998 90 678-90-12" },
+  { "id": "t7", "name": "dots. Matyaqubov Ilhom", "department": "Biologiya", "phone": "+998 91 789-01-23" },
+  { "id": "t8", "name": "katta o'qit. Xudayberganova Feruza", "department": "Kimyo", "phone": "+998 93 890-12-34" },
+  { "id": "t9", "name": "dots. Sobirov Otabek", "department": "Geografiya", "phone": "+998 94 901-23-45" },
+  { "id": "t10", "name": "prof. Nurmetov Qadamboy", "department": "O'zbek tili", "phone": "+998 97 012-34-56" },
+  { "id": "t11", "name": "dots. Ivanova Yelena", "department": "Rus tili va adabiyoti", "phone": "+998 90 234-56-78" },
+  { "id": "t12", "name": "katta o'qit. Karimova Malika", "department": "Xorijiy til (Ingliz tili)", "phone": "+998 90 111-22-33" },
+  { "id": "t13", "name": "dots. Alimova Gulchehra", "department": "Boshlang'ich ta'lim", "phone": "+998 91 222-33-44" },
+  { "id": "t14", "name": "dots. Bobojonova Oysha", "department": "Maktabgacha ta'lim", "phone": "+998 93 456-78-90" },
+  { "id": "t15", "name": "prof. Razzoqov Shavkat", "department": "Pedagogika va psixologiya", "phone": "+998 97 890-12-34" },
+  { "id": "t16", "name": "dots. Madaminov Baxtiyor", "department": "Tarix", "phone": "+998 93 333-44-55" },
+  { "id": "t17", "name": "katta o'qit. Bekchanov Anvar", "department": "Milliy g'oya", "phone": "+998 91 567-89-01" },
+  { "id": "t18", "name": "katta o'qit. Ro'zimov Jasur", "department": "Jismoniy madaniyat", "phone": "+998 94 444-55-66" },
+  { "id": "t19", "name": "katta o'qit. Masharipov Omon", "department": "Musiqa ta'limi", "phone": "+998 90 789-01-23" },
+  { "id": "t20", "name": "dots. Yo'ldoshev Tohir", "department": "Tasviriy san'at (TSMG)", "phone": "+998 93 901-23-45" },
+  { "id": "t21", "name": "dots. Qalandarova O'rinposhsha", "department": "Texnologik ta'lim", "phone": "+998 94 012-34-56" }
+]

@@ -1,0 +1,34 @@
+# ==============================================================
+# UrDPI Davomat Tizimi - Linux Systemd Service Fayli
+# Joylashuv: /etc/systemd/system/urdpi-davomat.service
+# ==============================================================
+# Ishga tushirish:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable urdpi-davomat
+#   sudo systemctl start urdpi-davomat
+# ==============================================================
+
+[Unit]
+Description=UrDPI Davomat va Monitoring Tizimi
+After=network.target
+
+[Service]
+Type=simple
+User=root
+# Loyiha serverdagi manzili:
+WorkingDirectory=/var/www/davomat
+ExecStart=/usr/bin/node /var/www/davomat/server.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOST=0.0.0.0
+
+# Xavfsizlik va resurs chegaralari
+LimitNOFILE=65536
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=urdpi-davomat
+
+[Install]
+WantedBy=multi-user.target

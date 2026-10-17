@@ -1,0 +1,1739 @@
+[
+  {
+    "id": "aniq-fanlar",
+    "name": "Aniq fanlar oliy maktabi",
+    "shortName": "Aniq fanlar",
+    "sheetName": "Aniq fanlar",
+    "directions": [
+      {
+        "id": "fizika",
+        "name": "Fizika",
+        "groups": [
+          {
+            "id": "261-Fizika",
+            "name": "261-Fizika",
+            "course": 1,
+            "hemis": 25,
+            "row": 4
+          },
+          {
+            "id": "262-Fizika",
+            "name": "262-Fizika",
+            "course": 1,
+            "hemis": 22,
+            "row": 5
+          },
+          {
+            "id": "251-Fizika",
+            "name": "251-Fizika",
+            "course": 2,
+            "hemis": 26,
+            "row": 15
+          },
+          {
+            "id": "252-Fizika",
+            "name": "252-Fizika",
+            "course": 2,
+            "hemis": 26,
+            "row": 16
+          },
+          {
+            "id": "241-Fizika",
+            "name": "241-Fizika",
+            "course": 3,
+            "hemis": 21,
+            "row": 23
+          },
+          {
+            "id": "242-Fizika",
+            "name": "242-Fizika",
+            "course": 3,
+            "hemis": 21,
+            "row": 24
+          }
+        ]
+      },
+      {
+        "id": "astronomiya",
+        "name": "Astronomiya",
+        "groups": [
+          {
+            "id": "261-Astranomiya",
+            "name": "261-Astranomiya",
+            "course": 1,
+            "hemis": 8,
+            "row": 6
+          },
+          {
+            "id": "251-Astranomiya",
+            "name": "251-Astranomiya",
+            "course": 2,
+            "hemis": 13,
+            "row": 17
+          },
+          {
+            "id": "241-Astronomiya",
+            "name": "241-Astronomiya",
+            "course": 3,
+            "hemis": 11,
+            "row": 25
+          }
+        ]
+      },
+      {
+        "id": "matematika",
+        "name": "Matematika",
+        "groups": [
+          {
+            "id": "261-Matematika",
+            "name": "261-Matematika",
+            "course": 1,
+            "hemis": 26,
+            "row": 7
+          },
+          {
+            "id": "262-Matematika",
+            "name": "262-Matematika",
+            "course": 1,
+            "hemis": 28,
+            "row": 8
+          },
+          {
+            "id": "251-Matematika",
+            "name": "251-Matematika",
+            "course": 2,
+            "hemis": 21,
+            "row": 18
+          },
+          {
+            "id": "252-Matematika",
+            "name": "252-Matematika",
+            "course": 2,
+            "hemis": 23,
+            "row": 19
+          },
+          {
+            "id": "253-Matematika",
+            "name": "253-Matematika",
+            "course": 2,
+            "hemis": 22,
+            "row": 20
+          },
+          {
+            "id": "241-Matematika",
+            "name": "241-Matematika",
+            "course": 3,
+            "hemis": 21,
+            "row": 26
+          },
+          {
+            "id": "242-Matematika",
+            "name": "242-Matematika",
+            "course": 3,
+            "hemis": 21,
+            "row": 27
+          },
+          {
+            "id": "243-Matematika",
+            "name": "243-Matematika",
+            "course": 3,
+            "hemis": 22,
+            "row": 28
+          }
+        ]
+      },
+      {
+        "id": "amaliy-matematika",
+        "name": "Amaliy matematika",
+        "groups": [
+          {
+            "id": "261-Amaliy matematika",
+            "name": "261-Amaliy matematika",
+            "course": 1,
+            "hemis": 26,
+            "row": 9
+          },
+          {
+            "id": "262-Amaliy matematika",
+            "name": "262-Amaliy matematika",
+            "course": 1,
+            "hemis": 25,
+            "row": 10
+          },
+          {
+            "id": "251-Amaliy matematika",
+            "name": "251-Amaliy matematika",
+            "course": 2,
+            "hemis": 27,
+            "row": 21
+          },
+          {
+            "id": "252-Amaliy matematika",
+            "name": "252-Amaliy matematika",
+            "course": 2,
+            "hemis": 27,
+            "row": 22
+          },
+          {
+            "id": "241-Amaliy matematika",
+            "name": "241-Amaliy matematika",
+            "course": 3,
+            "hemis": 28,
+            "row": 29
+          }
+        ]
+      },
+      {
+        "id": "att",
+        "name": "Axborot tizimlari va texnologiyalari",
+        "groups": [
+          {
+            "id": "261-Axborot tizimlari va texnologiyalari",
+            "name": "261-Axborot tizimlari va texnologiyalari",
+            "course": 1,
+            "hemis": 22,
+            "row": 11
+          },
+          {
+            "id": "262-Axborot tizimlari va texnologiyalari",
+            "name": "262-Axborot tizimlari va texnologiyalari",
+            "course": 1,
+            "hemis": 22,
+            "row": 12
+          }
+        ]
+      },
+      {
+        "id": "ai",
+        "name": "Sun'iy intellekt",
+        "groups": [
+          {
+            "id": "261-Sun'iy intelekt",
+            "name": "261-Sun'iy intelekt",
+            "course": 1,
+            "hemis": 19,
+            "row": 13
+          },
+          {
+            "id": "262-Sun'iy intelekt",
+            "name": "262-Sun'iy intelekt",
+            "course": 1,
+            "hemis": 19,
+            "row": 14
+          }
+        ]
+      },
+      {
+        "id": "mat-info-fiz-ast",
+        "name": "Matematika-informatika va Fizika-astronomiya (4-kurs)",
+        "groups": [
+          {
+            "id": "231-Matematika va informatika",
+            "name": "231-Matematika va informatika",
+            "course": 4,
+            "hemis": 22,
+            "row": 30
+          },
+          {
+            "id": "232-Matematika va informatika",
+            "name": "232-Matematika va informatika",
+            "course": 4,
+            "hemis": 24,
+            "row": 31
+          },
+          {
+            "id": "233-Matematika va informatika",
+            "name": "233-Matematika va informatika",
+            "course": 4,
+            "hemis": 24,
+            "row": 32
+          },
+          {
+            "id": "231-Fizika va astranomiya",
+            "name": "231-Fizika va astranomiya",
+            "course": 4,
+            "hemis": 27,
+            "row": 33
+          },
+          {
+            "id": "232-Fizika va astranomiya",
+            "name": "232-Fizika va astranomiya",
+            "course": 4,
+            "hemis": 27,
+            "row": 34
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "filologiya",
+    "name": "Filologiya fakulteti",
+    "shortName": "Filologiya",
+    "sheetName": "Filologiya",
+    "directions": [
+      {
+        "id": "ozbek-tili",
+        "name": "O'zbek tili va adabiyoti",
+        "groups": [
+          {
+            "id": "261-O'zbek tili va adabiyoti",
+            "name": "261-O'zbek tili va adabiyoti",
+            "course": 1,
+            "hemis": 26,
+            "row": 4
+          },
+          {
+            "id": "262-O'zbek tili va adabiyoti",
+            "name": "262-O'zbek tili va adabiyoti",
+            "course": 1,
+            "hemis": 18,
+            "row": 5
+          },
+          {
+            "id": "263-O'zbek tili va adabiyoti",
+            "name": "263-O'zbek tili va adabiyoti",
+            "course": 1,
+            "hemis": 31,
+            "row": 6
+          },
+          {
+            "id": "251-O'zbek tili va adabiyoti",
+            "name": "251-O'zbek tili va adabiyoti",
+            "course": 2,
+            "hemis": 27,
+            "row": 26
+          },
+          {
+            "id": "252-O'zbek tili va adabiyoti",
+            "name": "252-O'zbek tili va adabiyoti",
+            "course": 2,
+            "hemis": 28,
+            "row": 27
+          },
+          {
+            "id": "253-O'zbek tili va adabiyoti",
+            "name": "253-O'zbek tili va adabiyoti",
+            "course": 2,
+            "hemis": 29,
+            "row": 28
+          },
+          {
+            "id": "254-O'zbek tili va adabiyoti",
+            "name": "254-O'zbek tili va adabiyoti",
+            "course": 2,
+            "hemis": 28,
+            "row": 29
+          },
+          {
+            "id": "255-O'zbek tili va adabiyoti",
+            "name": "255-O'zbek tili va adabiyoti",
+            "course": 2,
+            "hemis": 30,
+            "row": 30
+          },
+          {
+            "id": "241-O'zbek tili va adabiyoti",
+            "name": "241-O'zbek tili va adabiyoti",
+            "course": 3,
+            "hemis": 32,
+            "row": 45
+          },
+          {
+            "id": "242-O'zbek tili va adabiyoti",
+            "name": "242-O'zbek tili va adabiyoti",
+            "course": 3,
+            "hemis": 30,
+            "row": 46
+          },
+          {
+            "id": "243-O'zbek tili va adabiyoti",
+            "name": "243-O'zbek tili va adabiyoti",
+            "course": 3,
+            "hemis": 31,
+            "row": 47
+          },
+          {
+            "id": "244-O'zbek tili va adabiyoti",
+            "name": "244-O'zbek tili va adabiyoti",
+            "course": 3,
+            "hemis": 30,
+            "row": 48
+          },
+          {
+            "id": "231-O'zbek tili va adabiyoti",
+            "name": "231-O'zbek tili va adabiyoti",
+            "course": 4,
+            "hemis": 25,
+            "row": 69
+          },
+          {
+            "id": "232-O'zbek tili va adabiyoti",
+            "name": "232-O'zbek tili va adabiyoti",
+            "course": 4,
+            "hemis": 25,
+            "row": 70
+          },
+          {
+            "id": "233-O'zbek tili va adabiyoti",
+            "name": "233-O'zbek tili va adabiyoti",
+            "course": 4,
+            "hemis": 25,
+            "row": 71
+          },
+          {
+            "id": "234-O'zbek tili va adabiyoti",
+            "name": "234-O'zbek tili va adabiyoti",
+            "course": 4,
+            "hemis": 25,
+            "row": 72
+          },
+          {
+            "id": "235-O'zbek tili va adabiyoti",
+            "name": "235-O'zbek tili va adabiyoti",
+            "course": 4,
+            "hemis": 25,
+            "row": 73
+          }
+        ]
+      },
+      {
+        "id": "rus-tili",
+        "name": "Rus tili va adabiyoti (rus guruhlari)",
+        "groups": [
+          {
+            "id": "261-O'zbek tili va adabiyoti (rus tili)",
+            "name": "261-O'zbek tili va adabiyoti (rus tili)",
+            "course": 1,
+            "hemis": 27,
+            "row": 7
+          },
+          {
+            "id": "262-O'zbek tili va adabiyoti (rus tili)",
+            "name": "262-O'zbek tili va adabiyoti (rus tili)",
+            "course": 1,
+            "hemis": 24,
+            "row": 8
+          },
+          {
+            "id": "251-O'zbek tili va adabiyoti (rus tili)",
+            "name": "251-O'zbek tili va adabiyoti (rus tili)",
+            "course": 2,
+            "hemis": 27,
+            "row": 23
+          },
+          {
+            "id": "252-O'zbek tili va adabiyoti (rus tili)",
+            "name": "252-O'zbek tili va adabiyoti (rus tili)",
+            "course": 2,
+            "hemis": 26,
+            "row": 24
+          },
+          {
+            "id": "253-O'zbek tili va adabiyoti (rus tili)",
+            "name": "253-O'zbek tili va adabiyoti (rus tili)",
+            "course": 2,
+            "hemis": 26,
+            "row": 25
+          },
+          {
+            "id": "241-O'zbek tili va adabiyoti (rus tili)",
+            "name": "241-O'zbek tili va adabiyoti (rus tili)",
+            "course": 3,
+            "hemis": 31,
+            "row": 49
+          },
+          {
+            "id": "242-O'zbek tili va adabiyoti (rus tili)",
+            "name": "242-O'zbek tili va adabiyoti (rus tili)",
+            "course": 3,
+            "hemis": 34,
+            "row": 50
+          },
+          {
+            "id": "231-O'zga tilli guruhlarda rus tili",
+            "name": "231-O'zga tilli guruhlarda rus tili",
+            "course": 4,
+            "hemis": 32,
+            "row": 63
+          },
+          {
+            "id": "232-O'zga tilli guruhlarda rus tili",
+            "name": "232-O'zga tilli guruhlarda rus tili",
+            "course": 4,
+            "hemis": 34,
+            "row": 64
+          },
+          {
+            "id": "233-O'zga tilli guruhlarda rus tili",
+            "name": "233-O'zga tilli guruhlarda rus tili",
+            "course": 4,
+            "hemis": 32,
+            "row": 65
+          },
+          {
+            "id": "234-O'zga tilli guruhlarda rus tili",
+            "name": "234-O'zga tilli guruhlarda rus tili",
+            "course": 4,
+            "hemis": 32,
+            "row": 66
+          },
+          {
+            "id": "235-O'zga tilli guruhlarda rus tili",
+            "name": "235-O'zga tilli guruhlarda rus tili",
+            "course": 4,
+            "hemis": 30,
+            "row": 67
+          },
+          {
+            "id": "236-O'zga tilli guruhlarda rus tili",
+            "name": "236-O'zga tilli guruhlarda rus tili",
+            "course": 4,
+            "hemis": 32,
+            "row": 68
+          }
+        ]
+      },
+      {
+        "id": "xorijiy-til",
+        "name": "Xorijiy til va adabiyoti (Ingliz tili)",
+        "groups": [
+          {
+            "id": "261-(A) Xorijiy til va adabiyoti",
+            "name": "261-(A) Xorijiy til va adabiyoti",
+            "course": 1,
+            "hemis": 18,
+            "row": 9
+          },
+          {
+            "id": "261-(B) Xorijiy til va adabiyoti",
+            "name": "261-(B) Xorijiy til va adabiyoti",
+            "course": 1,
+            "hemis": 16,
+            "row": 10
+          },
+          {
+            "id": "262-(A) Xorijiy til va adabiyoti",
+            "name": "262-(A) Xorijiy til va adabiyoti",
+            "course": 1,
+            "hemis": 15,
+            "row": 11
+          },
+          {
+            "id": "262-(B) Xorijiy til va adabiyoti",
+            "name": "262-(B) Xorijiy til va adabiyoti",
+            "course": 1,
+            "hemis": 12,
+            "row": 12
+          },
+          {
+            "id": "263-(A) Xorijiy til va adabiyoti",
+            "name": "263-(A) Xorijiy til va adabiyoti",
+            "course": 1,
+            "hemis": 14,
+            "row": 13
+          },
+          {
+            "id": "263-(B) Xorijiy til va adabiyoti",
+            "name": "263-(B) Xorijiy til va adabiyoti",
+            "course": 1,
+            "hemis": 17,
+            "row": 14
+          },
+          {
+            "id": "251-(A) Xorijiy til va adabiyoti",
+            "name": "251-(A) Xorijiy til va adabiyoti",
+            "course": 2,
+            "hemis": 18,
+            "row": 17
+          },
+          {
+            "id": "251-(B) Xorijiy til va adabiyoti",
+            "name": "251-(B) Xorijiy til va adabiyoti",
+            "course": 2,
+            "hemis": 20,
+            "row": 18
+          },
+          {
+            "id": "252-(A) Xorijiy til va adabiyoti",
+            "name": "252-(A) Xorijiy til va adabiyoti",
+            "course": 2,
+            "hemis": 16,
+            "row": 19
+          },
+          {
+            "id": "252-(B) Xorijiy til va adabiyoti",
+            "name": "252-(B) Xorijiy til va adabiyoti",
+            "course": 2,
+            "hemis": 16,
+            "row": 20
+          },
+          {
+            "id": "241-(A) Xorijiy til va adabiyoti",
+            "name": "241-(A) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 18,
+            "row": 31
+          },
+          {
+            "id": "241-(B) Xorijiy til va adabiyoti",
+            "name": "241-(B) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 16,
+            "row": 32
+          },
+          {
+            "id": "242-(A) Xorijiy til va adabiyoti",
+            "name": "242-(A) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 16,
+            "row": 33
+          },
+          {
+            "id": "242-(B) Xorijiy til va adabiyoti",
+            "name": "242-(B) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 17,
+            "row": 34
+          },
+          {
+            "id": "243-(A) Xorijiy til va adabiyoti",
+            "name": "243-(A) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 16,
+            "row": 35
+          },
+          {
+            "id": "243-(B) Xorijiy til va adabiyoti",
+            "name": "243-(B) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 15,
+            "row": 36
+          },
+          {
+            "id": "244-(A) Xorijiy til va adabiyoti",
+            "name": "244-(A) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 18,
+            "row": 37
+          },
+          {
+            "id": "244-(B) Xorijiy til va adabiyoti",
+            "name": "244-(B) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 13,
+            "row": 38
+          },
+          {
+            "id": "245-(A) Xorijiy til va adabiyoti",
+            "name": "245-(A) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 15,
+            "row": 39
+          },
+          {
+            "id": "245-(B) Xorijiy til va adabiyoti",
+            "name": "245-(B) Xorijiy til va adabiyoti",
+            "course": 3,
+            "hemis": 15,
+            "row": 40
+          },
+          {
+            "id": "231-(A) Xorijiy til va adabiyoti",
+            "name": "231-(A) Xorijiy til va adabiyoti",
+            "course": 4,
+            "hemis": 15,
+            "row": 51
+          },
+          {
+            "id": "231-(B) Xorijiy til va adabiyoti",
+            "name": "231-(B) Xorijiy til va adabiyoti",
+            "course": 4,
+            "hemis": 16,
+            "row": 52
+          },
+          {
+            "id": "232-(A) Xorijiy til va adabiyoti",
+            "name": "232-(A) Xorijiy til va adabiyoti",
+            "course": 4,
+            "hemis": 15,
+            "row": 53
+          },
+          {
+            "id": "232-(B) Xorijiy til va adabiyoti",
+            "name": "232-(B) Xorijiy til va adabiyoti",
+            "course": 4,
+            "hemis": 16,
+            "row": 54
+          },
+          {
+            "id": "233-(A) Xorijiy til va adabiyoti",
+            "name": "233-(A) Xorijiy til va adabiyoti",
+            "course": 4,
+            "hemis": 14,
+            "row": 55
+          },
+          {
+            "id": "233-(B) Xorijiy til va adabiyoti",
+            "name": "233-(B) Xorijiy til va adabiyoti",
+            "course": 4,
+            "hemis": 17,
+            "row": 56
+          },
+          {
+            "id": "234-(A) Xorijiy til va adabiyoti",
+            "name": "234-(A) Xorijiy til va adabiyoti",
+            "course": 4,
+            "hemis": 14,
+            "row": 57
+          },
+          {
+            "id": "234-(B) Xorijiy til va adabiyoti",
+            "name": "234-(B) Xorijiy til va adabiyoti",
+            "course": 4,
+            "hemis": 17,
+            "row": 58
+          }
+        ]
+      },
+      {
+        "id": "xorijiy-til-rus",
+        "name": "Xorijiy til va adabiyoti (rus)",
+        "groups": [
+          {
+            "id": "261-(A) Xorijiy til va adabiyoti  (rus)",
+            "name": "261-(A) Xorijiy til va adabiyoti  (rus)",
+            "course": 1,
+            "hemis": 15,
+            "row": 15
+          },
+          {
+            "id": "261-(B) Xorijiy til va adabiyoti (rus)",
+            "name": "261-(B) Xorijiy til va adabiyoti (rus)",
+            "course": 1,
+            "hemis": 15,
+            "row": 16
+          },
+          {
+            "id": "251-(A) Xorijiy til va adabiyoti  (rus)",
+            "name": "251-(A) Xorijiy til va adabiyoti  (rus)",
+            "course": 2,
+            "hemis": 20,
+            "row": 21
+          },
+          {
+            "id": "251-(B) Xorijiy til va adabiyoti  (rus)",
+            "name": "251-(B) Xorijiy til va adabiyoti  (rus)",
+            "course": 2,
+            "hemis": 18,
+            "row": 22
+          },
+          {
+            "id": "241-(A) Xorijiy til va adabiyoti  (rus)",
+            "name": "241-(A) Xorijiy til va adabiyoti  (rus)",
+            "course": 3,
+            "hemis": 16,
+            "row": 41
+          },
+          {
+            "id": "241-(B) Xorijiy til va adabiyoti  (rus)",
+            "name": "241-(B) Xorijiy til va adabiyoti  (rus)",
+            "course": 3,
+            "hemis": 12,
+            "row": 42
+          },
+          {
+            "id": "242-(A) Xorijiy til va adabiyoti  (rus)",
+            "name": "242-(A) Xorijiy til va adabiyoti  (rus)",
+            "course": 3,
+            "hemis": 13,
+            "row": 43
+          },
+          {
+            "id": "242-(B) Xorijiy til va adabiyoti  (rus)",
+            "name": "242-(B) Xorijiy til va adabiyoti  (rus)",
+            "course": 3,
+            "hemis": 16,
+            "row": 44
+          },
+          {
+            "id": "231-(A) Xorijiy til va adabiyoti  (rus)",
+            "name": "231-(A) Xorijiy til va adabiyoti  (rus)",
+            "course": 4,
+            "hemis": 17,
+            "row": 59
+          },
+          {
+            "id": "231-(B) Xorijiy til va adabiyoti  (rus)",
+            "name": "231-(B) Xorijiy til va adabiyoti  (rus)",
+            "course": 4,
+            "hemis": 15,
+            "row": 60
+          },
+          {
+            "id": "232-(A) Xorijiy til va adabiyoti  (rus)",
+            "name": "232-(A) Xorijiy til va adabiyoti  (rus)",
+            "course": 4,
+            "hemis": 17,
+            "row": 61
+          },
+          {
+            "id": "232-(B) Xorijiy til va adabiyoti  (rus)",
+            "name": "232-(B) Xorijiy til va adabiyoti  (rus)",
+            "course": 4,
+            "hemis": 17,
+            "row": 62
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ijtimoiy-amaliy",
+    "name": "Ijtimoiy va amaliy fanlar fakulteti",
+    "shortName": "Ijtimoiy va amaliy",
+    "sheetName": "Ijtimoiy va amaliy",
+    "directions": [
+      {
+        "id": "tarix",
+        "name": "Tarix",
+        "groups": [
+          {
+            "id": "261-Tarix",
+            "name": "261-Tarix",
+            "course": 1,
+            "hemis": 23,
+            "row": 4
+          },
+          {
+            "id": "262 -Tarix",
+            "name": "262 -Tarix",
+            "course": 1,
+            "hemis": 24,
+            "row": 5
+          },
+          {
+            "id": "251-Tarix",
+            "name": "251-Tarix",
+            "course": 2,
+            "hemis": 21,
+            "row": 15
+          },
+          {
+            "id": "252-Tarix",
+            "name": "252-Tarix",
+            "course": 2,
+            "hemis": 23,
+            "row": 16
+          },
+          {
+            "id": "253-Tarix",
+            "name": "253-Tarix",
+            "course": 2,
+            "hemis": 22,
+            "row": 17
+          },
+          {
+            "id": "241-Tarix",
+            "name": "241-Tarix",
+            "course": 3,
+            "hemis": 27,
+            "row": 31
+          },
+          {
+            "id": "242 -Tarix",
+            "name": "242 -Tarix",
+            "course": 3,
+            "hemis": 27,
+            "row": 32
+          },
+          {
+            "id": "231-Tarix",
+            "name": "231-Tarix",
+            "course": 4,
+            "hemis": 23,
+            "row": 46
+          },
+          {
+            "id": "232-Tarix",
+            "name": "232-Tarix",
+            "course": 4,
+            "hemis": 18,
+            "row": 47
+          },
+          {
+            "id": "233-Tarix",
+            "name": "233-Tarix",
+            "course": 4,
+            "hemis": 23,
+            "row": 48
+          }
+        ]
+      },
+      {
+        "id": "milliy-goya",
+        "name": "Milliy g'oya va huquq ta'limi",
+        "groups": [
+          {
+            "id": "261-Milliy g'oya",
+            "name": "261-Milliy g'oya",
+            "course": 1,
+            "hemis": 29,
+            "row": 6
+          },
+          {
+            "id": "251-Milliy g'oya",
+            "name": "251-Milliy g'oya",
+            "course": 2,
+            "hemis": 21,
+            "row": 18
+          },
+          {
+            "id": "252-Milliy g'oya",
+            "name": "252-Milliy g'oya",
+            "course": 2,
+            "hemis": 21,
+            "row": 19
+          },
+          {
+            "id": "241-Milliy g'oya",
+            "name": "241-Milliy g'oya",
+            "course": 3,
+            "hemis": 30,
+            "row": 33
+          },
+          {
+            "id": "231-Milliy g'oya",
+            "name": "231-Milliy g'oya",
+            "course": 4,
+            "hemis": 30,
+            "row": 49
+          }
+        ]
+      },
+      {
+        "id": "jismoniy-madaniyat",
+        "name": "Jismoniy madaniyat",
+        "groups": [
+          {
+            "id": "261-Jismoniy madaniyat",
+            "name": "261-Jismoniy madaniyat",
+            "course": 1,
+            "hemis": 29,
+            "row": 7
+          },
+          {
+            "id": "262-Jismoniy madaniyat",
+            "name": "262-Jismoniy madaniyat",
+            "course": 1,
+            "hemis": 19,
+            "row": 8
+          },
+          {
+            "id": "263-Jismoniy madaniyat",
+            "name": "263-Jismoniy madaniyat",
+            "course": 1,
+            "hemis": 22,
+            "row": 9
+          },
+          {
+            "id": "264-Jismoniy madaniyat",
+            "name": "264-Jismoniy madaniyat",
+            "course": 1,
+            "hemis": 19,
+            "row": 10
+          },
+          {
+            "id": "251-Jismoniy madaniyat",
+            "name": "251-Jismoniy madaniyat",
+            "course": 2,
+            "hemis": 26,
+            "row": 20
+          },
+          {
+            "id": "252-Jismoniy madaniyat",
+            "name": "252-Jismoniy madaniyat",
+            "course": 2,
+            "hemis": 23,
+            "row": 21
+          },
+          {
+            "id": "253-Jismoniy madaniyat",
+            "name": "253-Jismoniy madaniyat",
+            "course": 2,
+            "hemis": 28,
+            "row": 22
+          },
+          {
+            "id": "254-Jismoniy madaniyat",
+            "name": "254-Jismoniy madaniyat",
+            "course": 2,
+            "hemis": 25,
+            "row": 23
+          },
+          {
+            "id": "255-Jismoniy madaniyat",
+            "name": "255-Jismoniy madaniyat",
+            "course": 2,
+            "hemis": 26,
+            "row": 24
+          },
+          {
+            "id": "256-Jismoniy madaniyat",
+            "name": "256-Jismoniy madaniyat",
+            "course": 2,
+            "hemis": 23,
+            "row": 25
+          },
+          {
+            "id": "241-Jismoniy madaniyat",
+            "name": "241-Jismoniy madaniyat",
+            "course": 3,
+            "hemis": 25,
+            "row": 34
+          },
+          {
+            "id": "242-Jismoniy madaniyat",
+            "name": "242-Jismoniy madaniyat",
+            "course": 3,
+            "hemis": 25,
+            "row": 35
+          },
+          {
+            "id": "243-Jismoniy madaniyat",
+            "name": "243-Jismoniy madaniyat",
+            "course": 3,
+            "hemis": 25,
+            "row": 36
+          },
+          {
+            "id": "244-Jismoniy madaniyat",
+            "name": "244-Jismoniy madaniyat",
+            "course": 3,
+            "hemis": 26,
+            "row": 37
+          },
+          {
+            "id": "245-Jismoniy madaniyat",
+            "name": "245-Jismoniy madaniyat",
+            "course": 3,
+            "hemis": 26,
+            "row": 38
+          },
+          {
+            "id": "246-Jismoniy madaniyat",
+            "name": "246-Jismoniy madaniyat",
+            "course": 3,
+            "hemis": 27,
+            "row": 39
+          },
+          {
+            "id": "247-Jismoniy madaniyat",
+            "name": "247-Jismoniy madaniyat",
+            "course": 3,
+            "hemis": 29,
+            "row": 40
+          },
+          {
+            "id": "248-Jismoniy madaniyat",
+            "name": "248-Jismoniy madaniyat",
+            "course": 3,
+            "hemis": 25,
+            "row": 41
+          }
+        ]
+      },
+      {
+        "id": "musiqa",
+        "name": "Musiqa ta'limi",
+        "groups": [
+          {
+            "id": "261-Musiqa ta’limi",
+            "name": "261-Musiqa ta’limi",
+            "course": 1,
+            "hemis": 18,
+            "row": 11
+          },
+          {
+            "id": "262-Musiqa ta’limi",
+            "name": "262-Musiqa ta’limi",
+            "course": 1,
+            "hemis": 17,
+            "row": 12
+          },
+          {
+            "id": "251-Musiqa ta’limi",
+            "name": "251-Musiqa ta’limi",
+            "course": 2,
+            "hemis": 18,
+            "row": 26
+          },
+          {
+            "id": "252-Musiqa ta’limi",
+            "name": "252-Musiqa ta’limi",
+            "course": 2,
+            "hemis": 18,
+            "row": 27
+          },
+          {
+            "id": "241-Musiqa ta’limi",
+            "name": "241-Musiqa ta’limi",
+            "course": 3,
+            "hemis": 24,
+            "row": 42
+          },
+          {
+            "id": "242-Musiqa ta’limi",
+            "name": "242-Musiqa ta’limi",
+            "course": 3,
+            "hemis": 24,
+            "row": 43
+          }
+        ]
+      },
+      {
+        "id": "tsmg",
+        "name": "Tasviriy san'at va muhandislik grafikasi (TSMG)",
+        "groups": [
+          {
+            "id": "261-TSMG",
+            "name": "261-TSMG",
+            "course": 1,
+            "hemis": 23,
+            "row": 13
+          },
+          {
+            "id": "262-TSMG",
+            "name": "262-TSMG",
+            "course": 1,
+            "hemis": 23,
+            "row": 14
+          },
+          {
+            "id": "251-TSMG",
+            "name": "251-TSMG",
+            "course": 2,
+            "hemis": 21,
+            "row": 28
+          },
+          {
+            "id": "252-TSMG",
+            "name": "252-TSMG",
+            "course": 2,
+            "hemis": 20,
+            "row": 29
+          },
+          {
+            "id": "253-TSMG",
+            "name": "253-TSMG",
+            "course": 2,
+            "hemis": 21,
+            "row": 30
+          },
+          {
+            "id": "TSMG 241",
+            "name": "TSMG 241",
+            "course": 3,
+            "hemis": 24,
+            "row": 44
+          },
+          {
+            "id": "TSMG 242",
+            "name": "TSMG 242",
+            "course": 3,
+            "hemis": 25,
+            "row": 45
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "boshlangich-talim",
+    "name": "Boshlang'ich ta'lim fakulteti",
+    "shortName": "Boshlang'ich ta'lim",
+    "sheetName": "Boshlang'ich ta'lim",
+    "directions": [
+      {
+        "id": "boshlangich",
+        "name": "Boshlang'ich ta'lim",
+        "groups": [
+          {
+            "id": "261-Boshlang'ich ta'lim",
+            "name": "261-Boshlang'ich ta'lim",
+            "course": 1,
+            "hemis": 24,
+            "row": 4
+          },
+          {
+            "id": "262-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "name": "262-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "course": 1,
+            "hemis": 29,
+            "row": 8
+          },
+          {
+            "id": "263-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "name": "263-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "course": 1,
+            "hemis": 23,
+            "row": 9
+          },
+          {
+            "id": "251-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "name": "251-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "course": 2,
+            "hemis": 30,
+            "row": 11
+          },
+          {
+            "id": "252-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "name": "252-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "course": 2,
+            "hemis": 30,
+            "row": 12
+          },
+          {
+            "id": "253-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "name": "253-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "course": 2,
+            "hemis": 29,
+            "row": 13
+          },
+          {
+            "id": "254-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "name": "254-Boshlang'ich ta'lim (Kunduzgi) o'zbek",
+            "course": 2,
+            "hemis": 23,
+            "row": 14
+          },
+          {
+            "id": "241-Boshlang'ich ta'lim (kundizgi)",
+            "name": "241-Boshlang'ich ta'lim (kundizgi)",
+            "course": 3,
+            "hemis": 28,
+            "row": 19
+          },
+          {
+            "id": "242-Boshlang'ich ta'lim(kundizgi)",
+            "name": "242-Boshlang'ich ta'lim(kundizgi)",
+            "course": 3,
+            "hemis": 26,
+            "row": 20
+          },
+          {
+            "id": "243-Boshlang'ich ta'lim(kundizgi)",
+            "name": "243-Boshlang'ich ta'lim(kundizgi)",
+            "course": 3,
+            "hemis": 29,
+            "row": 21
+          },
+          {
+            "id": "244-Boshlang'ich ta'lim(kundizgi)",
+            "name": "244-Boshlang'ich ta'lim(kundizgi)",
+            "course": 3,
+            "hemis": 28,
+            "row": 22
+          },
+          {
+            "id": "245-Boshlang'ich ta'lim (kundizgi)",
+            "name": "245-Boshlang'ich ta'lim (kundizgi)",
+            "course": 3,
+            "hemis": 29,
+            "row": 23
+          },
+          {
+            "id": "246-Boshlang'ich ta'lim(kundizgi)",
+            "name": "246-Boshlang'ich ta'lim(kundizgi)",
+            "course": 3,
+            "hemis": 24,
+            "row": 24
+          },
+          {
+            "id": "247-Boshlang'ich ta'lim(kundizgi)",
+            "name": "247-Boshlang'ich ta'lim(kundizgi)",
+            "course": 3,
+            "hemis": 26,
+            "row": 25
+          },
+          {
+            "id": "248-Boshlang'ich talim (kundizgi)",
+            "name": "248-Boshlang'ich talim (kundizgi)",
+            "course": 3,
+            "hemis": 27,
+            "row": 26
+          },
+          {
+            "id": "249-Boshlang'ich ta'lim(kundizgi)",
+            "name": "249-Boshlang'ich ta'lim(kundizgi)",
+            "course": 3,
+            "hemis": 29,
+            "row": 27
+          },
+          {
+            "id": "2410-Boshlang'ich ta'lim(kundizgi)",
+            "name": "2410-Boshlang'ich ta'lim(kundizgi)",
+            "course": 3,
+            "hemis": 27,
+            "row": 28
+          },
+          {
+            "id": "2411-boshlang'ich ta'lim(kundizgi)",
+            "name": "2411-boshlang'ich ta'lim(kundizgi)",
+            "course": 3,
+            "hemis": 28,
+            "row": 29
+          },
+          {
+            "id": "2412 Boshlang`ich ta`lim (kunduzgi",
+            "name": "2412 Boshlang`ich ta`lim (kunduzgi",
+            "course": 3,
+            "hemis": 27,
+            "row": 30
+          },
+          {
+            "id": "231-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "231-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 32,
+            "row": 43
+          },
+          {
+            "id": "232-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "232-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 30,
+            "row": 44
+          },
+          {
+            "id": "233-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "233-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 28,
+            "row": 45
+          },
+          {
+            "id": "234-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "234-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 29,
+            "row": 46
+          },
+          {
+            "id": "235-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "235-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 30,
+            "row": 47
+          },
+          {
+            "id": "236-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "236-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 31,
+            "row": 48
+          },
+          {
+            "id": "237-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "237-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 31,
+            "row": 49
+          },
+          {
+            "id": "238-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "238-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 30,
+            "row": 50
+          },
+          {
+            "id": "239-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "name": "239-Boshlang'ich ta'lim (Kunduzgi) O'zbek",
+            "course": 4,
+            "hemis": 28,
+            "row": 51
+          }
+        ]
+      },
+      {
+        "id": "boshlangich-rus",
+        "name": "Boshlang'ich ta'lim (rus)",
+        "groups": [
+          {
+            "id": "261-Boshlang'ich ta'lim  (Rus)",
+            "name": "261-Boshlang'ich ta'lim  (Rus)",
+            "course": 1,
+            "hemis": 22,
+            "row": 5
+          },
+          {
+            "id": "251-Boshlang'ich ta'lim (Kunduzgi) RUS",
+            "name": "251-Boshlang'ich ta'lim (Kunduzgi) RUS",
+            "course": 2,
+            "hemis": 23,
+            "row": 10
+          },
+          {
+            "id": "241-boshlang'ich ta'lim(kundizgi)rus",
+            "name": "241-boshlang'ich ta'lim(kundizgi)rus",
+            "course": 3,
+            "hemis": 17,
+            "row": 31
+          },
+          {
+            "id": "242-boshlang'ich ta'lim(kundizgi)rus",
+            "name": "242-boshlang'ich ta'lim(kundizgi)rus",
+            "course": 3,
+            "hemis": 19,
+            "row": 32
+          },
+          {
+            "id": "231-Boshlang'ich ta'lim (Kunduzgi) Rus",
+            "name": "231-Boshlang'ich ta'lim (Kunduzgi) Rus",
+            "course": 4,
+            "hemis": 18,
+            "row": 41
+          },
+          {
+            "id": "232-Boshlang'ich ta'lim (Kunduzgi) rus",
+            "name": "232-Boshlang'ich ta'lim (Kunduzgi) rus",
+            "course": 4,
+            "hemis": 16,
+            "row": 42
+          }
+        ]
+      },
+      {
+        "id": "maktabgacha",
+        "name": "Maktabgacha ta'lim",
+        "groups": [
+          {
+            "id": "261-Maktabgacha talim(o'zbek)",
+            "name": "261-Maktabgacha talim(o'zbek)",
+            "course": 1,
+            "hemis": 20,
+            "row": 6
+          },
+          {
+            "id": "251-Maktabgacha talim(o'zbek)",
+            "name": "251-Maktabgacha talim(o'zbek)",
+            "course": 2,
+            "hemis": 31,
+            "row": 16
+          },
+          {
+            "id": "252-Maktabgacha talim(o'zbek)",
+            "name": "252-Maktabgacha talim(o'zbek)",
+            "course": 2,
+            "hemis": 32,
+            "row": 17
+          },
+          {
+            "id": "253-Maktabgacha ta'lim",
+            "name": "253-Maktabgacha ta'lim",
+            "course": 2,
+            "hemis": 28,
+            "row": 18
+          },
+          {
+            "id": "241-Maktabgacha ta'lim Kunduzgi (o'zbek)",
+            "name": "241-Maktabgacha ta'lim Kunduzgi (o'zbek)",
+            "course": 3,
+            "hemis": 23,
+            "row": 34
+          },
+          {
+            "id": "242 Maktabgacha ta'lim(kunduzgi)",
+            "name": "242 Maktabgacha ta'lim(kunduzgi)",
+            "course": 3,
+            "hemis": 24,
+            "row": 35
+          },
+          {
+            "id": "243-Maktabgacha ta'lim kunduzgi (o'zbek)",
+            "name": "243-Maktabgacha ta'lim kunduzgi (o'zbek)",
+            "course": 3,
+            "hemis": 25,
+            "row": 36
+          },
+          {
+            "id": "244-Maktabgacha ta'lim kunduzgi (o'zbek)",
+            "name": "244-Maktabgacha ta'lim kunduzgi (o'zbek)",
+            "course": 3,
+            "hemis": 24,
+            "row": 37
+          },
+          {
+            "id": "245-Maktabgacha talim(kunduzgi)",
+            "name": "245-Maktabgacha talim(kunduzgi)",
+            "course": 3,
+            "hemis": 25,
+            "row": 38
+          },
+          {
+            "id": "246-Maktabgacha talim(kunduzgi)",
+            "name": "246-Maktabgacha talim(kunduzgi)",
+            "course": 3,
+            "hemis": 29,
+            "row": 39
+          },
+          {
+            "id": "247-Maktabgacha talim(kunduzgi)",
+            "name": "247-Maktabgacha talim(kunduzgi)",
+            "course": 3,
+            "hemis": 28,
+            "row": 40
+          }
+        ]
+      },
+      {
+        "id": "maktabgacha-rus",
+        "name": "Maktabgacha ta'lim (rus)",
+        "groups": [
+          {
+            "id": "261-Maktabgacha talim(rus)",
+            "name": "261-Maktabgacha talim(rus)",
+            "course": 1,
+            "hemis": 20,
+            "row": 7
+          },
+          {
+            "id": "251-Maktabgacha talim(rus)",
+            "name": "251-Maktabgacha talim(rus)",
+            "course": 2,
+            "hemis": 19,
+            "row": 15
+          },
+          {
+            "id": "241-Maktabgacha ta'lim(rus)",
+            "name": "241-Maktabgacha ta'lim(rus)",
+            "course": 3,
+            "hemis": 15,
+            "row": 33
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pedagogika",
+    "name": "Pedagogika fakulteti",
+    "shortName": "Pedagogika",
+    "sheetName": "Pedagogika",
+    "directions": [
+      {
+        "id": "geografiya",
+        "name": "Geografiya",
+        "groups": [
+          {
+            "id": "261-Geografiya",
+            "name": "261-Geografiya",
+            "course": 1,
+            "hemis": 31,
+            "row": 4
+          },
+          {
+            "id": "251-Geografiya",
+            "name": "251-Geografiya",
+            "course": 2,
+            "hemis": 26,
+            "row": 17
+          },
+          {
+            "id": "252-Geografiya",
+            "name": "252-Geografiya",
+            "course": 2,
+            "hemis": 24,
+            "row": 18
+          },
+          {
+            "id": "241-Geografiya",
+            "name": "241-Geografiya",
+            "course": 3,
+            "hemis": 26,
+            "row": 25
+          },
+          {
+            "id": "242-Geografiya",
+            "name": "242-Geografiya",
+            "course": 3,
+            "hemis": 26,
+            "row": 26
+          },
+          {
+            "id": "231-Geografiya",
+            "name": "231-Geografiya",
+            "course": 4,
+            "hemis": 29,
+            "row": 28
+          },
+          {
+            "id": "232-Geografiya",
+            "name": "232-Geografiya",
+            "course": 4,
+            "hemis": 30,
+            "row": 29
+          }
+        ]
+      },
+      {
+        "id": "pedagogika",
+        "name": "Pedagogika va psixologiya",
+        "groups": [
+          {
+            "id": "261-Pedagogika",
+            "name": "261-Pedagogika",
+            "course": 1,
+            "hemis": 23,
+            "row": 5
+          },
+          {
+            "id": "251-Pedagogika",
+            "name": "251-Pedagogika",
+            "course": 2,
+            "hemis": 28,
+            "row": 10
+          },
+          {
+            "id": "241-Pedagogika",
+            "name": "241-Pedagogika",
+            "course": 3,
+            "hemis": 21,
+            "row": 19
+          },
+          {
+            "id": "231-Pedagogika",
+            "name": "231-Pedagogika",
+            "course": 4,
+            "hemis": 29,
+            "row": 27
+          }
+        ]
+      },
+      {
+        "id": "kimyo",
+        "name": "Kimyo",
+        "groups": [
+          {
+            "id": "261-Kimyo",
+            "name": "261-Kimyo",
+            "course": 1,
+            "hemis": 25,
+            "row": 6
+          },
+          {
+            "id": "251-Kimyo",
+            "name": "251-Kimyo",
+            "course": 2,
+            "hemis": 29,
+            "row": 16
+          },
+          {
+            "id": "241-Kimyo",
+            "name": "241-Kimyo",
+            "course": 3,
+            "hemis": 29,
+            "row": 22
+          }
+        ]
+      },
+      {
+        "id": "texnologik-talim",
+        "name": "Texnologik ta'lim",
+        "groups": [
+          {
+            "id": "261-Texnologik ta'lim",
+            "name": "261-Texnologik ta'lim",
+            "course": 1,
+            "hemis": 18,
+            "row": 7
+          },
+          {
+            "id": "262-Texnologik ta'lim",
+            "name": "262-Texnologik ta'lim",
+            "course": 1,
+            "hemis": 19,
+            "row": 8
+          },
+          {
+            "id": "251-Texnologik ta'lim",
+            "name": "251-Texnologik ta'lim",
+            "course": 2,
+            "hemis": 22,
+            "row": 11
+          },
+          {
+            "id": "252-Texnologik ta'lim",
+            "name": "252-Texnologik ta'lim",
+            "course": 2,
+            "hemis": 22,
+            "row": 12
+          },
+          {
+            "id": "241-Texnologik ta'lim",
+            "name": "241-Texnologik ta'lim",
+            "course": 3,
+            "hemis": 24,
+            "row": 23
+          },
+          {
+            "id": "242-Texnologik ta'lim",
+            "name": "242-Texnologik ta'lim",
+            "course": 3,
+            "hemis": 21,
+            "row": 24
+          }
+        ]
+      },
+      {
+        "id": "biologiya",
+        "name": "Biologiya",
+        "groups": [
+          {
+            "id": "261-Biologiya",
+            "name": "261-Biologiya",
+            "course": 1,
+            "hemis": 21,
+            "row": 9
+          },
+          {
+            "id": "251-Biologiya",
+            "name": "251-Biologiya",
+            "course": 2,
+            "hemis": 25,
+            "row": 13
+          },
+          {
+            "id": "252-Biologiya",
+            "name": "252-Biologiya",
+            "course": 2,
+            "hemis": 21,
+            "row": 14
+          },
+          {
+            "id": "253-Biologiya",
+            "name": "253-Biologiya",
+            "course": 2,
+            "hemis": 22,
+            "row": 15
+          },
+          {
+            "id": "241-Biologiya",
+            "name": "241-Biologiya",
+            "course": 3,
+            "hemis": 24,
+            "row": 20
+          },
+          {
+            "id": "242-Biologiya",
+            "name": "242-Biologiya",
+            "course": 3,
+            "hemis": 23,
+            "row": 21
+          }
+        ]
+      }
+    ]
+  }
+]
