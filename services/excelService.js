@@ -380,7 +380,8 @@ class ExcelService {
       haftaCell.numFmt = '0.0%';
     }
 
-    // Update Overview sheet
+    // Recalculate faculty sheet and overview sheet
+    this.recalculateFacultySheet(targetSheet, faculty);
     this.updateOverviewSheetData(wb, faculties);
 
     // Save workbook
@@ -396,6 +397,179 @@ class ExcelService {
     };
   }
 
+  // Synchronize attendance logs from JSON DB into workbook sheets
+  syncAttendanceLogs(wb) {
+    const attendanceFile = path.join(__dirname, '..', 'data', 'attendance.json');
+    if (!fs.existsSync(attendanceFile)) return;
+    let logs = [];
+    try {
+      logs = JSON.parse(fs.readFileSync(attendanceFile, 'utf8'));
+    } catch (e) {
+      return;
+    }
+
+    const faculties = this.getFacultiesData();
+
+    logs.forEach(l => {
+      const d = new Date(l.date || new Date());
+      let dow = d.getDay();
+      if (dow === 0) dow = 1;
+      if (dow > 6) dow = 6;
+      const baseCol = DAY_BASE_COLS[dow] || 5;
+      const pair = Math.min(Math.max(parseInt(l.pair) || 1, 1), 3);
+      const targetCol = baseCol + (pair - 1);
+
+      const fac = faculties.find(f => f.id === l.facultyId) || faculties[0];
+      const sheet = wb.getWorksheet(fac.sheetName || fac.name) || wb.getWorksheet(fac.shortName);
+      if (!sheet) return;
+
+      const cleanGroupName = (l.groupId || '').replace(/\s+/g, ' ').replace(/\u00a0/g, ' ').trim().toLowerCase();
+      let targetRow = null;
+      sheet.eachRow((r, ri) => {
+        if (ri >= 4) {
+          const val = r.getCell(3).value;
+          if (val && String(val).replace(/\s+/g, ' ').replace(/\u00a0/g, ' ').trim().toLowerCase() === cleanGroupName) {
+            targetRow = ri;
+          }
+        }
+      });
+
+      if (targetRow) {
+        sheet.getCell(targetRow, targetCol).value = parseInt(l.presentCount, 10);
+        sheet.getCell(targetRow, targetCol).alignment = { horizontal: 'center', vertical: 'middle' };
+        if (l.notes && String(l.notes).trim()) {
+          sheet.getCell(targetRow, targetCol).note = `${l.auditor || 'Uslubchi'}: ${String(l.notes).trim()}`;
+        }
+      }
+    });
+  }
+
+  // Recalculate formulas and computed values for a faculty sheet
+  recalculateFacultySheet(sheet, faculty) {
+    if (!sheet) return;
+
+    const parseNum = (v) => {
+      if (typeof v === 'number') return v;
+      if (v && typeof v.result === 'number') return v.result;
+      const parsed = parseFloat(v);
+      return !isNaN(parsed) ? parsed : null;
+    };
+
+    let jamiRowIdx = null;
+    sheet.eachRow((r, ri) => {
+      if (ri >= 4 && String(r.getCell(3).value || '').includes('JAMI')) {
+        jamiRowIdx = ri;
+      }
+    });
+
+    const maxDataRow = jamiRowIdx ? (jamiRowIdx - 1) : sheet.rowCount;
+
+    // 1. Recalculate group rows
+    for (let r = 4; r <= maxDataRow; r++) {
+      const hemisVal = parseNum(sheet.getCell(r, 4).value) || 25;
+      const groupDayRates = [];
+
+      for (let dow = 1; dow <= 6; dow++) {
+        const bCol = DAY_BASE_COLS[dow];
+        const p1 = parseNum(sheet.getCell(r, bCol).value);
+        const p2 = parseNum(sheet.getCell(r, bCol + 1).value);
+        const p3 = parseNum(sheet.getCell(r, bCol + 2).value);
+        const pairs = [p1, p2, p3].filter(v => v !== null);
+
+        if (pairs.length > 0 && hemisVal > 0) {
+          const avgDay = pairs.reduce((a, b) => a + b, 0) / pairs.length;
+          const dayRate = Math.min(+(avgDay / hemisVal).toFixed(4), 1.0);
+          const colL1 = sheet.getColumn(bCol).letter;
+          const colL3 = sheet.getColumn(bCol + 2).letter;
+          sheet.getCell(r, bCol + 3).value = {
+            formula: `IFERROR(AVERAGE(${colL1}${r}:${colL3}${r})/D${r},"")`,
+            result: dayRate
+          };
+          sheet.getCell(r, bCol + 3).numFmt = '0.0%';
+          groupDayRates.push(dayRate);
+        }
+      }
+
+      if (groupDayRates.length > 0) {
+        const haftaRate = Math.min(+(groupDayRates.reduce((a, b) => a + b, 0) / groupDayRates.length).toFixed(4), 1.0);
+        sheet.getCell(r, 29).value = {
+          formula: `IFERROR(AVERAGE(H${r},L${r},P${r},T${r},X${r},AB${r}),"")`,
+          result: haftaRate
+        };
+        sheet.getCell(r, 29).numFmt = '0.0%';
+      }
+    }
+
+    // 2. Recalculate JAMI row
+    if (jamiRowIdx) {
+      let facHemis = 0;
+      for (let r = 4; r <= maxDataRow; r++) {
+        facHemis += (parseNum(sheet.getCell(r, 4).value) || 25);
+      }
+      sheet.getCell(jamiRowIdx, 4).value = { formula: `SUM(D4:D${maxDataRow})`, result: facHemis };
+
+      const jamiDayRates = [];
+      for (let dow = 1; dow <= 6; dow++) {
+        const bCol = DAY_BASE_COLS[dow];
+        const activePairSums = [];
+
+        for (let p = 0; p < 3; p++) {
+          const colIdx = bCol + p;
+          const colLetter = sheet.getColumn(colIdx).letter;
+          let colSum = 0;
+          let hasColVal = false;
+          for (let r = 4; r <= maxDataRow; r++) {
+            const v = parseNum(sheet.getCell(r, colIdx).value);
+            if (v !== null) {
+              colSum += v;
+              hasColVal = true;
+            }
+          }
+          if (hasColVal) {
+            sheet.getCell(jamiRowIdx, colIdx).value = {
+              formula: `SUM(${colLetter}4:${colLetter}${maxDataRow})`,
+              result: colSum
+            };
+            activePairSums.push(colSum);
+          }
+        }
+
+        if (activePairSums.length > 0 && facHemis > 0) {
+          const avgJamiDay = activePairSums.reduce((a, b) => a + b, 0) / activePairSums.length;
+          const dayRate = Math.min(+(avgJamiDay / facHemis).toFixed(4), 1.0);
+          const colL1 = sheet.getColumn(bCol).letter;
+          const colL3 = sheet.getColumn(bCol + 2).letter;
+          sheet.getCell(jamiRowIdx, bCol + 3).value = {
+            formula: `IFERROR(AVERAGE(${colL1}${jamiRowIdx}:${colL3}${jamiRowIdx})/D${jamiRowIdx},"")`,
+            result: dayRate
+          };
+          sheet.getCell(jamiRowIdx, bCol + 3).numFmt = '0.0%';
+          jamiDayRates.push(dayRate);
+        }
+      }
+
+      if (jamiDayRates.length > 0) {
+        const weekRate = Math.min(+(jamiDayRates.reduce((a, b) => a + b, 0) / jamiDayRates.length).toFixed(4), 1.0);
+        sheet.getCell(jamiRowIdx, 29).value = {
+          formula: `IFERROR(AVERAGE(H${jamiRowIdx},L${jamiRowIdx},P${jamiRowIdx},T${jamiRowIdx},X${jamiRowIdx},AB${jamiRowIdx}),"")`,
+          result: weekRate
+        };
+        sheet.getCell(jamiRowIdx, 29).numFmt = '0.0%';
+      }
+    }
+  }
+
+  // Recalculate all faculty sheets in workbook
+  recalculateAllSheets(wb) {
+    const faculties = this.getFacultiesData();
+    faculties.forEach(fac => {
+      const sheet = wb.getWorksheet(fac.sheetName || fac.name) || wb.getWorksheet(fac.shortName);
+      if (sheet) {
+        this.recalculateFacultySheet(sheet, fac);
+      }
+    });
+  }
+
   // Refresh Overview sheet with calculated totals from all sheets
   updateOverviewSheetData(wb, faculties) {
     const overview = this.ensureOverviewSheet(wb);
@@ -403,12 +577,31 @@ class ExcelService {
     let grandTotalGroups = 0;
     let grandTotalHemis = 0;
     let grandTotalPresent = 0;
+    let grandTotalCheckedHemis = 0;
+    let grandTotalCheckedGroups = 0;
+
+    const subCell = overview.getCell('A2');
+    if (subCell) {
+      subCell.value = `Oxirgi yangilanish: ${new Date().toLocaleString('uz-UZ')} | Barcha 5 ta fakultet bo'yicha integratsiyalangan hisobot`;
+    }
+
+    const todayDate = new Date();
+    let todayDayOfWeek = todayDate.getDay();
+    if (todayDayOfWeek === 0) todayDayOfWeek = 1;
+    if (todayDayOfWeek > 6) todayDayOfWeek = 6;
+    const todayBaseCol = DAY_BASE_COLS[todayDayOfWeek] || 5;
+
+    const parseNum = (v) => {
+      if (typeof v === 'number') return v;
+      if (v && typeof v.result === 'number') return v.result;
+      const parsed = parseFloat(v);
+      return !isNaN(parsed) ? parsed : null;
+    };
 
     faculties.forEach((fac, idx) => {
       const sheet = wb.getWorksheet(fac.sheetName || fac.name) || wb.getWorksheet(fac.shortName);
       let groupCount = 0;
       let hemisSum = 0;
-      let presentSum = 0;
 
       fac.directions.forEach(d => {
         d.groups.forEach(g => {
@@ -417,15 +610,37 @@ class ExcelService {
         });
       });
 
-      // Calculate present students if sheet exists
+      let presentSum = 0;
+      let checkedGroupsCount = 0;
+      let checkedHemisSum = 0;
+      const weeklyRates = [];
+
       if (sheet) {
-        const todayDayOfWeek = new Date().getDay() || 1;
-        const colBase = DAY_BASE_COLS[todayDayOfWeek] || 5;
-        // Scan all data rows up to the summary row
-        for (let r = 4; r < sheet.rowCount; r++) {
-          const val = sheet.getCell(r, colBase).value;
-          if (typeof val === 'number') {
-            presentSum += val;
+        let jamiRowIdx = null;
+        sheet.eachRow((r, i) => {
+          if (i >= 4 && String(r.getCell(3).value || '').includes('JAMI')) {
+            jamiRowIdx = i;
+          }
+        });
+        const maxDataRow = jamiRowIdx ? (jamiRowIdx - 1) : sheet.rowCount;
+
+        for (let r = 4; r <= maxDataRow; r++) {
+          const hemisVal = parseNum(sheet.getCell(r, 4).value) || 25;
+          const p1 = parseNum(sheet.getCell(r, todayBaseCol).value);
+          const p2 = parseNum(sheet.getCell(r, todayBaseCol + 1).value);
+          const p3 = parseNum(sheet.getCell(r, todayBaseCol + 2).value);
+          const pairs = [p1, p2, p3].filter(v => v !== null);
+
+          if (pairs.length > 0) {
+            checkedGroupsCount++;
+            checkedHemisSum += hemisVal;
+            const groupAvg = pairs.reduce((a, b) => a + b, 0) / pairs.length;
+            presentSum += Math.round(groupAvg);
+          }
+
+          const weekVal = parseNum(sheet.getCell(r, 29).value);
+          if (weekVal !== null && weekVal > 0) {
+            weeklyRates.push(weekVal);
           }
         }
       }
@@ -433,52 +648,78 @@ class ExcelService {
       grandTotalGroups += groupCount;
       grandTotalHemis += hemisSum;
       grandTotalPresent += presentSum;
+      grandTotalCheckedHemis += checkedHemisSum;
+      grandTotalCheckedGroups += checkedGroupsCount;
 
-      const rate = hemisSum > 0 ? (presentSum / hemisSum) : 0;
-      const statusText = rate >= 0.9 ? 'A\'lo' : (rate >= 0.8 ? 'Yaxshi' : (rate > 0 ? 'Qoniqarli' : 'Kutilmoqda'));
+      const dayRate = checkedHemisSum > 0 ? (presentSum / checkedHemisSum) : 0;
+      let haftaRate = dayRate;
+      if (weeklyRates.length > 0) {
+        haftaRate = weeklyRates.reduce((a, b) => a + b, 0) / weeklyRates.length;
+      }
+      haftaRate = Math.min(haftaRate, 1.0);
 
-      overview.getRow(rowIdx).values = [
+      const statusText = checkedGroupsCount === 0
+        ? 'Kutilmoqda'
+        : (dayRate >= 0.9 ? 'A\'lo' : (dayRate >= 0.8 ? 'Yaxshi' : 'Qoniqarli'));
+
+      const row = overview.getRow(rowIdx);
+      row.values = [
         idx + 1,
         fac.name,
         groupCount,
         hemisSum,
-        presentSum || '-',
-        rate > 0 ? (rate * 100).toFixed(1) + '%' : '-',
-        rate > 0 ? (rate * 100).toFixed(1) + '%' : '-',
+        checkedGroupsCount > 0 ? presentSum : '-',
+        checkedGroupsCount > 0 ? (dayRate * 100).toFixed(1) + '%' : '-',
+        haftaRate > 0 ? (haftaRate * 100).toFixed(1) + '%' : (checkedGroupsCount > 0 ? (dayRate * 100).toFixed(1) + '%' : '-'),
         statusText
       ];
-      overview.getRow(rowIdx).alignment = { vertical: 'middle' };
-      overview.getRow(rowIdx).getCell(1).alignment = { horizontal: 'center' };
-      overview.getRow(rowIdx).getCell(3).alignment = { horizontal: 'center' };
-      overview.getRow(rowIdx).getCell(4).alignment = { horizontal: 'center' };
-      overview.getRow(rowIdx).getCell(5).alignment = { horizontal: 'center' };
-      overview.getRow(rowIdx).getCell(6).alignment = { horizontal: 'center' };
-      overview.getRow(rowIdx).getCell(7).alignment = { horizontal: 'center' };
-      overview.getRow(rowIdx).getCell(8).alignment = { horizontal: 'center' };
+      row.alignment = { vertical: 'middle' };
+      row.getCell(1).alignment = { horizontal: 'center' };
+      row.getCell(3).alignment = { horizontal: 'center' };
+      row.getCell(4).alignment = { horizontal: 'center' };
+      row.getCell(5).alignment = { horizontal: 'center' };
+      row.getCell(6).alignment = { horizontal: 'center' };
+      row.getCell(7).alignment = { horizontal: 'center' };
+      row.getCell(8).alignment = { horizontal: 'center' };
 
-      // Coloring status
-      const statusCell = overview.getRow(rowIdx).getCell(8);
-      if (rate >= 0.9) statusCell.font = { color: { argb: 'FF16A34A' }, bold: true };
-      else if (rate >= 0.8) statusCell.font = { color: { argb: 'FF2563EB' }, bold: true };
-      else statusCell.font = { color: { argb: 'FFE11D48' }, bold: true };
+      const statusCell = row.getCell(8);
+      if (statusText === "A'lo") statusCell.font = { color: { argb: 'FF16A34A' }, bold: true };
+      else if (statusText === 'Yaxshi') statusCell.font = { color: { argb: 'FF2563EB' }, bold: true };
+      else if (statusText === 'Qoniqarli') statusCell.font = { color: { argb: 'FFF59E0B' }, bold: true };
+      else statusCell.font = { color: { argb: 'FF94A3B8' }, italic: true };
 
       rowIdx++;
     });
 
     // Grand total row
-    const totalRate = grandTotalHemis > 0 ? (grandTotalPresent / grandTotalHemis) : 0;
-    overview.getRow(rowIdx).values = [
+    const grandDayRate = grandTotalCheckedHemis > 0 ? (grandTotalPresent / grandTotalCheckedHemis) : 0;
+    const grandRow = overview.getRow(rowIdx);
+    grandRow.values = [
       '',
       'INSTITUT BO\'YICHA JAMI',
       grandTotalGroups,
       grandTotalHemis,
-      grandTotalPresent || '-',
-      totalRate > 0 ? (totalRate * 100).toFixed(1) + '%' : '-',
-      totalRate > 0 ? (totalRate * 100).toFixed(1) + '%' : '-',
-      totalRate >= 0.85 ? 'Barqaror' : (totalRate > 0 ? 'Nazoratda' : 'Kutilmoqda')
+      grandTotalCheckedGroups > 0 ? grandTotalPresent : '-',
+      grandTotalCheckedGroups > 0 ? (grandDayRate * 100).toFixed(1) + '%' : '-',
+      grandTotalCheckedGroups > 0 ? (grandDayRate * 100).toFixed(1) + '%' : '-',
+      grandTotalCheckedGroups === 0 ? 'Kutilmoqda' : (grandDayRate >= 0.85 ? 'Barqaror' : 'Nazoratda')
     ];
-    overview.getRow(rowIdx).font = { bold: true };
-    overview.getRow(rowIdx).fill = {
+    grandRow.font = { bold: true };
+    grandRow.alignment = { vertical: 'middle' };
+    grandRow.getCell(2).alignment = { horizontal: 'left' };
+    grandRow.getCell(3).alignment = { horizontal: 'center' };
+    grandRow.getCell(4).alignment = { horizontal: 'center' };
+    grandRow.getCell(5).alignment = { horizontal: 'center' };
+    grandRow.getCell(6).alignment = { horizontal: 'center' };
+    grandRow.getCell(7).alignment = { horizontal: 'center' };
+    grandRow.getCell(8).alignment = { horizontal: 'center' };
+
+    const grandStatusCell = grandRow.getCell(8);
+    if (grandDayRate >= 0.85) grandStatusCell.font = { color: { argb: 'FF16A34A' }, bold: true };
+    else if (grandDayRate > 0) grandStatusCell.font = { color: { argb: 'FFF59E0B' }, bold: true };
+    else grandStatusCell.font = { color: { argb: 'FF94A3B8' }, italic: true };
+
+    grandRow.fill = {
       type: 'pattern',
       pattern: 'solid',
       fgColor: { argb: 'FFF1F5F9' }
@@ -622,13 +863,37 @@ class ExcelService {
   // Export single faculty workbook or full workbook
   async exportFacultyWorkbook(facultyId) {
     const wb = new ExcelJS.Workbook();
-    await wb.xlsx.readFile(this.excelPath);
+    try {
+      await wb.xlsx.readFile(this.excelPath);
+    } catch (e) {
+      if (fs.existsSync(BACKUP_PATH)) {
+        await wb.xlsx.readFile(BACKUP_PATH);
+      } else {
+        throw e;
+      }
+    }
+
+    const faculties = this.getFacultiesData();
+
+    // Ensure all 5 faculty sheets exist, sync logs, recalculate formulas and overview
+    faculties.forEach(fac => {
+      this.ensureFacultySheet(wb, fac);
+    });
+    this.syncAttendanceLogs(wb);
+    this.recalculateAllSheets(wb);
+    this.updateOverviewSheetData(wb, faculties);
+
+    // Save recalculated workbook to disk
+    try {
+      await wb.xlsx.writeFile(this.excelPath);
+    } catch (writeErr) {
+      console.error('Error saving recalculated workbook:', writeErr);
+    }
 
     if (!facultyId || facultyId === 'all') {
       return wb;
     }
 
-    const faculties = this.getFacultiesData();
     const faculty = faculties.find(f => f.id === facultyId) || faculties[0];
     const targetSheet = wb.getWorksheet(faculty.sheetName || faculty.name) || wb.getWorksheet(faculty.shortName) || wb.worksheets[0];
 

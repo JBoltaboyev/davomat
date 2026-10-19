@@ -356,15 +356,11 @@ app.get('/api/excel/download', async (req, res) => {
     const facultyId = req.query.faculty;
     const today = new Date().toISOString().split('T')[0];
 
-    if (!facultyId || facultyId === 'all') {
-      if (fs.existsSync(EXCEL_FILE)) {
-        return res.download(EXCEL_FILE, `UrDPI_DAVOMAT_Barcha_Fakultetlar_${today}.xlsx`);
-      }
-    }
-
     const faculties = JSON.parse(fs.readFileSync(FACULTIES_FILE, 'utf8'));
     const fac = faculties.find(f => f.id === facultyId);
-    const safeName = fac ? fac.shortName.replace(/[^a-zA-Z0-9_\u0400-\u04FF]/g, '_') : 'Fakultet';
+    const safeName = (!facultyId || facultyId === 'all')
+      ? 'Barcha_Fakultetlar'
+      : (fac ? fac.shortName.replace(/[^a-zA-Z0-9_\u0400-\u04FF]/g, '_') : 'Fakultet');
 
     const wb = await excelService.exportFacultyWorkbook(facultyId);
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

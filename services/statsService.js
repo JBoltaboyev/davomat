@@ -45,6 +45,15 @@ class StatsService {
       return matchDate && matchFac;
     });
 
+    // Teacher Attendance metrics
+    const totalAuditedTeachers = filteredLogs.length;
+    const absentTeachersCount = filteredLogs.filter(l => l.teacherPresent === false).length;
+    const substituteTeachersCount = filteredLogs.filter(l => l.teacherPresent === false && l.substituteTeacher).length;
+    const presentTeachersCount = totalAuditedTeachers - absentTeachersCount;
+    const teacherAttendanceRate = totalAuditedTeachers > 0
+      ? Number(((presentTeachersCount / totalAuditedTeachers) * 100).toFixed(1))
+      : 100;
+
     // 1. If scoped to single faculty (Uslubchi view)
     if (isScoped) {
       const targetFac = faculties.find(f => f.id === facultyIdFilter) || faculties[0];
@@ -183,6 +192,11 @@ class StatsService {
         totalGroups: facTotalGroups,
         totalAuditedGroups: facAuditedGroups,
         overallAttendanceRate: Number(overallRate.toFixed(1)),
+        totalAuditedTeachers,
+        presentTeachersCount,
+        absentTeachersCount,
+        substituteTeachersCount,
+        teacherAttendanceRate,
         directionStats,
         facultyStats: [{
           id: targetFac.id,
@@ -342,6 +356,11 @@ class StatsService {
       totalGroups,
       totalAuditedGroups: filteredLogs.length,
       overallAttendanceRate: Number(overallRate.toFixed(1)),
+      totalAuditedTeachers,
+      presentTeachersCount,
+      absentTeachersCount,
+      substituteTeachersCount,
+      teacherAttendanceRate,
       facultyStats,
       topGroups,
       lowGroups,

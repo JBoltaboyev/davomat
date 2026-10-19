@@ -698,5 +698,28 @@
     "photoUrl": null,
     "notes": "Rejalashtirilgan ochiq dars",
     "auditor": "Inspektor"
+  },
+  {
+    "id": "att_1792399033092_k4qne",
+    "createdAt": "2026-10-19T08:37:13.092Z",
+    "date": "2026-10-19",
+    "time": "13:37",
+    "facultyId": "pedagogika",
+    "groupId": "261-Geografiya",
+    "shift": "kunduzgi-2",
+    "shiftName": "Kunduzgi (2-smena)",
+    "pair": 1,
+    "pairTime": "13:00 - 14:20",
+    "room": "201-auditoriya",
+    "teacher": "prof. Boltayev Sulton",
+    "teacherPresent": false,
+    "subject": "sfgdf",
+    "presentCount": 31,
+    "hemisTotal": 31,
+    "absentStudents": [],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "Uslubchi (Pedagogika)"
   }
 ]

@@ -1396,6 +1396,32 @@ async function loadDashboardStats() {
     if (kpiStudents) kpiStudents.textContent = stats.totalInstituteStudents.toLocaleString();
     if (kpiAudited) kpiAudited.textContent = stats.totalAuditedGroups;
 
+    // Teacher Attendance KPI
+    const kpiTeacher = document.getElementById('kpiTeacherRate');
+    const kpiTeacherCard = kpiTeacher ? kpiTeacher.closest('.kpi-card') : null;
+    const kpiTeacherSubtext = kpiTeacherCard ? kpiTeacherCard.querySelector('.kpi-subtext') : null;
+
+    if (kpiTeacher) {
+      const tRate = stats.teacherAttendanceRate !== undefined ? stats.teacherAttendanceRate : 100;
+      kpiTeacher.textContent = tRate + '%';
+      if (kpiTeacherCard) {
+        kpiTeacherCard.classList.remove('green', 'amber', 'red');
+        if (tRate >= 95) kpiTeacherCard.classList.add('green');
+        else if (tRate >= 80) kpiTeacherCard.classList.add('amber');
+        else kpiTeacherCard.classList.add('red');
+      }
+      if (kpiTeacherSubtext) {
+        if (stats.absentTeachersCount > 0) {
+          const subInfo = stats.substituteTeachersCount > 0 ? ` (${stats.substituteTeachersCount} tasida o'rniga dars)` : '';
+          kpiTeacherSubtext.innerHTML = `<span style="color:#ef4444; font-weight:700;">${stats.absentTeachersCount} ta darsda yo'q</span>${subInfo}`;
+        } else if (stats.totalAuditedTeachers > 0) {
+          kpiTeacherSubtext.textContent = `Barcha (${stats.totalAuditedTeachers} nafar) o'qituvchilar darsda`;
+        } else {
+          kpiTeacherSubtext.textContent = `Reja bo'yicha darslar o'tilmoqda`;
+        }
+      }
+    }
+
     if (stats.isScoped && stats.facultyScope) {
       if (kpiOverallLabel) kpiOverallLabel.textContent = "Fakultet Davomati";
       if (kpiTotalLabel) kpiTotalLabel.textContent = "Fakultet Talabalari";
