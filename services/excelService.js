@@ -323,14 +323,12 @@ class ExcelService {
       targetSheet.getCell(`D${targetRow}`).value = entry.hemisTotal || 25;
     }
 
-    // Write attendance count to the exact cell
+    // Write attendance count to the exact cell (no cell notes)
     const cell = targetSheet.getCell(targetRow, targetCol);
     cell.value = parseInt(entry.presentCount, 10);
     cell.alignment = { horizontal: 'center', vertical: 'middle' };
-
-    // Attach note if provided
-    if (entry.notes && String(entry.notes).trim()) {
-      cell.note = `${entry.auditor || 'Uslubchi'}: ${String(entry.notes).trim()}`;
+    if (cell.note) {
+      delete cell.note;
     }
 
     // Helper to get numeric value
@@ -380,7 +378,8 @@ class ExcelService {
       haftaCell.numFmt = '0.0%';
     }
 
-    // Recalculate faculty sheet and overview sheet
+    // Recalculate faculty sheet and overview sheet, ensure all notes are removed
+    this.clearAllNotes(wb);
     this.recalculateFacultySheet(targetSheet, faculty);
     this.updateOverviewSheetData(wb, faculties);
 
@@ -435,10 +434,11 @@ class ExcelService {
       });
 
       if (targetRow) {
-        sheet.getCell(targetRow, targetCol).value = parseInt(l.presentCount, 10);
-        sheet.getCell(targetRow, targetCol).alignment = { horizontal: 'center', vertical: 'middle' };
-        if (l.notes && String(l.notes).trim()) {
-          sheet.getCell(targetRow, targetCol).note = `${l.auditor || 'Uslubchi'}: ${String(l.notes).trim()}`;
+        const cell = sheet.getCell(targetRow, targetCol);
+        cell.value = parseInt(l.presentCount, 10);
+        cell.alignment = { horizontal: 'center', vertical: 'middle' };
+        if (cell.note) {
+          delete cell.note;
         }
       }
     });
@@ -559,8 +559,23 @@ class ExcelService {
     }
   }
 
+  // Remove all cell notes/comments across all worksheets
+  clearAllNotes(wb) {
+    wb.worksheets.forEach(ws => {
+      ws.eachRow({ includeEmpty: false }, row => {
+        row.eachCell({ includeEmpty: false }, cell => {
+          delete cell._comment;
+          if (cell._value && cell._value.model && cell._value.model.comment) {
+            delete cell._value.model.comment;
+          }
+        });
+      });
+    });
+  }
+
   // Recalculate all faculty sheets in workbook
   recalculateAllSheets(wb) {
+    this.clearAllNotes(wb);
     const faculties = this.getFacultiesData();
     faculties.forEach(fac => {
       const sheet = wb.getWorksheet(fac.sheetName || fac.name) || wb.getWorksheet(fac.shortName);
@@ -912,6 +927,7 @@ class ExcelService {
         const srcCell = row.getCell(c);
         const destCell = newRow.getCell(c);
         destCell.value = srcCell.value;
+        if (destCell.note) delete destCell.note;
         if (srcCell.numFmt) destCell.numFmt = srcCell.numFmt;
         if (srcCell.font) destCell.font = JSON.parse(JSON.stringify(srcCell.font));
         if (srcCell.alignment) destCell.alignment = JSON.parse(JSON.stringify(srcCell.alignment));
