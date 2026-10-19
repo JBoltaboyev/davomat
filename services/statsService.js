@@ -1,10 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 
-const ATTENDANCE_PATH = path.join(__dirname, '..', 'data', 'attendance.json');
-const FACULTIES_PATH = path.join(__dirname, '..', 'data', 'faculties.json');
+let ATTENDANCE_PATH = path.join(__dirname, '..', 'data', 'attendance.json');
+let FACULTIES_PATH = path.join(__dirname, '..', 'data', 'faculties.json');
 
 class StatsService {
+  setDataDir(dirPath) {
+    if (dirPath) {
+      ATTENDANCE_PATH = path.join(dirPath, 'attendance.json');
+      FACULTIES_PATH = path.join(dirPath, 'faculties.json');
+    }
+  }
+
   getAttendanceLogs() {
     try {
       if (!fs.existsSync(ATTENDANCE_PATH)) return [];

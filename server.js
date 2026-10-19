@@ -30,19 +30,63 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/davomat', express.static(path.join(__dirname, 'public')));
 app.use('/davomat', express.static(__dirname));
 
+const os = require('os');
+const isVercel = process.env.VERCEL === '1' || !!process.env.AWS_LAMBDA_FUNCTION_NAME || !!process.env.VERCEL_ENV;
+
 // File paths
-const DATA_DIR = path.join(__dirname, 'data');
+let DATA_DIR = path.join(__dirname, 'data');
+let EXCEL_FILE = path.join(__dirname, 'DAVOMAT.xlsx');
+let UPLOADS_DIR = path.join(__dirname, 'public', 'uploads', 'attendance');
+
+if (isVercel) {
+  try {
+    const tmpDir = path.join(os.tmpdir(), 'davomat');
+    const tmpDataDir = path.join(tmpDir, 'data');
+    const tmpUploadsDir = path.join(tmpDir, 'uploads', 'attendance');
+    const tmpExcelFile = path.join(tmpDir, 'DAVOMAT.xlsx');
+
+    if (!fs.existsSync(tmpDataDir)) {
+      fs.mkdirSync(tmpDataDir, { recursive: true });
+      const origData = path.join(__dirname, 'data');
+      if (fs.existsSync(origData)) {
+        fs.readdirSync(origData).forEach(f => {
+          fs.copyFileSync(path.join(origData, f), path.join(tmpDataDir, f));
+        });
+      }
+    }
+
+    if (!fs.existsSync(tmpUploadsDir)) {
+      fs.mkdirSync(tmpUploadsDir, { recursive: true });
+    }
+
+    if (!fs.existsSync(tmpExcelFile) && fs.existsSync(EXCEL_FILE)) {
+      fs.copyFileSync(EXCEL_FILE, tmpExcelFile);
+    }
+
+    DATA_DIR = tmpDataDir;
+    EXCEL_FILE = tmpExcelFile;
+    UPLOADS_DIR = tmpUploadsDir;
+
+    excelService.setPaths(EXCEL_FILE, path.join(DATA_DIR, 'faculties.json'));
+    statsService.setDataDir(DATA_DIR);
+  } catch (tmpErr) {
+    console.error('Vercel tmp initialization error:', tmpErr);
+  }
+} else {
+  if (!fs.existsSync(UPLOADS_DIR)) {
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+  }
+}
+
+// Serve uploaded images statically
+app.use('/uploads/attendance', express.static(UPLOADS_DIR));
+app.use('/uploads', express.static(path.join(UPLOADS_DIR, '..')));
+
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const FACULTIES_FILE = path.join(DATA_DIR, 'faculties.json');
 const TEACHERS_FILE = path.join(DATA_DIR, 'teachers.json');
 const ROOMS_FILE = path.join(DATA_DIR, 'rooms.json');
 const STUDENTS_FILE = path.join(DATA_DIR, 'students.json');
-const EXCEL_FILE = path.join(__dirname, 'DAVOMAT.xlsx');
-const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads', 'attendance');
-
-if (!fs.existsSync(UPLOADS_DIR)) {
-  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-}
 
 // Helper to read JSON
 const readJson = (file) => {
@@ -454,30 +498,34 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start Server
-const server = app.listen(PORT, HOST, () => {
-  console.log(`=================================================`);
-  console.log(`🏛  UrDPI Davomat va Monitoring Tizimi ishga tushdi!`);
-  console.log(`🌐  Local URL: http://localhost:${PORT}`);
-  console.log(`📱  Tarmoqdan kirish: http://172.10.11.59:${PORT}`);
-  console.log(`📑  Excel sinxronizatsiya: ${EXCEL_FILE}`);
-  console.log(`🩺  Health Check: http://localhost:${PORT}/health`);
-  console.log(`=================================================`);
-});
-
-// Graceful Shutdown for Production (PM2, Docker, Systemd)
-const handleShutdown = (signal) => {
-  console.log(`\n🛑 [${signal}] Signali qabul qilindi. Server xavfsiz to'xtatilmoqda...`);
-  server.close(() => {
-    console.log('✅ Barcha ulanishlar yopildi. Server to\'xtatildi.');
-    process.exit(0);
+// Start Server if not in serverless environment
+if (!isVercel) {
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`=================================================`);
+    console.log(`🏛  UrDPI Davomat va Monitoring Tizimi ishga tushdi!`);
+    console.log(`🌐  Local URL: http://localhost:${PORT}`);
+    console.log(`📱  Tarmoqdan kirish: http://172.10.11.59:${PORT}`);
+    console.log(`📑  Excel sinxronizatsiya: ${EXCEL_FILE}`);
+    console.log(`🩺  Health Check: http://localhost:${PORT}/health`);
+    console.log(`=================================================`);
   });
 
-  setTimeout(() => {
-    console.error('⚠️ Majburiy to\'xtatildi (timeout).');
-    process.exit(1);
-  }, 5000);
-};
+  // Graceful Shutdown for Production (PM2, Docker, Systemd)
+  const handleShutdown = (signal) => {
+    console.log(`\n🛑 [${signal}] Signali qabul qilindi. Server xavfsiz to'xtatilmoqda...`);
+    server.close(() => {
+      console.log('✅ Barcha ulanishlar yopildi. Server to\'xtatildi.');
+      process.exit(0);
+    });
 
-process.on('SIGTERM', () => handleShutdown('SIGTERM'));
-process.on('SIGINT', () => handleShutdown('SIGINT'));
+    setTimeout(() => {
+      console.error('⚠️ Majburiy to\'xtatildi (timeout).');
+      process.exit(1);
+    }, 5000);
+  };
+
+  process.on('SIGTERM', () => handleShutdown('SIGTERM'));
+  process.on('SIGINT', () => handleShutdown('SIGINT'));
+}
+
+module.exports = app;

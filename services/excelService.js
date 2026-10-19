@@ -29,10 +29,16 @@ const DAY_NAMES = {
 class ExcelService {
   constructor() {
     this.excelPath = EXCEL_PATH;
+    this.facultiesPath = FACULTIES_PATH;
+  }
+
+  setPaths(excelPath, facultiesPath) {
+    if (excelPath) this.excelPath = excelPath;
+    if (facultiesPath) this.facultiesPath = facultiesPath;
   }
 
   getFacultiesData() {
-    return JSON.parse(fs.readFileSync(FACULTIES_PATH, 'utf8'));
+    return JSON.parse(fs.readFileSync(this.facultiesPath || FACULTIES_PATH, 'utf8'));
   }
 
   // Get current week dates (Monday to Saturday)
