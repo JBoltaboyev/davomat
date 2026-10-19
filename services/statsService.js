@@ -368,6 +368,7 @@ class StatsService {
       room: entry.room || 'Noma\'lum',
       teacher: entry.teacher || 'Belgilanmagan',
       teacherPresent: entry.teacherPresent !== false,
+      substituteTeacher: (entry.teacherPresent === false && entry.substituteTeacher) ? String(entry.substituteTeacher).trim() : null,
       subject: entry.subject || 'Dars',
       presentCount: parseInt(entry.presentCount) || 0,
       hemisTotal: parseInt(entry.hemisTotal) || 25,

@@ -674,5 +674,29 @@
     "photoUrl": "/uploads/attendance/audit_1792392139680_47zbi.jpg",
     "notes": "sdgasdfAGFGAFGA",
     "auditor": "Uslubchi"
+  },
+  {
+    "id": "att_1792398906036_lszn7",
+    "createdAt": "2026-10-19T08:35:06.036Z",
+    "date": "2026-10-19",
+    "time": "13:35",
+    "facultyId": "aniq-fanlar",
+    "groupId": "261-Fizika",
+    "shift": "kunduzgi-1",
+    "shiftName": "Kunduzgi (1-smena)",
+    "pair": 1,
+    "pairTime": "08:30 - 09:50",
+    "room": "101-auditoriya",
+    "teacher": "dots. Qodirov Azamat",
+    "teacherPresent": false,
+    "substituteTeacher": "dots. Aliyev Bekzod",
+    "subject": "Dars",
+    "presentCount": 24,
+    "hemisTotal": 25,
+    "absentStudents": [],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "Rejalashtirilgan ochiq dars",
+    "auditor": "Inspektor"
   }
 ]

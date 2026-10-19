@@ -1073,14 +1073,24 @@ function initFormInteractions() {
   // Teacher present toggle
   const teacherCheck = document.getElementById('teacherPresentCheck');
   const teacherStatusLabel = document.getElementById('teacherStatusLabel');
+  const subPanel = document.getElementById('substituteTeacherPanel');
+  const subInput = document.getElementById('substituteTeacherInput');
+  const teacherAuditContainer = document.getElementById('teacherAuditContainer');
+
   if (teacherCheck && teacherStatusLabel) {
     teacherCheck.addEventListener('change', () => {
       if (teacherCheck.checked) {
         teacherStatusLabel.textContent = '(Ha, darsda)';
         teacherStatusLabel.style.color = 'var(--status-good)';
+        if (subPanel) subPanel.style.display = 'none';
+        if (subInput) subInput.value = '';
+        if (teacherAuditContainer) teacherAuditContainer.classList.remove('has-substitute');
       } else {
         teacherStatusLabel.textContent = '(Yo\'q, darsda emas)';
         teacherStatusLabel.style.color = 'var(--status-bad)';
+        if (subPanel) subPanel.style.display = 'block';
+        if (teacherAuditContainer) teacherAuditContainer.classList.add('has-substitute');
+        if (subInput) subInput.focus();
       }
     });
   }
@@ -1277,6 +1287,10 @@ async function handleAttendanceSubmit(e) {
 
     const auditorName = auditorInput?.value || state.currentUser?.name || 'Inspektor';
 
+    const isTeacherPresent = teacherCheck ? teacherCheck.checked : true;
+    const subInput = document.getElementById('substituteTeacherInput');
+    const substituteTeacher = (!isTeacherPresent && subInput) ? subInput.value.trim() : null;
+
     const payload = {
       facultyId: assignedFacultyId,
       groupId: state.selectedGroup?.name || '261-Fizika',
@@ -1287,7 +1301,8 @@ async function handleAttendanceSubmit(e) {
       pairTime: state.pairTime,
       room: roomInput.value || state.selectedRoom,
       teacher: teacherInput.value,
-      teacherPresent: teacherCheck ? teacherCheck.checked : true,
+      teacherPresent: isTeacherPresent,
+      substituteTeacher: substituteTeacher,
       subject: subjectInput.value,
       presentCount: state.presentCount,
       hemisTotal: state.hemisTotal,
@@ -1311,6 +1326,19 @@ async function handleAttendanceSubmit(e) {
 
     showToast(data.message, 'success');
     resetPhotoAudit();
+
+    // Reset substitute inputs
+    if (subInput) subInput.value = '';
+    const subPanel = document.getElementById('substituteTeacherPanel');
+    if (subPanel) subPanel.style.display = 'none';
+    const teacherAuditContainer = document.getElementById('teacherAuditContainer');
+    if (teacherAuditContainer) teacherAuditContainer.classList.remove('has-substitute');
+    if (teacherCheck) teacherCheck.checked = true;
+    const teacherStatusLabel = document.getElementById('teacherStatusLabel');
+    if (teacherStatusLabel) {
+      teacherStatusLabel.textContent = '(Ha, darsda)';
+      teacherStatusLabel.style.color = 'var(--status-good)';
+    }
 
     // Trigger celebration / refresh
     btnSubmit.innerHTML = `<span>✅</span> Saqlandi va Excel yangilandi!`;
@@ -1506,9 +1534,38 @@ async function loadDashboardStats() {
             </div>
           ` : '';
 
+          const isTeacherPresent = log.teacherPresent !== false;
+          const subTeacher = (log.substituteTeacher && String(log.substituteTeacher).trim()) ? String(log.substituteTeacher).trim() : '';
+
+          let teacherAuditHtml = '';
+          if (!isTeacherPresent) {
+            if (subTeacher) {
+              const shortSub = subTeacher.length > 15 ? subTeacher.slice(0, 13) + '...' : subTeacher;
+              teacherAuditHtml = `
+                <div class="audit-substitute-badge has-sub" 
+                  data-sub="${encodeURIComponent(subTeacher)}" 
+                  data-main="${encodeURIComponent(log.teacher || '')}" 
+                  title="Asosiy o'qituvchi (${log.teacher || 'Belgilanmagan'}) darsda yo'q. O'rniga dars o'tmoqda: ${subTeacher.replace(/"/g, '&quot;')} (Bosilsa to'liq ko'rsatiladi)">
+                  <span>🔄</span> O'rniga: <b>${shortSub}</b>
+                </div>
+              `;
+            } else {
+              teacherAuditHtml = `
+                <div class="audit-substitute-badge absent" 
+                  data-main="${encodeURIComponent(log.teacher || '')}" 
+                  title="O'qituvchi (${log.teacher || 'Belgilanmagan'}) darsda yo'q!">
+                  <span>⚠️</span> Darsda yo'q
+                </div>
+              `;
+            }
+          }
+
           card.innerHTML = `
             <div class="audit-left">
-              <span class="audit-room-tag">${log.room}</span>
+              <div class="audit-room-col">
+                <span class="audit-room-tag">${log.room}</span>
+                ${teacherAuditHtml}
+              </div>
               <div>
                 <div class="audit-group-title">${log.groupId}</div>
                 <div class="audit-subinfo">${log.teacher} • ${log.subject} (${shiftLabel}${log.pair}-para${timeLabel})</div>
@@ -1535,6 +1592,20 @@ async function loadDashboardStats() {
             const auditor = btn.getAttribute('data-auditor');
             const time = btn.getAttribute('data-time');
             openPhotoModal(photoUrl, title, meta, auditor, time);
+          });
+        });
+
+        // Attach click listeners for substitute badges
+        auditStream.querySelectorAll('.audit-substitute-badge').forEach(badge => {
+          badge.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const sub = decodeURIComponent(badge.getAttribute('data-sub') || '');
+            const main = decodeURIComponent(badge.getAttribute('data-main') || '');
+            if (sub) {
+              showToast(`👨‍🏫 <b>Asosiy o'qituvchi:</b> ${main || 'Belgilanmagan'} (darsda emas)<br>🔄 <b>O'rniga:</b> ${sub} dars o'tmoqda`, 'info');
+            } else {
+              showToast(`⚠️ <b>O'qituvchi:</b> ${main || 'Belgilanmagan'} darsda yo'q deb qayd etilgan!`, 'error');
+            }
           });
         });
 

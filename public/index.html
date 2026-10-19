@@ -298,15 +298,33 @@
               </div>
 
               <!-- Teacher presence verification -->
-              <div class="teacher-audit-box">
-                <div class="switch-label">
-                  <span>👨‍🏫 O'qituvchi darsdami?</span>
-                  <span id="teacherStatusLabel" style="color: var(--status-good); font-weight:700;">(Ha, darsda)</span>
+              <div class="teacher-audit-container" id="teacherAuditContainer">
+                <div class="teacher-audit-box">
+                  <div class="switch-label">
+                    <span>👨‍🏫 O'qituvchi darsdami?</span>
+                    <span id="teacherStatusLabel" style="color: var(--status-good); font-weight:700;">(Ha, darsda)</span>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="teacherPresentCheck" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
                 </div>
-                <label class="toggle-switch">
-                  <input type="checkbox" id="teacherPresentCheck" checked>
-                  <span class="toggle-slider"></span>
-                </label>
+
+                <!-- Substitute Teacher Panel (shown if teacher is not present) -->
+                <div id="substituteTeacherPanel" class="substitute-teacher-panel" style="display: none;">
+                  <div class="substitute-header">
+                    <span class="substitute-icon">🔄</span>
+                    <div>
+                      <div class="substitute-title">O'rniga kim dars o'tmoqda? (Almashtirgan o'qituvchi)</div>
+                      <div class="substitute-desc">Asosiy o'qituvchi darsda bo'lmagani sababli dars o'tayotgan o'qituvchini belgilang</div>
+                    </div>
+                  </div>
+                  <div class="input-group" style="margin-top: 0.6rem;">
+                    <label class="input-label" for="substituteTeacherInput">👨‍🏫 O'rniga dars o'tuvchi (F.I.Sh.)</label>
+                    <input type="text" id="substituteTeacherInput" class="form-input"
+                      placeholder="O'rniga kirgan o'qituvchi ismini tanlang yoki yozing" list="teachersDatalist">
+                  </div>
+                </div>
               </div>
 
               <!-- Mode Switcher: Quick Count vs Student Roster -->
@@ -958,7 +976,7 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Main Frontend Application Logic -->
-  <script src="/js/app.js?v=3.3"></script>
+  <script src="/js/app.js?v=3.4"></script>
 </body>
 
 </html>
