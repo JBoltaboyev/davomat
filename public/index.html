@@ -8,7 +8,7 @@
   <meta name="description"
     content="Urganch davlat pedagogika instituti (UrDPI) 5 ta fakulteti va yo'nalishlari uchun mobil va avtomatlashtirilgan Excel davomat monitoring tizimi">
   <link rel="manifest" href="/manifest.json">
-  <link rel="stylesheet" href="/css/style.css?v=2.7">
+  <link rel="stylesheet" href="/css/style.css?v=3.0">
   <link rel="icon" type="image/png" href="/logo.png">
 </head>
 
@@ -375,6 +375,61 @@
                 </div>
               </div>
 
+              <!-- Auditoriya Foto-fakti (Classroom Photo Proof) -->
+              <div class="photo-audit-section">
+                <div class="photo-audit-header">
+                  <div class="photo-audit-title">
+                    <span class="photo-audit-icon">📸</span>
+                    <div>
+                      <div class="photo-audit-main-text">Auditoriya Foto-fakti</div>
+                      <div class="photo-audit-sub-text">Dars jarayonidan 1 ta rasm (Ixtiyoriy)</div>
+                    </div>
+                  </div>
+                  <div id="photoStatusBadge" class="photo-status-badge empty">Rasm yo'q</div>
+                </div>
+
+                <input type="file" id="auditPhotoInput" accept="image/*" capture="environment" style="display: none;">
+
+                <!-- State 1: No photo yet -->
+                <div id="photoEmptyState" class="photo-empty-box" role="button" tabindex="0">
+                  <div class="photo-cam-circle">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                      </path>
+                      <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                  </div>
+                  <div class="photo-prompt-text">
+                    <strong>Auditoriyani rasmga olish</strong> yoki fayl tanlash
+                  </div>
+                  <div class="photo-hint-text">Smartfon kamerasi yoki xotiradan dars holatini tasdiqlovchi foto yuklash
+                  </div>
+                </div>
+
+                <!-- State 2: Photo taken preview -->
+                <div id="photoPreviewContainer" class="photo-preview-box" style="display: none;">
+                  <div class="photo-img-wrapper">
+                    <img id="auditPhotoImg" src="" alt="Auditoriya dars surati">
+                    <div class="photo-overlay-time" id="photoTimestampBadge">--:--</div>
+                  </div>
+                  <div class="photo-preview-details">
+                    <div class="photo-info-row">
+                      <span class="photo-verified-tag">✓ Foto-dalil biriktirildi</span>
+                      <span class="photo-size-text" id="photoSizeBadge">~200 KB</span>
+                    </div>
+                    <div class="photo-btn-group">
+                      <button type="button" class="btn-photo-action retake" id="btnRetakePhoto">
+                        <span>🔄</span> Boshqa rasm olish
+                      </button>
+                      <button type="button" class="btn-photo-action delete" id="btnDeletePhoto">
+                        <span>🗑</span> O'chirish
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- Submit Button -->
               <button type="submit" class="btn-submit-attendance" id="btnSubmitAttendance">
                 <span>✅</span> Saqlash va DAVOMAT.xlsx ga Yozish
@@ -500,15 +555,15 @@
               <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                 <button type="button" class="chip-btn" id="btnPrintExcelTable"
                   style="display:flex; align-items:center; gap:0.4rem; padding:0.5rem 0.9rem; font-weight:700;">
-                  <span>🖨</span> Chop etish (Print)
+                  Chop etish (Print)
                 </button>
                 <a href="/api/excel/download?faculty=aniq-fanlar" class="chip-btn active" id="btnDownloadFacultyExcel"
                   style="display:flex; align-items:center; gap:0.4rem; padding:0.5rem 0.9rem; text-decoration:none; font-weight:700;">
-                  <span>📥</span> Tanlangan Fakultet (.xlsx)
+                  Tanlangan Fakultet (.xlsx)
                 </a>
                 <a href="/api/excel/download?faculty=all" class="btn-excel-download"
                   style="font-size:0.82rem; padding:0.5rem 0.9rem;">
-                  <span>📁</span> Barcha Fakultetlar (.xlsx)
+                  Barcha Fakultetlar (.xlsx)
                 </a>
               </div>
             </div>
@@ -846,20 +901,61 @@
         <p class="auth-modal-subtitle">Tizimga kirish uchun login va parolingizni kiriting</p>
       </div>
 
+      <!-- Tezkor kirish (Akkauntni 1 bosishda tanlash) -->
+      <div class="quick-role-section">
+        <div class="quick-role-label">⚡ Tezkor kirish (Akkauntni tanlang):</div>
+        <div class="quick-role-grid">
+          <button type="button" class="quick-role-btn active" data-login="admin" data-pass="123">
+            <span class="quick-role-icon">👑</span>
+            <span>Admin</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-login="aniq" data-pass="123">
+            <span class="quick-role-icon">🔬</span>
+            <span>Aniq fan</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-login="filologiya" data-pass="123">
+            <span class="quick-role-icon">📚</span>
+            <span>Filologiya</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-login="ijtimoiy" data-pass="123">
+            <span class="quick-role-icon">🌍</span>
+            <span>Ijtimoiy</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-login="boshlangich" data-pass="123">
+            <span class="quick-role-icon">✏️</span>
+            <span>Boshlang'ich</span>
+          </button>
+          <button type="button" class="quick-role-btn" data-login="pedagogika" data-pass="123">
+            <span class="quick-role-icon">🧠</span>
+            <span>Pedagogika</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Login Form -->
       <form id="loginForm" style="display: flex; flex-direction: column; gap: 1rem;">
         <div class="auth-error-banner" id="loginErrorBanner"></div>
 
         <div class="auth-input-group">
           <label class="auth-input-label" for="loginUsername">👤 Foydalanuvchi nomi (Login)</label>
-          <input type="text" id="loginUsername" class="auth-input" value=""
-            placeholder="Loginni kiriting (admin yoki uslubchi)" required autocomplete="username" autofocus>
+          <input type="text" id="loginUsername" class="auth-input" value="admin"
+            placeholder="Masalan: admin yoki aniq, filologiya..." required autocomplete="username" autofocus>
         </div>
 
         <div class="auth-input-group">
           <label class="auth-input-label" for="loginPassword">🔑 Parol</label>
-          <input type="password" id="loginPassword" class="auth-input" value="" placeholder="Parolingizni kiriting"
-            required autocomplete="current-password">
+          <div class="auth-password-wrapper">
+            <input type="password" id="loginPassword" class="auth-input" value="123" placeholder="Parolni kiriting"
+              required autocomplete="current-password">
+            <button type="button" class="btn-toggle-password" id="btnTogglePassword" aria-label="Parolni ko'rsatish"
+              title="Parolni ko'rsatish/yashirish">
+              👁️
+            </button>
+          </div>
+          <div class="auth-hint-row">
+            <span>Standart parol: <strong class="auth-hint-badge">123</strong></span>
+            <span>Barcha hisoblar uchun</span>
+          </div>
         </div>
 
         <button type="submit" class="btn-auth-submit" id="btnLoginSubmit">
@@ -870,11 +966,40 @@
     </div>
   </div>
 
+  <!-- ================= CLASSROOM PHOTO LIGHTBOX MODAL ================= -->
+  <div class="photo-modal-overlay" id="photoModalOverlay" style="display: none;" role="dialog" aria-modal="true">
+    <div class="photo-modal-backdrop" id="photoModalBackdrop"></div>
+    <div class="photo-modal-card">
+      <div class="photo-modal-header">
+        <div class="photo-modal-info">
+          <div class="photo-modal-title" id="photoModalTitle">261-Fizika • 104-xona</div>
+          <div class="photo-modal-meta" id="photoModalMeta">O'qituvchi: Alimov B. • 1-para</div>
+        </div>
+        <button type="button" class="btn-close-modal" id="btnClosePhotoModal" aria-label="Yopish">✕</button>
+      </div>
+      <div class="photo-modal-body">
+        <div class="photo-modal-img-container">
+          <img id="photoModalImg" src="" alt="Auditoriya dars surati">
+        </div>
+        <div class="photo-modal-footer">
+          <div class="photo-modal-details">
+            <span id="photoModalAuditor">👤 Tekshiruvchi: Uslubchi</span>
+            <span id="photoModalTime">⏰ 10:15</span>
+          </div>
+          <a id="photoModalDownloadBtn" href="" download="UrDPI_Dars_Surati.jpg" class="btn-download-photo"
+            target="_blank" rel="noopener">
+            <span>📥</span> Asl rasmni ko'rish / yuklab olish
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Main Frontend Application Logic -->
-  <script src="/js/app.js?v=2.6"></script>
+  <script src="/js/app.js?v=3.2"></script>
 </body>
 
 </html>

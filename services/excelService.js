@@ -322,6 +322,58 @@ class ExcelService {
     cell.value = parseInt(entry.presentCount, 10);
     cell.alignment = { horizontal: 'center', vertical: 'middle' };
 
+    // Attach note if provided
+    if (entry.notes && String(entry.notes).trim()) {
+      cell.note = `${entry.auditor || 'Uslubchi'}: ${String(entry.notes).trim()}`;
+    }
+
+    // Helper to get numeric value
+    const parseNum = (v) => {
+      if (typeof v === 'number') return v;
+      if (v && typeof v.result === 'number') return v.result;
+      const parsed = parseFloat(v);
+      return !isNaN(parsed) ? parsed : null;
+    };
+
+    // Calculate and store formula result for this group's daily %
+    const hemisVal = parseNum(targetSheet.getCell(`D${targetRow}`).value) || 25;
+    const p1 = parseNum(targetSheet.getCell(targetRow, baseCol).value);
+    const p2 = parseNum(targetSheet.getCell(targetRow, baseCol + 1).value);
+    const p3 = parseNum(targetSheet.getCell(targetRow, baseCol + 2).value);
+    const pairNums = [p1, p2, p3].filter(v => v !== null);
+
+    if (pairNums.length > 0 && hemisVal > 0) {
+      const avgDay = pairNums.reduce((a, b) => a + b, 0) / pairNums.length;
+      const dayRate = +(avgDay / hemisVal).toFixed(4);
+      const dayPctCell = targetSheet.getCell(targetRow, baseCol + 3);
+      const colL1 = targetSheet.getColumn(baseCol).letter;
+      const colL3 = targetSheet.getColumn(baseCol + 2).letter;
+      const formula = dayPctCell.value && dayPctCell.value.formula
+        ? dayPctCell.value.formula
+        : `IFERROR(AVERAGE(${colL1}${targetRow}:${colL3}${targetRow})/D${targetRow},"")`;
+      dayPctCell.value = { formula, result: dayRate };
+      dayPctCell.numFmt = '0.0%';
+    }
+
+    // Calculate weekly rate
+    const weekBaseCols = [5, 9, 13, 17, 21, 25];
+    const dayRates = [];
+    weekBaseCols.forEach(b => {
+      const cellVal = targetSheet.getCell(targetRow, b + 3).value;
+      const rate = parseNum(cellVal);
+      if (rate !== null) dayRates.push(rate);
+    });
+
+    if (dayRates.length > 0) {
+      const haftaRate = +(dayRates.reduce((a, b) => a + b, 0) / dayRates.length).toFixed(4);
+      const haftaCell = targetSheet.getCell(`AC${targetRow}`);
+      const hFormula = haftaCell.value && haftaCell.value.formula
+        ? haftaCell.value.formula
+        : `IFERROR(AVERAGE(H${targetRow},L${targetRow},P${targetRow},T${targetRow},X${targetRow},AB${targetRow}),"")`;
+      haftaCell.value = { formula: hFormula, result: haftaRate };
+      haftaCell.numFmt = '0.0%';
+    }
+
     // Update Overview sheet
     this.updateOverviewSheetData(wb, faculties);
 
@@ -475,8 +527,84 @@ class ExcelService {
         }
         rowValues.push(val !== undefined && val !== null ? val : '');
       }
+      // Dynamically calculate missing day % and hafta % for rows >= 4
+      if (rowNumber >= 4) {
+        const hemisVal = parseFloat(rowValues[3]) || 0;
+        const dayPctIndices = [7, 11, 15, 19, 23, 27];
+        const dayRates = [];
+
+        dayPctIndices.forEach(pctIdx => {
+          let currPct = rowValues[pctIdx];
+          if (currPct !== '' && currPct !== null && currPct !== undefined && !isNaN(parseFloat(currPct))) {
+            dayRates.push(parseFloat(currPct));
+          } else {
+            const p1 = parseFloat(rowValues[pctIdx - 3]);
+            const p2 = parseFloat(rowValues[pctIdx - 2]);
+            const p3 = parseFloat(rowValues[pctIdx - 1]);
+            const pairs = [p1, p2, p3].filter(v => !isNaN(v));
+
+            if (pairs.length > 0 && hemisVal > 0) {
+              const avg = pairs.reduce((a, b) => a + b, 0) / pairs.length;
+              const rate = +(avg / hemisVal).toFixed(4);
+              rowValues[pctIdx] = rate;
+              dayRates.push(rate);
+            }
+          }
+        });
+
+        // Hafta % (column index 28)
+        let weekPct = rowValues[28];
+        if ((weekPct === '' || weekPct === null || weekPct === undefined || isNaN(parseFloat(weekPct))) && dayRates.length > 0) {
+          const avgWeek = dayRates.reduce((a, b) => a + b, 0) / dayRates.length;
+          rowValues[28] = +avgWeek.toFixed(4);
+        }
+      }
+
       grid.push({ rowNumber, values: rowValues });
     });
+
+    // Also compute JAMI row sums & percentages if empty
+    const jamiRowObj = grid.find(r => r.rowNumber >= 4 && String(r.values[2] || '').includes('JAMI'));
+    if (jamiRowObj) {
+      const dataRows = grid.filter(r => r.rowNumber >= 4 && !String(r.values[2] || '').includes('JAMI'));
+      // Total Hemis
+      if (!jamiRowObj.values[3] || isNaN(parseFloat(jamiRowObj.values[3]))) {
+        const totHemis = dataRows.reduce((sum, r) => sum + (parseFloat(r.values[3]) || 0), 0);
+        jamiRowObj.values[3] = totHemis;
+      }
+      const totHemis = parseFloat(jamiRowObj.values[3]) || 1;
+
+      // For each day (columns 4..27)
+      const dayCols = [4, 8, 12, 16, 20, 24];
+      const jamiDayRates = [];
+      dayCols.forEach(bCol => {
+        const pairAverages = [];
+        for (let p = 0; p < 3; p++) {
+          const colIdx = bCol + p;
+          const colSum = dataRows.reduce((sum, r) => {
+            const val = parseFloat(r.values[colIdx]);
+            return sum + (!isNaN(val) ? val : 0);
+          }, 0);
+          const hasAny = dataRows.some(r => !isNaN(parseFloat(r.values[colIdx])));
+          if (hasAny) {
+            jamiRowObj.values[colIdx] = colSum;
+            pairAverages.push(colSum);
+          }
+        }
+        const pctIdx = bCol + 3;
+        if (pairAverages.length > 0 && totHemis > 0) {
+          const avg = pairAverages.reduce((a, b) => a + b, 0) / pairAverages.length;
+          const rate = +(avg / totHemis).toFixed(4);
+          jamiRowObj.values[pctIdx] = rate;
+          jamiDayRates.push(rate);
+        }
+      });
+
+      if (jamiDayRates.length > 0) {
+        const weekAvg = +(jamiDayRates.reduce((a, b) => a + b, 0) / jamiDayRates.length).toFixed(4);
+        jamiRowObj.values[28] = weekAvg;
+      }
+    }
 
     return {
       faculty,

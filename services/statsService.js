@@ -366,6 +366,7 @@ class StatsService {
       hemisTotal: parseInt(entry.hemisTotal) || 25,
       absentStudents: entry.absentStudents || [],
       excusedCount: parseInt(entry.excusedCount) || 0,
+      photoUrl: entry.photoUrl || null,
       notes: entry.notes || '',
       auditor: entry.auditor || 'Inspektor'
     };

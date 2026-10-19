@@ -21,7 +21,8 @@ const state = {
   hemisTotal: 25,
   studentRoster: [],
   mode: 'quick', // 'quick' or 'roster'
-  activeExcelFaculty: 'aniq-fanlar'
+  activeExcelFaculty: 'aniq-fanlar',
+  currentPhotoBase64: null
 };
 
 // 3 ta O'qish Vaqti (Smena va Paralar jadvali)
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initClockAndPair();
   initFormInteractions();
+  initPhotoAudit();
   initDashboardEvents();
   initExcelViewer();
   initSettingsForms();
@@ -82,6 +84,33 @@ function initAuth() {
   const btnLogout = document.getElementById('btnLogout');
   const changePasswordForm = document.getElementById('changePasswordForm');
   const topbarProfile = document.getElementById('topbarUserProfile');
+
+  // Quick role buttons
+  const quickRoleBtns = document.querySelectorAll('.quick-role-btn');
+  quickRoleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      quickRoleBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const login = btn.getAttribute('data-login');
+      const pass = btn.getAttribute('data-pass');
+      const userInput = document.getElementById('loginUsername');
+      const passInput = document.getElementById('loginPassword');
+      if (userInput) userInput.value = login || '';
+      if (passInput) passInput.value = pass || '123';
+      if (loginError) loginError.style.display = 'none';
+    });
+  });
+
+  // Password toggle
+  const btnTogglePassword = document.getElementById('btnTogglePassword');
+  const loginPasswordInput = document.getElementById('loginPassword');
+  if (btnTogglePassword && loginPasswordInput) {
+    btnTogglePassword.addEventListener('click', () => {
+      const isPass = loginPasswordInput.type === 'password';
+      loginPasswordInput.type = isPass ? 'text' : 'password';
+      btnTogglePassword.textContent = isPass ? '🙈' : '👁️';
+    });
+  }
 
   // Login form submit
   if (loginForm) {
@@ -1289,6 +1318,7 @@ async function handleAttendanceSubmit(e) {
       presentCount: state.presentCount,
       hemisTotal: state.hemisTotal,
       absentStudents: absentList,
+      photoBase64: state.currentPhotoBase64 || null,
       notes: notesInput.value,
       auditor: auditorName
     };
@@ -1306,6 +1336,7 @@ async function handleAttendanceSubmit(e) {
     }
 
     showToast(data.message, 'success');
+    resetPhotoAudit();
 
     // Trigger celebration / refresh
     btnSubmit.innerHTML = `<span>✅</span> Saqlandi va Excel yangilandi!`;
@@ -1470,6 +1501,37 @@ async function loadDashboardStats() {
           const shiftLabel = log.shiftName ? `${log.shiftName} • ` : '';
           const timeLabel = log.pairTime ? ` (${log.pairTime})` : '';
 
+          const photoBtnHtml = log.photoUrl ? `
+            <button type="button" class="audit-photo-btn" 
+              data-photo="${log.photoUrl}" 
+              data-title="${log.groupId} • ${log.room}" 
+              data-meta="O'qituvchi: ${log.teacher || 'Belgilanmagan'} • ${log.pair}-para" 
+              data-auditor="${log.auditor || 'Uslubchi'}" 
+              data-time="${log.time || ''} ${log.date || ''}"
+              title="Auditoriya dars rasmini ko'rish">
+              <span>📸</span> Foto-fakt
+            </button>
+          ` : '';
+
+          const noteText = (log.notes && String(log.notes).trim()) ? String(log.notes).trim() : '';
+          const noteBtnHtml = noteText ? `
+            <button type="button" class="audit-note-btn" 
+              data-note="${encodeURIComponent(noteText)}"
+              data-group="${encodeURIComponent(log.groupId || '')}"
+              data-auditor="${encodeURIComponent(log.auditor || 'Uslubchi')}"
+              data-time="${encodeURIComponent((log.time || '') + ' ' + (log.date || ''))}"
+              title="Eslatma: ${noteText.replace(/"/g, '&quot;')} (Bosilsa to'liq ko'rsatiladi)">
+              <span>📝</span> ${noteText.length > 20 ? noteText.slice(0, 18) + '...' : noteText}
+            </button>
+          ` : '';
+
+          const actionsHtml = (photoBtnHtml || noteBtnHtml) ? `
+            <div class="audit-actions-row">
+              ${photoBtnHtml}
+              ${noteBtnHtml}
+            </div>
+          ` : '';
+
           card.innerHTML = `
             <div class="audit-left">
               <span class="audit-room-tag">${log.room}</span>
@@ -1479,13 +1541,38 @@ async function loadDashboardStats() {
               </div>
             </div>
             <div class="audit-right">
-              <div class="audit-rate-num" style="color: ${rate >= 90 ? '#34d399' : (rate >= 80 ? '#fbbf24' : '#fb7185')};">
+              <div class="audit-rate-num" style="color: ${rate >= 90 ? '#16a34a' : (rate >= 80 ? '#d97706' : '#dc2626')};">
                 ${rate}%
               </div>
               <div class="audit-time-tag">${log.time || '10:00'} • ${log.presentCount}/${log.hemisTotal}</div>
+              ${actionsHtml}
             </div>
           `;
           auditStream.appendChild(card);
+        });
+
+        // Attach click listeners for photo buttons
+        auditStream.querySelectorAll('.audit-photo-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const photoUrl = btn.getAttribute('data-photo');
+            const title = btn.getAttribute('data-title');
+            const meta = btn.getAttribute('data-meta');
+            const auditor = btn.getAttribute('data-auditor');
+            const time = btn.getAttribute('data-time');
+            openPhotoModal(photoUrl, title, meta, auditor, time);
+          });
+        });
+
+        // Attach click listeners for note buttons
+        auditStream.querySelectorAll('.audit-note-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const note = decodeURIComponent(btn.getAttribute('data-note') || '');
+            const group = decodeURIComponent(btn.getAttribute('data-group') || '');
+            const auditor = decodeURIComponent(btn.getAttribute('data-auditor') || '');
+            showToast(`<b>📝 ${group}</b> (${auditor}):<br>${note}`, 'info');
+          });
         });
       }
     }
@@ -1632,27 +1719,102 @@ async function loadExcelGrid(facultyId) {
     }
     thead.innerHTML = headHtml;
 
+    // Separate data rows and calculate faculty HEMIS total
+    const dataRows = rows.filter(r => r.rowNumber >= 4 && !String(r.values[2] || '').includes('JAMI'));
+    const totalHemisFaculty = dataRows.reduce((sum, r) => sum + (parseFloat(r.values[3]) || 0), 0);
+
     // Body rows (Row 4 onwards)
     let bodyHtml = '';
     rows.filter(r => r.rowNumber >= 4).forEach(r => {
       const vals = r.values;
       const isTotalRow = String(vals[2] || '').includes('JAMI');
       
-      bodyHtml += `<tr class="${isTotalRow ? 'total-row' : ''}" style="${isTotalRow ? 'font-weight:800; background:rgba(255,255,255,0.06);' : ''}">`;
+      bodyHtml += `<tr class="${isTotalRow ? 'total-row' : ''}">`;
       bodyHtml += `<td class="col-sticky-kurs">${vals[1] || ''}</td>`;
       bodyHtml += `<td class="col-sticky-guruh" style="text-align:left; font-weight:700;">${vals[2] || ''}</td>`;
-      bodyHtml += `<td class="col-sticky-hemis" style="font-weight:700; color:#38bdf8;">${vals[3] || ''}</td>`;
+      
+      const hemisDisplay = isTotalRow ? (totalHemisFaculty || vals[3] || '') : (vals[3] || '');
+      bodyHtml += `<td class="col-sticky-hemis" style="font-weight:700; color:#38bdf8;">${hemisDisplay}</td>`;
 
       // 6 days * 4 columns (1-p, 2-p, 3-p, %)
+      const rowDayPcts = [];
       for (let c = 4; c < 28; c++) {
         const val = vals[c];
         const isPct = (c - 4) % 4 === 3;
-        
         let cellClass = isPct ? 'pct-cell' : '';
         let displayVal = val !== undefined && val !== null ? val : '';
-        
-        if (isPct && typeof val === 'number') {
-          displayVal = (val * 100).toFixed(0) + '%';
+
+        if (isTotalRow) {
+          if (!isPct) {
+            // Pair column sum (1-p, 2-p, 3-p) across all groups in this faculty
+            let colSum = 0;
+            let hasAny = false;
+            dataRows.forEach(dr => {
+              const num = parseFloat(dr.values[c]);
+              if (!isNaN(num) && num > 0) {
+                colSum += num;
+                hasAny = true;
+              }
+            });
+            displayVal = hasAny ? colSum : (displayVal && !isNaN(parseFloat(displayVal)) ? displayVal : '');
+          } else {
+            // Day percentage column for JAMI row
+            const dayPairSums = [];
+            [c - 3, c - 2, c - 1].forEach(colIdx => {
+              let pSum = 0;
+              let hasP = false;
+              dataRows.forEach(dr => {
+                const num = parseFloat(dr.values[colIdx]);
+                if (!isNaN(num) && num > 0) {
+                  pSum += num;
+                  hasP = true;
+                }
+              });
+              if (hasP) dayPairSums.push(pSum);
+            });
+
+            if (dayPairSums.length > 0 && totalHemisFaculty > 0) {
+              const avgP = dayPairSums.reduce((a, b) => a + b, 0) / dayPairSums.length;
+              const pct = (avgP / totalHemisFaculty) * 100;
+              displayVal = pct.toFixed(1) + '%';
+              rowDayPcts.push(pct);
+              if (pct >= 90) cellClass += ' pct-good';
+              else if (pct >= 80) cellClass += ' pct-warn';
+              else if (pct > 0) cellClass += ' pct-bad';
+            } else {
+              displayVal = '-';
+            }
+          }
+        } else {
+          // Regular group row
+          if (isPct) {
+            let numVal = parseFloat(displayVal);
+            if (!isNaN(numVal)) {
+              const pct = numVal <= 1 ? numVal * 100 : numVal;
+              displayVal = pct.toFixed(0) + '%';
+              rowDayPcts.push(pct);
+              if (pct >= 90) cellClass += ' pct-good';
+              else if (pct >= 80) cellClass += ' pct-warn';
+              else if (pct > 0) cellClass += ' pct-bad';
+            } else {
+              const hemis = parseFloat(vals[3]) || 0;
+              const p1 = parseFloat(vals[c - 3]);
+              const p2 = parseFloat(vals[c - 2]);
+              const p3 = parseFloat(vals[c - 1]);
+              const pairs = [p1, p2, p3].filter(p => !isNaN(p));
+              if (pairs.length > 0 && hemis > 0) {
+                const avg = pairs.reduce((a, b) => a + b, 0) / pairs.length;
+                const pct = (avg / hemis) * 100;
+                displayVal = pct.toFixed(0) + '%';
+                rowDayPcts.push(pct);
+                if (pct >= 90) cellClass += ' pct-good';
+                else if (pct >= 80) cellClass += ' pct-warn';
+                else if (pct > 0) cellClass += ' pct-bad';
+              } else {
+                displayVal = '-';
+              }
+            }
+          }
         }
 
         bodyHtml += `<td class="${cellClass}">${displayVal}</td>`;
@@ -1660,13 +1822,20 @@ async function loadExcelGrid(facultyId) {
 
       // Hafta %
       const haftaVal = vals[28];
-      let haftaText = haftaVal ? (typeof haftaVal === 'number' ? (haftaVal * 100).toFixed(0) + '%' : haftaVal) : '-';
-      bodyHtml += `<td style="font-weight:800; color:#34d399;">${haftaText}</td>`;
+      let haftaText = '-';
+      let hNum = parseFloat(haftaVal);
+      if (!isNaN(hNum)) {
+        const pct = hNum <= 1 ? hNum * 100 : hNum;
+        haftaText = (isTotalRow ? pct.toFixed(1) : pct.toFixed(0)) + '%';
+      } else if (rowDayPcts.length > 0) {
+        const avgH = rowDayPcts.reduce((a, b) => a + b, 0) / rowDayPcts.length;
+        haftaText = (isTotalRow ? avgH.toFixed(1) : avgH.toFixed(0)) + '%';
+      }
+      bodyHtml += `<td style="font-weight:800; color:#34d399; font-family:'JetBrains Mono';">${haftaText}</td>`;
       bodyHtml += '</tr>';
     });
 
     tbody.innerHTML = bodyHtml;
-
   } catch (err) {
     console.error('Error rendering Excel grid:', err);
     thead.innerHTML = '<tr><th colspan="20" style="color:var(--status-bad);">Excel jadvalini yuklashda xatolik</th></tr>';
@@ -1806,3 +1975,194 @@ function showToast(message, type = 'info') {
     setTimeout(() => toast.remove(), 300);
   }, 4000);
 }
+
+// ================= 📸 AUDITORIYA FOTO-FAKTI (CLASSROOM PHOTO AUDIT) =================
+function initPhotoAudit() {
+  const photoInput = document.getElementById('auditPhotoInput');
+  const emptyBox = document.getElementById('photoEmptyState');
+  const btnRetake = document.getElementById('btnRetakePhoto');
+  const btnDelete = document.getElementById('btnDeletePhoto');
+  const modalBackdrop = document.getElementById('photoModalBackdrop');
+  const btnCloseModal = document.getElementById('btnClosePhotoModal');
+
+  if (emptyBox && photoInput) {
+    emptyBox.addEventListener('click', () => photoInput.click());
+    emptyBox.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        photoInput.click();
+      }
+    });
+  }
+
+  if (btnRetake && photoInput) {
+    btnRetake.addEventListener('click', () => photoInput.click());
+  }
+
+  if (btnDelete) {
+    btnDelete.addEventListener('click', () => {
+      resetPhotoAudit();
+      showToast('Auditoriya surati olib tashlandi', 'info');
+    });
+  }
+
+  if (photoInput) {
+    photoInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        showToast('Iltimos, faqat rasm faylini tanlang!', 'error');
+        return;
+      }
+
+      showToast('Rasm qayta ishlanmoqda va siqilmoqda...', 'info');
+
+      try {
+        const compressed = await processAndCompressImage(file);
+        state.currentPhotoBase64 = compressed.base64;
+
+        const imgPreview = document.getElementById('auditPhotoImg');
+        const previewContainer = document.getElementById('photoPreviewContainer');
+        const emptyState = document.getElementById('photoEmptyState');
+        const statusBadge = document.getElementById('photoStatusBadge');
+        const sizeBadge = document.getElementById('photoSizeBadge');
+        const timeBadge = document.getElementById('photoTimestampBadge');
+
+        if (imgPreview) imgPreview.src = compressed.base64;
+        if (sizeBadge) sizeBadge.textContent = `~${compressed.sizeKb} KB (optimallashtirildi)`;
+        if (timeBadge) timeBadge.textContent = new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit' });
+
+        if (statusBadge) {
+          statusBadge.className = 'photo-status-badge verified';
+          statusBadge.textContent = '✓ Rasm biriktirildi';
+        }
+
+        if (emptyState) emptyState.style.display = 'none';
+        if (previewContainer) previewContainer.style.display = 'flex';
+
+        showToast('Auditoriya surati muvaffaqiyatli tayyorlandi! ✅', 'success');
+      } catch (err) {
+        console.error('Photo compression error:', err);
+        showToast('Rasmni yuklashda xatolik yuz berdi', 'error');
+      }
+    });
+  }
+
+  // Modal close handlers
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', closePhotoModal);
+  }
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', closePhotoModal);
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closePhotoModal();
+    }
+  });
+}
+
+// Compress and resize photo client-side using Canvas
+function processAndCompressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX_WIDTH = 1200;
+        const MAX_HEIGHT = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width = Math.round((width * MAX_HEIGHT) / height);
+            height = MAX_HEIGHT;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Quality 0.78 JPEG gives outstanding clarity while keeping size ~120-250KB
+        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.78);
+        const approxSizeKb = Math.round((compressedBase64.length * 3) / 4 / 1024);
+
+        resolve({
+          base64: compressedBase64,
+          sizeKb: approxSizeKb
+        });
+      };
+      img.onerror = () => reject(new Error('Rasmni yuklab bo\'lmadi'));
+      img.src = e.target.result;
+    };
+    reader.onerror = () => reject(new Error('Faylni o\'qishda xatolik'));
+    reader.readAsDataURL(file);
+  });
+}
+
+// Reset photo audit state & UI
+function resetPhotoAudit() {
+  state.currentPhotoBase64 = null;
+  const photoInput = document.getElementById('auditPhotoInput');
+  const imgPreview = document.getElementById('auditPhotoImg');
+  const previewContainer = document.getElementById('photoPreviewContainer');
+  const emptyState = document.getElementById('photoEmptyState');
+  const statusBadge = document.getElementById('photoStatusBadge');
+
+  if (photoInput) photoInput.value = '';
+  if (imgPreview) imgPreview.src = '';
+  if (previewContainer) previewContainer.style.display = 'none';
+  if (emptyState) emptyState.style.display = 'flex';
+
+  if (statusBadge) {
+    statusBadge.className = 'photo-status-badge empty';
+    statusBadge.textContent = 'Rasm yo\'q';
+  }
+}
+
+// Open Lightbox Photo Modal
+function openPhotoModal(photoUrl, title, meta, auditor, time) {
+  const modal = document.getElementById('photoModalOverlay');
+  const img = document.getElementById('photoModalImg');
+  const titleEl = document.getElementById('photoModalTitle');
+  const metaEl = document.getElementById('photoModalMeta');
+  const auditorEl = document.getElementById('photoModalAuditor');
+  const timeEl = document.getElementById('photoModalTime');
+  const downloadBtn = document.getElementById('photoModalDownloadBtn');
+
+  if (!modal || !img) return;
+
+  img.src = photoUrl;
+  if (titleEl) titleEl.textContent = title || 'Auditoriya Foto-fakti';
+  if (metaEl) metaEl.textContent = meta || '';
+  if (auditorEl) auditorEl.textContent = `👤 Tekshiruvchi: ${auditor || 'Uslubchi'}`;
+  if (timeEl) timeEl.textContent = `⏰ ${time || ''}`;
+  if (downloadBtn) {
+    downloadBtn.href = photoUrl;
+    downloadBtn.setAttribute('download', `UrDPI_Audit_${(title || 'foto').replace(/[^a-zA-Z0-9]/g, '_')}.jpg`);
+  }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+// Close Lightbox Photo Modal
+function closePhotoModal() {
+  const modal = document.getElementById('photoModalOverlay');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+window.openPhotoModal = openPhotoModal;
+window.closePhotoModal = closePhotoModal;

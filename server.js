@@ -24,7 +24,8 @@ app.get(['/health', '/api/health'], (req, res) => {
 });
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/davomat', express.static(path.join(__dirname, 'public')));
 app.use('/davomat', express.static(__dirname));
@@ -37,6 +38,11 @@ const TEACHERS_FILE = path.join(DATA_DIR, 'teachers.json');
 const ROOMS_FILE = path.join(DATA_DIR, 'rooms.json');
 const STUDENTS_FILE = path.join(DATA_DIR, 'students.json');
 const EXCEL_FILE = path.join(__dirname, 'DAVOMAT.xlsx');
+const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads', 'attendance');
+
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
 
 // Helper to read JSON
 const readJson = (file) => {
@@ -63,13 +69,14 @@ app.post('/api/auth/login', (req, res) => {
 
   const users = readJson(USERS_FILE);
   const cleanUser = String(username).trim().toLowerCase();
+  const cleanPass = String(password).trim();
   const user = users.find(u => 
     (u.username.toLowerCase() === cleanUser || u.id.toLowerCase() === cleanUser) && 
-    String(u.password) === String(password)
+    String(u.password).trim() === cleanPass
   );
 
   if (!user) {
-    return res.status(401).json({ error: 'Login yoki parol noto\'g\'ri!' });
+    return res.status(401).json({ error: 'Login yoki parol noto\'g\'ri! Standart parol: 123' });
   }
 
   const token = 'urdpi_' + Buffer.from(`${user.id}:${Date.now()}`).toString('base64');
@@ -228,6 +235,21 @@ app.post('/api/attendance', async (req, res) => {
 
     if (!entry.facultyId || !entry.groupId || entry.presentCount === undefined) {
       return res.status(400).json({ error: 'Fakultet, guruh va qatnashganlar soni talab qilinadi!' });
+    }
+
+    // Process photo if uploaded
+    if (entry.photoBase64 && typeof entry.photoBase64 === 'string') {
+      try {
+        const matches = entry.photoBase64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+        const base64Data = matches ? matches[2] : entry.photoBase64;
+        const photoFilename = `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.jpg`;
+        const photoPath = path.join(UPLOADS_DIR, photoFilename);
+        fs.writeFileSync(photoPath, Buffer.from(base64Data, 'base64'));
+        entry.photoUrl = `/uploads/attendance/${photoFilename}`;
+        delete entry.photoBase64; // Don't bloat JSON database with base64 string
+      } catch (photoErr) {
+        console.error('Error saving attendance photo:', photoErr);
+      }
     }
 
     // A) Add to internal database logs
