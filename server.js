@@ -120,7 +120,7 @@ app.post('/api/auth/login', (req, res) => {
   );
 
   if (!user) {
-    return res.status(401).json({ error: 'Login yoki parol noto\'g\'ri! Standart parol: 123' });
+    return res.status(401).json({ error: 'Login yoki parol noto\'g\'ri!' });
   }
 
   const token = 'urdpi_' + Buffer.from(`${user.id}:${Date.now()}`).toString('base64');

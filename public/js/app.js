@@ -85,32 +85,6 @@ function initAuth() {
   const changePasswordForm = document.getElementById('changePasswordForm');
   const topbarProfile = document.getElementById('topbarUserProfile');
 
-  // Quick role buttons
-  const quickRoleBtns = document.querySelectorAll('.quick-role-btn');
-  quickRoleBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      quickRoleBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const login = btn.getAttribute('data-login');
-      const pass = btn.getAttribute('data-pass');
-      const userInput = document.getElementById('loginUsername');
-      const passInput = document.getElementById('loginPassword');
-      if (userInput) userInput.value = login || '';
-      if (passInput) passInput.value = pass || '123';
-      if (loginError) loginError.style.display = 'none';
-    });
-  });
-
-  // Password toggle
-  const btnTogglePassword = document.getElementById('btnTogglePassword');
-  const loginPasswordInput = document.getElementById('loginPassword');
-  if (btnTogglePassword && loginPasswordInput) {
-    btnTogglePassword.addEventListener('click', () => {
-      const isPass = loginPasswordInput.type === 'password';
-      loginPasswordInput.type = isPass ? 'text' : 'password';
-      btnTogglePassword.textContent = isPass ? '🙈' : '👁️';
-    });
-  }
 
   // Login form submit
   if (loginForm) {

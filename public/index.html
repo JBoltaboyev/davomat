@@ -901,61 +901,20 @@
         <p class="auth-modal-subtitle">Tizimga kirish uchun login va parolingizni kiriting</p>
       </div>
 
-      <!-- Tezkor kirish (Akkauntni 1 bosishda tanlash) -->
-      <div class="quick-role-section">
-        <div class="quick-role-label">⚡ Tezkor kirish (Akkauntni tanlang):</div>
-        <div class="quick-role-grid">
-          <button type="button" class="quick-role-btn active" data-login="admin" data-pass="123">
-            <span class="quick-role-icon">👑</span>
-            <span>Admin</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-login="aniq" data-pass="123">
-            <span class="quick-role-icon">🔬</span>
-            <span>Aniq fan</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-login="filologiya" data-pass="123">
-            <span class="quick-role-icon">📚</span>
-            <span>Filologiya</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-login="ijtimoiy" data-pass="123">
-            <span class="quick-role-icon">🌍</span>
-            <span>Ijtimoiy</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-login="boshlangich" data-pass="123">
-            <span class="quick-role-icon">✏️</span>
-            <span>Boshlang'ich</span>
-          </button>
-          <button type="button" class="quick-role-btn" data-login="pedagogika" data-pass="123">
-            <span class="quick-role-icon">🧠</span>
-            <span>Pedagogika</span>
-          </button>
-        </div>
-      </div>
-
       <!-- Login Form -->
-      <form id="loginForm" style="display: flex; flex-direction: column; gap: 1rem;">
+      <form id="loginForm" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 0.5rem;">
         <div class="auth-error-banner" id="loginErrorBanner"></div>
 
         <div class="auth-input-group">
           <label class="auth-input-label" for="loginUsername">👤 Foydalanuvchi nomi (Login)</label>
-          <input type="text" id="loginUsername" class="auth-input" value="admin"
-            placeholder="Masalan: admin yoki aniq, filologiya..." required autocomplete="username" autofocus>
+          <input type="text" id="loginUsername" class="auth-input" value=""
+            placeholder="Loginni kiriting" required autocomplete="username" autofocus>
         </div>
 
         <div class="auth-input-group">
           <label class="auth-input-label" for="loginPassword">🔑 Parol</label>
-          <div class="auth-password-wrapper">
-            <input type="password" id="loginPassword" class="auth-input" value="123" placeholder="Parolni kiriting"
-              required autocomplete="current-password">
-            <button type="button" class="btn-toggle-password" id="btnTogglePassword" aria-label="Parolni ko'rsatish"
-              title="Parolni ko'rsatish/yashirish">
-              👁️
-            </button>
-          </div>
-          <div class="auth-hint-row">
-            <span>Standart parol: <strong class="auth-hint-badge">123</strong></span>
-            <span>Barcha hisoblar uchun</span>
-          </div>
+          <input type="password" id="loginPassword" class="auth-input" value="" placeholder="Parolingizni kiriting"
+            required autocomplete="current-password">
         </div>
 
         <button type="submit" class="btn-auth-submit" id="btnLoginSubmit">
@@ -999,7 +958,7 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Main Frontend Application Logic -->
-  <script src="/js/app.js?v=3.2"></script>
+  <script src="/js/app.js?v=3.3"></script>
 </body>
 
 </html>

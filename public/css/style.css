@@ -2326,62 +2326,6 @@ body.not-authenticated {
   color: var(--text-muted);
 }
 
-/* Quick Role Switcher Buttons */
-.quick-role-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.quick-role-label {
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.quick-role-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-}
-
-.quick-role-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0.55rem 0.35rem;
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  border-radius: var(--radius-md);
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #334155;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  text-align: center;
-  gap: 0.25rem;
-}
-
-.quick-role-btn:hover {
-  border-color: var(--primary);
-  background: #eff6ff;
-  color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.quick-role-btn.active {
-  background: #eff6ff;
-  border-color: var(--primary);
-  color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-}
-
-.quick-role-icon {
-  font-size: 1.15rem;
-}
 
 /* Auth Input Fields */
 .auth-input-group {
@@ -2413,59 +2357,7 @@ body.not-authenticated {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-.auth-password-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
 
-.auth-password-wrapper .auth-input {
-  padding-right: 2.75rem;
-}
-
-.btn-toggle-password {
-  position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.35rem 0.5rem;
-  border-radius: var(--radius-sm);
-  color: var(--text-dim);
-  font-size: 1.05rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s ease;
-}
-
-.btn-toggle-password:hover {
-  color: var(--text-main);
-  background: #f1f5f9;
-}
-
-.auth-hint-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 0.2rem;
-  font-size: 0.74rem;
-  color: var(--text-dim);
-}
-
-.auth-hint-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  background: #eff6ff;
-  color: #1d4ed8;
-  font-weight: 700;
-  padding: 0.15rem 0.45rem;
-  border-radius: 4px;
-}
 
 .auth-error-banner {
   display: none;
