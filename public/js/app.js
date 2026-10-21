@@ -7,11 +7,13 @@ const state = {
   currentUser: null,
   faculties: [],
   teachers: [],
+  auditors: [],
   rooms: [],
   selectedFaculty: null,
   selectedDirection: null,
   selectedGroup: null,
   selectedRoom: '101-auditoriya',
+  selectedAuditor: '',
   selectedShift: 'kunduzgi-1',
   shiftName: 'Kunduzgi (1-smena)',
   selectedPair: 1,
@@ -882,19 +884,29 @@ function initClockAndPair() {
 // ================= 3. LOAD INITIAL DATA =================
 async function loadSeedData() {
   try {
-    const [facsRes, teachersRes, roomsRes] = await Promise.all([
+    const [facsRes, teachersRes, roomsRes, auditorsRes] = await Promise.all([
       fetch('/api/faculties').then(r => r.json()),
       fetch('/api/teachers').then(r => r.json()),
-      fetch('/api/rooms').then(r => r.json())
+      fetch('/api/rooms').then(r => r.json()),
+      fetch('/api/auditors').then(r => r.json()).catch(() => [])
     ]);
 
     state.faculties = facsRes;
     state.teachers = teachersRes;
     state.rooms = roomsRes;
+    state.auditors = Array.isArray(auditorsRes) && auditorsRes.length > 0 ? auditorsRes : [
+      { name: 'Mavlonov Tursunbek' },
+      { name: 'Djumaniyozov Davlatyor' },
+      { name: 'Bekchanov Nizomaddin' },
+      { name: 'Yangiboyev Sanjar' },
+      { name: 'Salayev Iskandar' },
+      { name: 'G\'ayipov Jur\'at' }
+    ];
 
     populateFacultiesDropdown();
     populateRoomsDatalist();
     populateTeachersDatalist();
+    populateAuditorsDatalist();
 
     // Default select faculty based on role
     const isUslubchi = state.currentUser && state.currentUser.role === 'uslubchi' && state.currentUser.facultyId;
@@ -1040,6 +1052,45 @@ function populateTeachersDatalist() {
   });
 }
 
+function populateAuditorsDatalist() {
+  const datalist = document.getElementById('auditorsDatalist');
+  const auditorInput = document.getElementById('auditorInput');
+  if (!datalist) return;
+
+  datalist.innerHTML = '';
+
+  const savedAuditor = localStorage.getItem('urdpi_selected_auditor');
+  let activeName = '';
+
+  if (auditorInput && auditorInput.value && auditorInput.value !== 'Uslubchi' && auditorInput.value !== 'Inspektor') {
+    activeName = auditorInput.value.trim();
+  } else if (state.currentUser && state.currentUser.role === 'uslubchi') {
+    activeName = state.currentUser.name;
+  } else if (savedAuditor) {
+    activeName = savedAuditor;
+  } else if (state.auditors && state.auditors.length > 0) {
+    activeName = state.auditors[0].name;
+  }
+
+  if (auditorInput && activeName) {
+    auditorInput.value = activeName;
+  }
+
+  (state.auditors || []).forEach(a => {
+    const opt = document.createElement('option');
+    opt.value = a.name;
+    datalist.appendChild(opt);
+  });
+
+  if (auditorInput && !auditorInput._auditorSyncAttached) {
+    auditorInput._auditorSyncAttached = true;
+    auditorInput.addEventListener('input', () => {
+      const val = auditorInput.value.trim();
+      if (val) localStorage.setItem('urdpi_selected_auditor', val);
+    });
+  }
+}
+
 // ================= 4. FORM INTERACTIONS & COUNTER =================
 function initFormInteractions() {
   const dirSelect = document.getElementById('directionSelect');
@@ -1052,18 +1103,8 @@ function initFormInteractions() {
     grpSelect.addEventListener('change', (e) => onGroupChange(e.target.value));
   }
 
-  // Room Chips click
+  // Room input change
   const roomInput = document.getElementById('roomInput');
-  document.querySelectorAll('#roomChips .chip-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#roomChips .chip-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const r = btn.getAttribute('data-room');
-      state.selectedRoom = r;
-      if (roomInput) roomInput.value = r;
-    });
-  });
-
   if (roomInput) {
     roomInput.addEventListener('input', (e) => {
       state.selectedRoom = e.target.value;
@@ -1594,7 +1635,7 @@ async function loadDashboardStats() {
               </div>
               <div>
                 <div class="audit-group-title">${log.groupId}</div>
-                <div class="audit-subinfo">${log.teacher} • ${log.subject} (${shiftLabel}${log.pair}-para${timeLabel})</div>
+                <div class="audit-subinfo">${log.teacher} • ${log.subject} (${shiftLabel}${log.pair}-para${timeLabel})${log.auditor ? ` • 👤 <b>${log.auditor}</b>` : ''}</div>
               </div>
             </div>
             <div class="audit-right">
@@ -2021,6 +2062,32 @@ function initSettingsForms() {
         }
       } catch (err) {
         showToast('Xona qo\'shishda xato', 'error');
+      }
+    });
+  }
+
+  // Add Auditor
+  const addAuditorForm = document.getElementById('addAuditorForm');
+  if (addAuditorForm) {
+    addAuditorForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('newAuditorName').value;
+      const dept = document.getElementById('newAuditorDept').value;
+
+      try {
+        const res = await fetch('/api/auditors', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, department: dept })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`Tekshiruvchi (Auditor) "${name}" qo'shildi!`, 'success');
+          addAuditorForm.reset();
+          loadSeedData();
+        }
+      } catch (err) {
+        showToast('Auditor qo\'shishda xato', 'error');
       }
     });
   }

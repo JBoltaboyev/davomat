@@ -1,0 +1,44 @@
+[
+  {
+    "id": "aud_1",
+    "name": "Mavlonov Tursunbek",
+    "department": "O'quv-uslubiy boshqarma",
+    "phone": "+998 90 123-45-67",
+    "role": "auditor"
+  },
+  {
+    "id": "aud_2",
+    "name": "Djumaniyozov Davlatyor",
+    "department": "O'quv-uslubiy boshqarma",
+    "phone": "+998 91 234-56-78",
+    "role": "auditor"
+  },
+  {
+    "id": "aud_3",
+    "name": "Bekchanov Nizomaddin",
+    "department": "O'quv-uslubiy boshqarma",
+    "phone": "+998 93 345-67-89",
+    "role": "auditor"
+  },
+  {
+    "id": "aud_4",
+    "name": "Yangiboyev Sanjar",
+    "department": "O'quv-uslubiy boshqarma",
+    "phone": "+998 94 456-78-90",
+    "role": "auditor"
+  },
+  {
+    "id": "aud_5",
+    "name": "Salayev Iskandar",
+    "department": "O'quv-uslubiy boshqarma",
+    "phone": "+998 97 567-89-01",
+    "role": "auditor"
+  },
+  {
+    "id": "aud_6",
+    "name": "G'ayipov Jur'at",
+    "department": "O'quv-uslubiy boshqarma",
+    "phone": "+998 90 678-90-12",
+    "role": "auditor"
+  }
+]

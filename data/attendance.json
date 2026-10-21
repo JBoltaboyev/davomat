@@ -16,7 +16,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "To'liq qatnashish, dars jadval asosida",
-    "auditor": "Inspektor Aliyev"
+    "auditor": "Mavlonov Tursunbek"
   },
   {
     "id": "att_1791960253834_mndwk",
@@ -35,7 +35,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "1 talaba betob",
-    "auditor": "Inspektor Aliyev"
+    "auditor": "Djumaniyozov Davlatyor"
   },
   {
     "id": "att_1791960253835_6z4zp",
@@ -54,7 +54,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "A'lo davomat",
-    "auditor": "Inspektor Aliyev"
+    "auditor": "Bekchanov Nizomaddin"
   },
   {
     "id": "att_1791960253836_ykd8c",
@@ -73,7 +73,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "Barcha talabalar joyida",
-    "auditor": "Inspektor Aliyev"
+    "auditor": "Yangiboyev Sanjar"
   },
   {
     "id": "att_1791960253837_kcqd9",
@@ -92,7 +92,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "2 talaba sababli",
-    "auditor": "Nazoratchi Karimova"
+    "auditor": "Salayev Iskandar"
   },
   {
     "id": "att_1791960253838_plfal",
@@ -111,7 +111,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "Kompyuter sinfida amaliy dars",
-    "auditor": "Nazoratchi Karimova"
+    "auditor": "G'ayipov Jur'at"
   },
   {
     "id": "att_1791960253839_p6i85",
@@ -130,7 +130,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "1 talaba kechikib keldi",
-    "auditor": "Inspektor Aliyev"
+    "auditor": "Mavlonov Tursunbek"
   },
   {
     "id": "att_1791960253840_kl1kv",
@@ -149,7 +149,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "Laboratoriya mashg'uloti",
-    "auditor": "Nazoratchi Karimova"
+    "auditor": "Djumaniyozov Davlatyor"
   },
   {
     "id": "att_1791960253845_p5dyw",
@@ -168,7 +168,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "2 talaba uzrli",
-    "auditor": "Nazoratchi Karimova"
+    "auditor": "Bekchanov Nizomaddin"
   },
   {
     "id": "att_1791960580703_0yq3k",
@@ -187,7 +187,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "API verification check",
-    "auditor": "Inspektor"
+    "auditor": "Yangiboyev Sanjar"
   },
   {
     "id": "att_1791960952503_igvkh",
@@ -248,7 +248,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "",
-    "auditor": "Inspektor Aliyev"
+    "auditor": "Mavlonov Tursunbek"
   },
   {
     "id": "att_1792038233832_qajty",
@@ -343,7 +343,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "",
-    "auditor": "Inspektor Aliyev"
+    "auditor": "G'ayipov Jur'at"
   },
   {
     "id": "att_1792044900381_2l61b",
@@ -381,7 +381,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "",
-    "auditor": "Inspektor Aliyev"
+    "auditor": "Djumaniyozov Davlatyor"
   },
   {
     "id": "att_1792065569106_elmrq",
@@ -400,7 +400,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "A'lo qatnashish",
-    "auditor": "Inspektor"
+    "auditor": "Bekchanov Nizomaddin"
   },
   {
     "id": "att_1792212715254_1qfpz",
@@ -422,7 +422,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "Sinov davomati",
-    "auditor": "Inspektor"
+    "auditor": "Yangiboyev Sanjar"
   },
   {
     "id": "att_1792214265241_d1h0m",
@@ -446,7 +446,7 @@
     ],
     "excusedCount": 0,
     "notes": "2-para davomati",
-    "auditor": "Inspektor"
+    "auditor": "Salayev Iskandar"
   },
   {
     "id": "att_1792214485580_vlm0d",
@@ -490,7 +490,7 @@
     "absentStudents": [],
     "excusedCount": 0,
     "notes": "",
-    "auditor": "Uslubchi"
+    "auditor": "Mavlonov Tursunbek"
   },
   {
     "id": "att_1792221832171_7pn9l",
@@ -535,7 +535,7 @@
     "excusedCount": 0,
     "photoUrl": "/uploads/attendance/audit_1792387126093_6vexu.jpg",
     "notes": "",
-    "auditor": "Uslubchi"
+    "auditor": "Bekchanov Nizomaddin"
   },
   {
     "id": "att_1792388634647_94tch",
@@ -558,7 +558,7 @@
     "excusedCount": 0,
     "photoUrl": "/uploads/attendance/audit_1792388634645_w6ugc.jpg",
     "notes": "efgasfgar",
-    "auditor": "Uslubchi"
+    "auditor": "Yangiboyev Sanjar"
   },
   {
     "id": "att_1792389200710_odeab",
@@ -604,7 +604,7 @@
     "excusedCount": 0,
     "photoUrl": null,
     "notes": "sdgasdfAGFG",
-    "auditor": "Uslubchi"
+    "auditor": "G'ayipov Jur'at"
   },
   {
     "id": "att_1792392106797_n75v6",
@@ -627,7 +627,7 @@
     "excusedCount": 0,
     "photoUrl": null,
     "notes": "sdgasdfAGFGAFGA",
-    "auditor": "Uslubchi"
+    "auditor": "Mavlonov Tursunbek"
   },
   {
     "id": "att_1792392117258_f07bz",
@@ -650,7 +650,7 @@
     "excusedCount": 0,
     "photoUrl": null,
     "notes": "sdgasdfAGFGAFGA",
-    "auditor": "Uslubchi"
+    "auditor": "Djumaniyozov Davlatyor"
   },
   {
     "id": "att_1792392139685_ng2bl",
@@ -673,7 +673,7 @@
     "excusedCount": 0,
     "photoUrl": "/uploads/attendance/audit_1792392139680_47zbi.jpg",
     "notes": "sdgasdfAGFGAFGA",
-    "auditor": "Uslubchi"
+    "auditor": "Bekchanov Nizomaddin"
   },
   {
     "id": "att_1792398906036_lszn7",
@@ -697,7 +697,7 @@
     "excusedCount": 0,
     "photoUrl": null,
     "notes": "Rejalashtirilgan ochiq dars",
-    "auditor": "Inspektor"
+    "auditor": "Yangiboyev Sanjar"
   },
   {
     "id": "att_1792399033092_k4qne",
@@ -721,5 +721,201 @@
     "photoUrl": null,
     "notes": "",
     "auditor": "Uslubchi (Pedagogika)"
+  },
+  {
+    "id": "att_1792484607726_uvdgk",
+    "createdAt": "2026-10-20T08:23:27.726Z",
+    "date": "2026-10-20",
+    "time": "13:23",
+    "facultyId": "aniq-fanlar",
+    "groupId": "241-Fizika",
+    "shift": "kunduzgi-2",
+    "shiftName": "Kunduzgi (2-smena)",
+    "pair": 1,
+    "pairTime": "13:00 - 14:20",
+    "room": "201-auditoriya",
+    "teacher": "dots. Yoqubov Sherzod",
+    "teacherPresent": true,
+    "substituteTeacher": null,
+    "subject": "Fizika",
+    "presentCount": 21,
+    "hemisTotal": 21,
+    "absentStudents": [],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "G'ayipov Jur'at"
+  },
+  {
+    "id": "att_1792560185663_xi264",
+    "createdAt": "2026-10-21T05:23:05.663Z",
+    "date": "2026-10-21",
+    "time": "10:23",
+    "facultyId": "aniq-fanlar",
+    "groupId": "261-Fizika",
+    "shift": "kunduzgi-1",
+    "shiftName": "Kunduzgi (1-smena)",
+    "pair": 2,
+    "pairTime": "10:00 - 11:20",
+    "room": "102-auditoriya",
+    "teacher": "prof. Boltayev Sulton",
+    "teacherPresent": true,
+    "substituteTeacher": null,
+    "subject": "eAFSD",
+    "presentCount": 25,
+    "hemisTotal": 25,
+    "absentStudents": [],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "Djumaniyozov Davlatyor"
+  },
+  {
+    "id": "att_1792560191853_5eqjj",
+    "createdAt": "2026-10-21T05:23:11.853Z",
+    "date": "2026-10-21",
+    "time": "10:23",
+    "facultyId": "aniq-fanlar",
+    "groupId": "252-Fizika",
+    "shift": "kunduzgi-1",
+    "shiftName": "Kunduzgi (1-smena)",
+    "pair": 2,
+    "pairTime": "10:00 - 11:20",
+    "room": "102-auditoriya",
+    "teacher": "prof. Boltayev Sulton",
+    "teacherPresent": true,
+    "substituteTeacher": null,
+    "subject": "eAFSD",
+    "presentCount": 26,
+    "hemisTotal": 26,
+    "absentStudents": [],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "Djumaniyozov Davlatyor"
+  },
+  {
+    "id": "att_1792560195678_m51bb",
+    "createdAt": "2026-10-21T05:23:15.678Z",
+    "date": "2026-10-21",
+    "time": "10:23",
+    "facultyId": "aniq-fanlar",
+    "groupId": "242-Fizika",
+    "shift": "kunduzgi-1",
+    "shiftName": "Kunduzgi (1-smena)",
+    "pair": 2,
+    "pairTime": "10:00 - 11:20",
+    "room": "102-auditoriya",
+    "teacher": "prof. Boltayev Sulton",
+    "teacherPresent": true,
+    "substituteTeacher": null,
+    "subject": "eAFSD",
+    "presentCount": 21,
+    "hemisTotal": 21,
+    "absentStudents": [],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "Djumaniyozov Davlatyor"
+  },
+  {
+    "id": "att_1792560208793_b0hfw",
+    "createdAt": "2026-10-21T05:23:28.794Z",
+    "date": "2026-10-21",
+    "time": "10:23",
+    "facultyId": "aniq-fanlar",
+    "groupId": "242-Fizika",
+    "shift": "kunduzgi-1",
+    "shiftName": "Kunduzgi (1-smena)",
+    "pair": 2,
+    "pairTime": "10:00 - 11:20",
+    "room": "102-auditoriya",
+    "teacher": "prof. Boltayev Sulton",
+    "teacherPresent": false,
+    "substituteTeacher": "katta o'qit. Rahimova Dilnoza",
+    "subject": "eAFSD",
+    "presentCount": 20,
+    "hemisTotal": 21,
+    "absentStudents": [],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "Djumaniyozov Davlatyor"
+  },
+  {
+    "id": "att_1792560213793_m5yss",
+    "createdAt": "2026-10-21T05:23:33.793Z",
+    "date": "2026-10-21",
+    "time": "10:23",
+    "facultyId": "aniq-fanlar",
+    "groupId": "261-Matematika",
+    "shift": "kunduzgi-1",
+    "shiftName": "Kunduzgi (1-smena)",
+    "pair": 2,
+    "pairTime": "10:00 - 11:20",
+    "room": "102-auditoriya",
+    "teacher": "prof. Boltayev Sulton",
+    "teacherPresent": true,
+    "substituteTeacher": null,
+    "subject": "eAFSD",
+    "presentCount": 26,
+    "hemisTotal": 26,
+    "absentStudents": [],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "Djumaniyozov Davlatyor"
+  },
+  {
+    "id": "att_1792560432940_0c86a",
+    "createdAt": "2026-10-21T05:27:12.940Z",
+    "date": "2026-10-21",
+    "time": "10:27",
+    "facultyId": "filologiya",
+    "groupId": "261-O'zbek tili va adabiyoti",
+    "shift": "kunduzgi-1",
+    "shiftName": "Kunduzgi (1-smena)",
+    "pair": 2,
+    "pairTime": "10:00 - 11:20",
+    "room": "104-ma'ruza zali",
+    "teacher": "prof. Boltayev Sulton",
+    "teacherPresent": true,
+    "substituteTeacher": null,
+    "subject": "eAFSD",
+    "presentCount": 25,
+    "hemisTotal": 26,
+    "absentStudents": [
+      "Bobojonov Shohruh"
+    ],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "Uslubchi (Filologiya)"
+  },
+  {
+    "id": "att_1792560490239_t2bfx",
+    "createdAt": "2026-10-21T05:28:10.239Z",
+    "date": "2026-10-21",
+    "time": "10:28",
+    "facultyId": "filologiya",
+    "groupId": "261-O'zbek tili va adabiyoti",
+    "shift": "kunduzgi-1",
+    "shiftName": "Kunduzgi (1-smena)",
+    "pair": 2,
+    "pairTime": "10:00 - 11:20",
+    "room": "203-bio",
+    "teacher": "prof. Boltayev Sulton",
+    "teacherPresent": true,
+    "substituteTeacher": null,
+    "subject": "eAFSD",
+    "presentCount": 23,
+    "hemisTotal": 26,
+    "absentStudents": [
+      "Bobojonov Shohruh"
+    ],
+    "excusedCount": 0,
+    "photoUrl": null,
+    "notes": "",
+    "auditor": "Yangiboyev Sanjar"
   }
 ]

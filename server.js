@@ -47,12 +47,15 @@ if (isVercel) {
 
     if (!fs.existsSync(tmpDataDir)) {
       fs.mkdirSync(tmpDataDir, { recursive: true });
-      const origData = path.join(__dirname, 'data');
-      if (fs.existsSync(origData)) {
-        fs.readdirSync(origData).forEach(f => {
-          fs.copyFileSync(path.join(origData, f), path.join(tmpDataDir, f));
-        });
-      }
+    }
+    const origData = path.join(__dirname, 'data');
+    if (fs.existsSync(origData)) {
+      fs.readdirSync(origData).forEach(f => {
+        const target = path.join(tmpDataDir, f);
+        if (!fs.existsSync(target)) {
+          fs.copyFileSync(path.join(origData, f), target);
+        }
+      });
     }
 
     if (!fs.existsSync(tmpUploadsDir)) {
@@ -85,6 +88,7 @@ app.use('/uploads', express.static(path.join(UPLOADS_DIR, '..')));
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const FACULTIES_FILE = path.join(DATA_DIR, 'faculties.json');
 const TEACHERS_FILE = path.join(DATA_DIR, 'teachers.json');
+const AUDITORS_FILE = path.join(DATA_DIR, 'auditors.json');
 const ROOMS_FILE = path.join(DATA_DIR, 'rooms.json');
 const STUDENTS_FILE = path.join(DATA_DIR, 'students.json');
 
@@ -239,6 +243,26 @@ app.post('/api/teachers', (req, res) => {
   res.json({ success: true, teacher: newTeacher });
 });
 
+// 2.5 Auditors list
+app.get('/api/auditors', (req, res) => {
+  res.json(readJson(AUDITORS_FILE));
+});
+
+app.post('/api/auditors', (req, res) => {
+  const { name, department, phone } = req.body;
+  if (!name) return res.status(400).json({ error: 'Tekshiruvchi ismi majburiy' });
+  const auditors = readJson(AUDITORS_FILE);
+  const newAuditor = {
+    id: 'aud_' + Date.now(),
+    name: name.trim(),
+    department: department || 'O\'quv-uslubiy boshqarma',
+    phone: phone || ''
+  };
+  auditors.push(newAuditor);
+  writeJson(AUDITORS_FILE, auditors);
+  res.json({ success: true, auditor: newAuditor });
+});
+
 // 3. Rooms list
 app.get('/api/rooms', (req, res) => {
   res.json(readJson(ROOMS_FILE));
@@ -379,6 +403,7 @@ app.get('/api/excel/download', async (req, res) => {
 
 // Helper: Real Telegram Bot API message dispatcher
 const sendTelegramMessage = (text) => {
+  require('dotenv').config({ override: true });
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {

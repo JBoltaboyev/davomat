@@ -1,14 +1,74 @@
 [
-  { "id": "r101", "name": "101-auditoriya", "building": "Aniq fanlar korpusi", "capacity": 30 },
-  { "id": "r102", "name": "102-auditoriya", "building": "Aniq fanlar korpusi", "capacity": 30 },
-  { "id": "r104", "name": "104-ma'ruza zali", "building": "Aniq fanlar korpusi", "capacity": 80 },
-  { "id": "r201", "name": "201-auditoriya", "building": "Aniq fanlar korpusi", "capacity": 30 },
-  { "id": "r203", "name": "203-kompyuter sinfi", "building": "Aniq fanlar korpusi", "capacity": 26 },
-  { "id": "r208", "name": "208-fizika laboratoriyasi", "building": "Aniq fanlar korpusi", "capacity": 25 },
-  { "id": "r301", "name": "301-auditoriya", "building": "Bosh bino", "capacity": 35 },
-  { "id": "r305", "name": "305-auditoriya", "building": "Bosh bino", "capacity": 35 },
-  { "id": "r310", "name": "310-ma'ruza zali", "building": "Bosh bino", "capacity": 100 },
-  { "id": "r401", "name": "401-auditoriya", "building": "Bosh bino", "capacity": 30 },
-  { "id": "r405", "name": "405-til laboratoriyasi", "building": "Filologiya korpusi", "capacity": 25 },
-  { "id": "r_sport", "name": "Sport majmuasi zali", "building": "Sport binosi", "capacity": 60 }
+  {
+    "id": "r101",
+    "name": "101-auditoriya",
+    "building": "Aniq fanlar",
+    "capacity": 30
+  },
+  {
+    "id": "r102",
+    "name": "102-auditoriya",
+    "building": "Aniq fanlar",
+    "capacity": 30
+  },
+  {
+    "id": "r104",
+    "name": "104-ma'ruza zali",
+    "building": "Aniq fanlar",
+    "capacity": 80
+  },
+  {
+    "id": "r201",
+    "name": "201-auditoriya",
+    "building": "Aniq fanlar",
+    "capacity": 30
+  },
+  {
+    "id": "r203",
+    "name": "203-kompyuter sinfi",
+    "building": "Aniq fanlar",
+    "capacity": 26
+  },
+  {
+    "id": "r208",
+    "name": "208-fizika laboratoriyasi",
+    "building": "Aniq fanlar",
+    "capacity": 25
+  },
+  {
+    "id": "r301",
+    "name": "301-auditoriya",
+    "building": "Bosh bino",
+    "capacity": 35
+  },
+  {
+    "id": "r305",
+    "name": "305-auditoriya",
+    "building": "Bosh bino",
+    "capacity": 35
+  },
+  {
+    "id": "r310",
+    "name": "310-ma'ruza zali",
+    "building": "Bosh bino",
+    "capacity": 100
+  },
+  {
+    "id": "r401",
+    "name": "401-auditoriya",
+    "building": "Bosh bino",
+    "capacity": 30
+  },
+  {
+    "id": "r405",
+    "name": "405-til laboratoriyasi",
+    "building": "Filologiya",
+    "capacity": 25
+  },
+  {
+    "id": "r_sport",
+    "name": "Sport majmuasi zali",
+    "building": "Sport",
+    "capacity": 60
+  }
 ]

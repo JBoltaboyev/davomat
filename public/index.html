@@ -232,22 +232,10 @@
 
                 <!-- Room / Auditoriya -->
                 <div class="input-group">
-                  <label class="input-label" for="roomSelect">
-                    <span>🚪 Auditoriya / Xona</span>
-                    <small class="text-dim">Tezkor tanlash:</small>
-                  </label>
+                  <label class="input-label" for="roomInput">🚪 Auditoriya / Xona</label>
                   <input type="text" id="roomInput" class="form-input" placeholder="Xona raqami, masalan: 101"
                     list="roomsDatalist" required>
                   <datalist id="roomsDatalist"></datalist>
-                  <div class="chips-container" id="roomChips">
-                    <button type="button" class="chip-btn active" data-room="101-auditoriya">101</button>
-                    <button type="button" class="chip-btn" data-room="102-auditoriya">102</button>
-                    <button type="button" class="chip-btn" data-room="201-auditoriya">201</button>
-                    <button type="button" class="chip-btn" data-room="203-kompyuter sinfi">203</button>
-                    <button type="button" class="chip-btn" data-room="301-auditoriya">301</button>
-                    <button type="button" class="chip-btn" data-room="305-auditoriya">305</button>
-                    <button type="button" class="chip-btn" data-room="405-til laboratoriyasi">405</button>
-                  </div>
                 </div>
 
                 <!-- Fakultet Selector -->
@@ -302,7 +290,8 @@
                 <div class="teacher-audit-box">
                   <div class="switch-label">
                     <span>👨‍🏫 O'qituvchi darsdami?</span>
-                    <span id="teacherStatusLabel" style="color: var(--status-good); font-weight:700;">(Ha, darsda)</span>
+                    <span id="teacherStatusLabel" style="color: var(--status-good); font-weight:700;">(Ha,
+                      darsda)</span>
                   </div>
                   <label class="toggle-switch">
                     <input type="checkbox" id="teacherPresentCheck" checked>
@@ -316,11 +305,13 @@
                     <span class="substitute-icon">🔄</span>
                     <div>
                       <div class="substitute-title">O'rniga kim dars o'tmoqda? (Almashtirgan o'qituvchi)</div>
-                      <div class="substitute-desc">Asosiy o'qituvchi darsda bo'lmagani sababli dars o'tayotgan o'qituvchini belgilang</div>
+                      <div class="substitute-desc">Asosiy o'qituvchi darsda bo'lmagani sababli dars o'tayotgan
+                        o'qituvchini belgilang</div>
                     </div>
                   </div>
                   <div class="input-group" style="margin-top: 0.6rem;">
-                    <label class="input-label" for="substituteTeacherInput">👨‍🏫 O'rniga dars o'tuvchi (F.I.Sh.)</label>
+                    <label class="input-label" for="substituteTeacherInput">👨‍🏫 O'rniga dars o'tuvchi
+                      (F.I.Sh.)</label>
                     <input type="text" id="substituteTeacherInput" class="form-input"
                       placeholder="O'rniga kirgan o'qituvchi ismini tanlang yoki yozing" list="teachersDatalist">
                   </div>
@@ -330,10 +321,10 @@
               <!-- Mode Switcher: Quick Count vs Student Roster -->
               <div class="mode-toggle-container">
                 <button type="button" class="mode-btn active" id="btnModeQuick">
-                  <span>⚡</span> Tezkor Sanash (Inspector Quick Count)
+                  <span>⚡</span> Tezkor Sanash
                 </button>
                 <button type="button" class="mode-btn" id="btnModeRoster">
-                  <span>📋</span> Talabalar Ro'yxati (HEMIS Roster)
+                  <span>📋</span> Talabalar Ro'yxati
                 </button>
               </div>
 
@@ -387,9 +378,13 @@
                   <input type="text" id="notesInput" class="form-input"
                     placeholder="Masalan: 1 talaba sababli kasal, dars jadval bo'yicha ketmoqda">
                 </div>
+                <!-- Tekshiruvchi (Auditor / Nazoratchi) -->
                 <div class="input-group">
-                  <label class="input-label" for="auditorInput">👤 Tekshiruvchi</label>
-                  <input type="text" id="auditorInput" class="form-input" value="Uslubchi">
+                  <label class="input-label" for="auditorInput">👤 Tekshiruvchi (Auditor / Nazoratchi)</label>
+                  <input type="text" id="auditorInput" class="form-input"
+                    placeholder="Tekshiruvchini tanlang yoki yozing" list="auditorsDatalist" required
+                    autocomplete="off">
+                  <datalist id="auditorsDatalist"></datalist>
                 </div>
               </div>
 
@@ -831,6 +826,27 @@
                 </form>
               </div>
 
+              <!-- Add Auditor Form -->
+              <div class="faculty-row-item">
+                <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:1rem;">👤 Yangi Auditor (Tekshiruvchi)
+                  Qo'shish</h3>
+                <form id="addAuditorForm" style="display:flex; flex-direction:column; gap:0.8rem;">
+                  <div>
+                    <label class="input-label">Tekshiruvchi F.I.Sh.</label>
+                    <input type="text" id="newAuditorName" class="form-input" placeholder="Mavlonov Tursunbek" required>
+                  </div>
+                  <div>
+                    <label class="input-label">Bo'lim / Lavozim</label>
+                    <input type="text" id="newAuditorDept" class="form-input" placeholder="O'quv-uslubiy boshqarma"
+                      value="O'quv-uslubiy boshqarma" required>
+                  </div>
+                  <button type="submit" class="chip-btn active"
+                    style="padding:0.75rem; font-weight:700; margin-top:0.5rem;">
+                    ✓ Auditorni Qo'shish
+                  </button>
+                </form>
+              </div>
+
               <!-- Settings: User Management (Admin Only) -->
               <div class="faculty-row-item" id="adminUserManagementSection" style="grid-column: 1 / -1;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
@@ -925,8 +941,8 @@
 
         <div class="auth-input-group">
           <label class="auth-input-label" for="loginUsername">👤 Foydalanuvchi nomi (Login)</label>
-          <input type="text" id="loginUsername" class="auth-input" value=""
-            placeholder="Loginni kiriting" required autocomplete="username" autofocus>
+          <input type="text" id="loginUsername" class="auth-input" value="" placeholder="Loginni kiriting" required
+            autocomplete="username" autofocus>
         </div>
 
         <div class="auth-input-group">
