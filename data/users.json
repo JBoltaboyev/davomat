@@ -10,66 +10,6 @@
     "phone": "+998 93 369-16-45"
   },
   {
-    "id": "user_mavlonov",
-    "username": "mavlonov",
-    "password": "123",
-    "name": "Mavlonov Tursunbek",
-    "role": "auditor",
-    "facultyId": "all",
-    "facultyName": "Barcha fakultetlar (Auditor)",
-    "phone": "+998 90 123-45-67"
-  },
-  {
-    "id": "user_djumaniyozov",
-    "username": "djumaniyozov",
-    "password": "123",
-    "name": "Djumaniyozov Davlatyor",
-    "role": "auditor",
-    "facultyId": "all",
-    "facultyName": "Barcha fakultetlar (Auditor)",
-    "phone": "+998 91 234-56-78"
-  },
-  {
-    "id": "user_bekchanov",
-    "username": "bekchanov",
-    "password": "123",
-    "name": "Bekchanov Nizomaddin",
-    "role": "auditor",
-    "facultyId": "all",
-    "facultyName": "Barcha fakultetlar (Auditor)",
-    "phone": "+998 93 345-67-89"
-  },
-  {
-    "id": "user_yangiboyev",
-    "username": "yangiboyev",
-    "password": "123",
-    "name": "Yangiboyev Sanjar",
-    "role": "auditor",
-    "facultyId": "all",
-    "facultyName": "Barcha fakultetlar (Auditor)",
-    "phone": "+998 94 456-78-90"
-  },
-  {
-    "id": "user_salayev",
-    "username": "salayev",
-    "password": "123",
-    "name": "Salayev Iskandar",
-    "role": "auditor",
-    "facultyId": "all",
-    "facultyName": "Barcha fakultetlar (Auditor)",
-    "phone": "+998 97 567-89-01"
-  },
-  {
-    "id": "user_gayipov",
-    "username": "gayipov",
-    "password": "123",
-    "name": "G'ayipov Jur'at",
-    "role": "auditor",
-    "facultyId": "all",
-    "facultyName": "Barcha fakultetlar (Auditor)",
-    "phone": "+998 90 678-90-12"
-  },
-  {
     "id": "user_uslubchi_aniq",
     "username": "aniq",
     "password": "123",

@@ -270,8 +270,13 @@ function applyUserRolePermissions() {
     if (facultyLockIndicator) {
       facultyLockIndicator.innerHTML = `<span class="faculty-locked-badge">🔒 ${user.facultyName}</span>`;
     }
-    if (auditorInput) {
-      auditorInput.value = user.name;
+    if (auditorInput && !auditorInput.value) {
+      const savedAuditor = localStorage.getItem('urdpi_selected_auditor');
+      if (savedAuditor) {
+        auditorInput.value = savedAuditor;
+      } else if (state.auditors && state.auditors.length > 0) {
+        auditorInput.value = state.auditors[0].name;
+      }
     }
     if (adminSection) {
       adminSection.style.display = 'none';
@@ -1064,15 +1069,13 @@ function populateAuditorsDatalist() {
 
   if (auditorInput && auditorInput.value && auditorInput.value !== 'Uslubchi' && auditorInput.value !== 'Inspektor') {
     activeName = auditorInput.value.trim();
-  } else if (state.currentUser && state.currentUser.role === 'uslubchi') {
-    activeName = state.currentUser.name;
   } else if (savedAuditor) {
     activeName = savedAuditor;
   } else if (state.auditors && state.auditors.length > 0) {
     activeName = state.auditors[0].name;
   }
 
-  if (auditorInput && activeName) {
+  if (auditorInput && !auditorInput.value && activeName) {
     auditorInput.value = activeName;
   }
 
